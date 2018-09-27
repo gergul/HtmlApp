@@ -15,7 +15,7 @@ static char THIS_FILE[] = __FILE__;
 #endif
 
 #define WM_ON_CLICK_LINK WM_USER + 10000
-#define WM_ON_EXTERNAL_FOO WM_USER + 10001
+#define WM_ON_EXTERNAL_CALL WM_USER + 10001
 
 // useful macro for checking HRESULTs
 #define HRCHECK(x) \
@@ -52,7 +52,11 @@ AFX_COMDAT AFX_DISPMAP_ENTRY CHtmlCtrl::_dispatchEntries[MAX_FUNCS] =
 };
 AFX_COMDAT const AFX_DISPMAP CHtmlCtrl::dispatchMap =
 {
-	(const AFX_DISPMAP *)(&CHtmlCtrl::GetThisDispatchMap),
+#ifdef _AFXDLL
+	&CHtmlView::GetThisDispatchMap,
+#else
+	(const AFX_DISPMAP *)NULL,
+#endif
 	&CHtmlCtrl::_dispatchEntries[0],
 	&CHtmlCtrl::_dispatchEntryCount, 
 	&CHtmlCtrl::_dwStockPropMask 
@@ -92,14 +96,14 @@ LRESULT CHtmlCtrl::OnExternalCall(WPARAM pFuncName, LPARAM pJsonStr)
 
 void CHtmlCtrl::OnScriptExternalCall(LPCTSTR pFunName, LPCTSTR pJsonStr)
 {
-	PostMessage(WM_ON_EXTERNAL_FOO, WPARAM(new CString(pFunName)), LPARAM(new CString(pJsonStr)));
+	PostMessage(WM_ON_EXTERNAL_CALL, WPARAM(new CString(pFunName)), LPARAM(new CString(pJsonStr)));
 }
 
 BEGIN_MESSAGE_MAP(CHtmlCtrl, CHtmlView)
 	ON_WM_DESTROY()
 	ON_WM_MOUSEACTIVATE()
 	ON_MESSAGE(WM_ON_CLICK_LINK, &CHtmlCtrl::OnClickLink)
-	ON_MESSAGE(WM_ON_EXTERNAL_FOO, &CHtmlCtrl::OnExternalCall)
+	ON_MESSAGE(WM_ON_EXTERNAL_CALL, &CHtmlCtrl::OnExternalCall)
 END_MESSAGE_MAP()
 
 //////////////////
@@ -365,7 +369,7 @@ SPIHTMLDocument2 CHtmlCtrl::GetSafeHtmlDocument() const
 
 HRESULT CHtmlCtrl::OnGetHostInfo(DOCHOSTUIINFO *pInfo)
 {
-	//如果窗口够大的话则不用滚动条,如果页面比窗口大,滚动条还是会出来的
+	////如果窗口够大的话则不用滚动条,如果页面比窗口大,滚动条还是会出来的
 	//pInfo->dwFlags |= DOCHOSTUIFLAG_SCROLL_NO | DOCHOSTUIFLAG_NO3DBORDER;
 	return S_OK;
 }

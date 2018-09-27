@@ -16,8 +16,6 @@
 
 #define WM_CLICK_CONSOLE WM_USER + 1
 
-
-
 CHtmlBrowerDlg::CHtmlBrowerDlg(CWnd* pParent /*=NULL*/)
 	: CDialogEx(CHtmlBrowerDlg::IDD, pParent)
 {
@@ -62,12 +60,18 @@ BOOL CHtmlBrowerDlg::OnInitDialog()
 	
 	m_html.SetIsHideContextMenu(TRUE);
 	m_html.CreateFromStatic(IDC_STATIC_HELP, this);
-	ADD_ON_EXTERNAL_CALL(&m_html, _T("fooo"), CHtmlBrowerDlg::onClickedHtmlButton, this);
-	ADD_ON_CLICK_LINK(&m_html, _T("toolbar"), _T("console"), CHtmlBrowerDlg::onClickLink, this);
+
+	ADD_EXTERNAL_CALL(&m_html, _T("onClickButton"), &CHtmlBrowerDlg::onClickedHtmlButton, this);
+	ADD_ON_CLICK_LINK(&m_html, _T("toolbar"), _T("console"), &CHtmlBrowerDlg::onClickLink, this);
+	ADD_ON_CLICK_LINK(&m_html, _T(""), _T("Gergul"), &CHtmlBrowerDlg::onClickLink, this);
+
 	CHtmlCtrl::AppendFunction(_T("foo"), (AFX_PMSG)&CHtmlBrowerDlg::foo, VT_EMPTY, VTS_I4 VTS_I4);
 	CHtmlCtrl::AppendFunction(_T("foo1"), (AFX_PMSG)&CHtmlBrowerDlg::foo1, VT_EMPTY, VTS_BSTR VTS_BSTR);
 
-	m_ctrlEditUrl.SetWindowText(_T("file:///C:/Users/Administrator/Desktop/HtmlBrower/data/layui-v2.4.3/dlg.html"));
+
+	TCHAR szBasePath[MAX_PATH];
+	GetCurrentDirectory(MAX_PATH, szBasePath);
+	m_ctrlEditUrl.SetWindowText(CString(szBasePath) + _T("\\data\\layui-v2.4.3\\dlg.html"));
 
 	return TRUE;  // 除非将焦点设置到控件，否则返回 TRUE
 }
@@ -114,9 +118,6 @@ void CHtmlBrowerDlg::OnBnClickedButton1()
 	CString sUrl;
 	m_ctrlEditUrl.GetWindowText(sUrl);
 	m_html.Navigate2(sUrl, NULL, NULL, _T("User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.81 Safari/537.36 OPR/45.0.2552.812"));
-	
-#elif 0
-	m_html.Navigate2(_T("file://H:\\Programming\\Workspace\\C\\HtmlBrower\\1.html"));
 #else
  	CString m_Text = _T("<html>")
  		_T("<body>")

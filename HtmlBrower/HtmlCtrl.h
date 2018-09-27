@@ -14,12 +14,12 @@
 DECLARE_SMARTPTR(IHTMLDocument2)
 
 typedef std::function<void(LPCTSTR pJsonStr)> FN_ON_EXTERNAL_CALL;
-#define ADD_ON_EXTERNAL_CALL(pHtmlCtrl, jsFuncName, memberFun, funObj) \
-	(pHtmlCtrl)->AppendFunction((jsFuncName), std::bind(&memberFun, (funObj), std::placeholders::_1));
+#define ADD_EXTERNAL_CALL(pHtmlCtrl, jsFuncName, memberFun, funObj) \
+	(pHtmlCtrl)->AppendFunction((jsFuncName), std::bind(memberFun, (funObj), std::placeholders::_1));
 
 typedef std::function<void(const CString& sProtocol, const CString& sCmd)> FN_ON_CLICK_LINK;
 #define ADD_ON_CLICK_LINK(pHtmlCtrl, protocol, cmd, memberFun, funObj) \
-	(pHtmlCtrl)->AppendOnClickLink((protocol), (cmd), std::bind(&memberFun, (funObj), std::placeholders::_1, std::placeholders::_2));
+	(pHtmlCtrl)->AppendOnClickLink((protocol), (cmd), std::bind(memberFun, (funObj), std::placeholders::_1, std::placeholders::_2));
 
 //这个类将 CHtmlView 转换为普通的能在对话框和框架中使用的控制
 class CHtmlCtrl
