@@ -13,9 +13,6 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="TOOL">
-      <UniqueIdentifier>{ee382ff2-4801-46a3-89bc-f69dd1591b36}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="ReadMe.txt" />
@@ -42,9 +39,6 @@
     <ClInclude Include="Resource.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="str_convert.h">
-      <Filter>TOOL</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="HtmlBrower.cpp">
@@ -58,9 +52,6 @@
     </ClCompile>
     <ClCompile Include="HtmlCtrl.cpp">
       <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="str_convert.cpp">
-      <Filter>TOOL</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
