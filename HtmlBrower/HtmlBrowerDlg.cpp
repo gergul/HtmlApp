@@ -129,12 +129,17 @@ void CHtmlBrowerDlg::OnBnClickedButton1()
 
 BOOL CHtmlBrowerDlg::foo(int n1, int n2)
 {
+	CString s;
+	s.Format(_T("foo(%d, %d)"), n1, n2);
+	AfxMessageBox(s);
 	return TRUE;
 }
 
 BOOL CHtmlBrowerDlg::foo1(const TCHAR* str1, LPCTSTR str2)
 {
-	//m_html.SetElementInputValue(_T("text123"), _T("dfsfsdfs"));
+	CString s;
+	s.Format(_T("foo1(%s, %s)"), str1, str2);
+	AfxMessageBox(s);
 	return TRUE;
 }
 

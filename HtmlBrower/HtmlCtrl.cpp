@@ -51,8 +51,8 @@ AFX_COMDAT AFX_DISPMAP_ENTRY CHtmlCtrl::_dispatchEntries[MAX_FUNCS] =
 	{ VTS_NONE, DISPID_UNKNOWN, VTS_NONE, VT_VOID, (AFX_PMSG)NULL, (AFX_PMSG)NULL, (size_t)-1, afxDispCustom }
 };
 AFX_COMDAT const AFX_DISPMAP CHtmlCtrl::dispatchMap =
-{ 
-	&CHtmlView::GetThisDispatchMap,
+{
+	(const AFX_DISPMAP *)(&CHtmlCtrl::GetThisDispatchMap),
 	&CHtmlCtrl::_dispatchEntries[0],
 	&CHtmlCtrl::_dispatchEntryCount, 
 	&CHtmlCtrl::_dwStockPropMask 

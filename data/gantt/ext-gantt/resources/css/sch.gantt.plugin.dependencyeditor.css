@@ -1,0 +1,15 @@
+/*
+
+Ext Gantt 2.2.21
+Copyright(c) 2009-2014 Bryntum AB
+http://bryntum.com/contact
+http://bryntum.com/license
+
+*/
+.sch-gantt-dependencyeditor
+{
+    z-index:13;
+    top:-1000px;
+    left:-1000px;
+    position:absolute;
+}

@@ -1,0 +1,78 @@
+.taskTip strong
+{
+    font-weight:bold;
+    margin-right:5px;
+}
+
+.taskTip li
+{
+	padding-bottom:3px;
+}
+
+.icon-add
+{
+    background:url(images/add.png) no-repeat left center !important;
+}
+
+.Johnny
+{
+    background-color:LightGreen;
+}
+
+.Johnny .sch-gantt-progress-bar
+{
+    background-color:#555;
+}
+
+.Sencha .sch-gantt-label-left
+{
+    background:url(sencha.png) no-repeat left center !important;
+    padding-left:20px;
+    font-weight:bold;
+    text-decoration:underline;
+    color:navy;
+}
+
+.Sencha .sch-gantt-parenttask-bar
+{
+    background:#eee;
+}
+
+.Sencha .sch-gantt-progress-bar
+{
+    background:red;
+}
+
+.Bryntum .sch-gantt-label-left
+{
+    background:url(bryntum.jpg) no-repeat left center !important;
+    padding-left:20px;
+    font-weight:bold;
+    text-decoration:underline;
+    color:navy;
+}
+
+.Bryntum .sch-gantt-progress-bar
+{
+    background:lightblue;
+}
+
+.Bryntum .sch-gantt-parenttask-bar
+{
+    background:#eee;
+}
+
+
+
+.Sencha .x-tree-icon
+{
+    background:url(sencha.png) no-repeat left center !important;
+    color:navy;
+}
+
+.Bryntum .x-tree-icon
+{
+    background:url(bryntum.jpg) no-repeat left center !important;
+    color:navy;
+}
+
