@@ -54,10 +54,10 @@ public:
 	static BOOL AppendFunction(LPCTSTR pszFuncName, AFX_PMSG pFuncAddr, WORD wRetType, LPCSTR pszParamType);
 
 public:
-	//绑定C++函数到脚本
+	//绑定C++函数到脚本（异步调用）
 	//脚本中调用window.external.call('pszFuncName', 'json string')即可调用相应的C++函数
 	void AppendFunction(LPCTSTR pszFuncName, FN_ON_EXTERNAL_CALL pfn);
-	//绑定C++函数到超链接
+	//绑定C++函数到超链接（异步调用）
 	//  sProtocol - 协议。 0~9 a~z + - . 才合法（大写也不行）
 	//  sCmd - 命令
 	BOOL AppendOnClickLink(const CString& sProtocol, const CString& sCmd, FN_ON_CLICK_LINK fn);
@@ -79,16 +79,23 @@ public:
 	BOOL CallScriptFunction(LPCTSTR pStrFuncName, CStringArray* pArrFuncArgs, CComVariant* pOutVarRes);
 	//执行脚本（有返回值）
 	BOOL ExecuteScript(CComVariant& res, const CString &sScript, const CString &sLanguage = _T("JavaScript"));
-	//全frame执行脚本（有返回值）
+	//全frame执行脚本（有返回值）<<frameUrl, res>>
 	void ExecuteScriptInAllFrames(std::vector<std::pair<CString, CComVariant> >& vctRes, const CString &sScript,
 		const CString &sLanguage = _T("JavaScript"));
 
 public:
-	CString GetElementInputValue(const CString& idEle);
-	void SetElementInputValue(const CString& idEle, const CString& val);
-
+	//全frame获取属性值
+	std::vector<CString> GetElementAttrib(const CString& idElement, const CString& attribName);
+	//全frame设置属性值
+	void SetElementAttrib(const CString& idElement, const CString& attribName, const CString& val);
+	
+	CString GetElementValue(const CString& idElement);
+	void SetElementValue(const CString& idElement, const CString& val);
+	
 protected:
+	//把url分割出协议和命令
 	static bool SplitProtocol(const CString& src, CString& sProtocol, CString& sCmd);
+	//协议名是否有效。0~9 a~z + - . 才合法（大写也不行）
 	static bool IsProtocolLegal(const CString& sProtocol);
 
 protected:
@@ -196,7 +203,7 @@ public:
 	CScriptRunnerEx(const CString& sScript, const CString& sScriptType = _T("JavaScript"));
 	virtual ~CScriptRunnerEx();
 
-	std::vector<std::pair<CString, CComVariant> > m_vctResults;
+	std::vector<std::pair<CString, CComVariant> > m_vctResults;//<<frameUrl, res>>
 
 protected:
 	virtual void OnFrame(CComPtr<IHTMLDocument2> &doc);

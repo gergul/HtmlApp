@@ -128,6 +128,21 @@ void CHtmlBrowerDlg::OnBnClickedButton1()
 #endif
 }
 
+BOOL CHtmlBrowerDlg::PreTranslateMessage(MSG* pMsg)
+{
+	if (pMsg->message == WM_KEYDOWN &&
+		pMsg->wParam == VK_RETURN)
+	{
+		if (pMsg->hwnd == m_ctrlEditUrl.GetSafeHwnd())
+		{
+			OnBnClickedButton1();
+			return TRUE;
+		}
+	}
+
+	return CDialogEx::PreTranslateMessage(pMsg);
+}
+
 BOOL CHtmlBrowerDlg::foo(int n1, int n2)
 {
 	CString s;
@@ -152,9 +167,9 @@ void CHtmlBrowerDlg::OnBnClickedButton2()
 	std::vector<std::pair<CString, CComVariant> > vctRes;
 	m_html.ExecuteScriptInAllFrames(vctRes, _T("document.getElementById('text123').value"));
 	
-	CString sText = m_html.GetElementInputValue(_T("text123"));
+	CString sText = m_html.GetElementValue(_T("text123"));
 	AfxMessageBox(sText);
-	m_html.SetElementInputValue(_T("text123"), _T("gergul123123123"));
+	m_html.SetElementValue(_T("text123"), _T("gergul123123123"));
 
 	m_html.ExecuteScript(_T("willError()"));
 
@@ -185,12 +200,13 @@ void CHtmlBrowerDlg::OnBnClickedButton2()
 
 void CHtmlBrowerDlg::onClickedHtmlButton(LPCTSTR pJsonStr)
 {
-	m_html.SetElementInputValue(_T("text123"), pJsonStr);
+	m_html.SetElementValue(_T("text123"), pJsonStr);
+	m_html.ExecuteScript(_T("document.getElementById('tianqi').src = 'https://www.baidu.com';"));
 }
 
 void CHtmlBrowerDlg::onClickLink(const CString& sProtocols, const CString& sCmd)
 {
-	m_html.SetElementInputValue(_T("text123"), sProtocols + _T("-") + sCmd);
+	m_html.SetElementValue(_T("text123"), sProtocols + _T("-") + sCmd);
 }
 
 void CHtmlBrowerDlg::OnSize(UINT nType, int cx, int cy)

@@ -1,9 +1,5 @@
 // CHtmlCtrl 实现 -- 控件中的 web 浏览器，只要改写 CHtmlVie
 // 你就可以摆脱框架 - 从而将此控制用于对话框和其它任何窗口。
-//
-// 特性s:
-// - SetCmdMap 用于设置“app:command”链接的命令映射。.
-// - SetHTML 用于将字符串转换为 HTML 文档。.
 
 #include "StdAfx.h"
 #include "HtmlCtrl.h"
@@ -180,7 +176,7 @@ BOOL CHtmlCtrl::PreTranslateMessage(MSG* pMsg)
 }
 
 //////////////////
-// Override to pass "app:" links to virtual fn instead of browser.
+// Override to pass links to virtual fn instead of browser.
 //
 void CHtmlCtrl::OnBeforeNavigate2(LPCTSTR lpszURL,
 	DWORD nFlags, LPCTSTR lpszTargetFrameName, CByteArray& baPostedData,
@@ -585,27 +581,45 @@ BOOL CHtmlCtrl::CallScriptFunction(LPCTSTR pStrFuncName, CStringArray* pArrFuncA
 	return bRes;
 }
 
-CString CHtmlCtrl::GetElementInputValue(const CString& idEle)
+CString CHtmlCtrl::GetElementValue(const CString& idElement)
 {
+	std::vector<CString> vctRes = GetElementAttrib(idElement, _T("value"));
+	for (int i = 0; i < vctRes.size(); ++i)
+	{
+		if (!vctRes[i].IsEmpty())
+			return vctRes[i];
+	}
+	return _T("");
+}
+
+void CHtmlCtrl::SetElementValue(const CString& idElement, const CString& val)
+{
+	SetElementAttrib(idElement, _T("value"), val);
+}
+
+std::vector<CString> CHtmlCtrl::GetElementAttrib(const CString& idElement, const CString& attribName)
+{
+	std::vector<CString> vctRet;
+
 	std::vector<std::pair<CString, CComVariant> > vctRes;
 	CString sHack;
-	sHack.Format(_T("document.getElementById('%s').value"), idEle);
+	sHack.Format(_T("document.getElementById('%s')['%s']"), idElement, attribName);
 	ExecuteScriptInAllFrames(vctRes, sHack);
 	for (int i = 0; i < vctRes.size(); ++i)
 	{
 		if (vctRes[i].second.vt == VT_BSTR && !CString(vctRes[i].second).IsEmpty())
 		{
-			return CString(vctRes[i].second.bstrVal);
+			vctRet.push_back(CString(vctRes[i].second.bstrVal));
 		}
 	}
 
-	return _T("");
+	return vctRet;
 }
 
-void CHtmlCtrl::SetElementInputValue(const CString& idEle, const CString& val)
+void CHtmlCtrl::SetElementAttrib(const CString& idElement, const CString& attribName, const CString& val)
 {
 	CString sHack;
-	sHack.Format(_T("document.getElementById('%s').value='%s'"), idEle, val);
+	sHack.Format(_T("document.getElementById('%s')['%s']='%s'"), idElement, attribName, val);
 	ExecuteScriptInAllFrames(sHack);
 }
 
