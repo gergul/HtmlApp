@@ -13,7 +13,7 @@
  
 常用两级表头：
  
-<table class="layui-table" lay-data="{width:800, url:'/test/table/demo2.json?v=2', page: true, limit: 6, limits:[6]}">
+<table class="layui-table" lay-data="{width:800, url:'./demo_data/demo2.json?v=2', page: true, limit: 6, limits:[6]}">
   <thead>
     <tr>
       <th lay-data="{checkbox:true, fixed:'left'}" rowspan="2"></th>
@@ -30,7 +30,7 @@
   </thead>
 </table>
 更多级表头（可以无限极）：
-<table class="layui-table" lay-data="{url:'/test/table/demo2.json?v=3', cellMinWidth: 80, page: true}">
+<table class="layui-table" lay-data="{url:'./demo_data/demo2.json?v=3', cellMinWidth: 80, page: true}">
   <thead>
     <tr>
       <th lay-data="{field:'username', width:80}" rowspan="3">联系人</th>

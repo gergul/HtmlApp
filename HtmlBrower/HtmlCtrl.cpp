@@ -623,6 +623,86 @@ void CHtmlCtrl::SetElementAttrib(const CString& idElement, const CString& attrib
 	ExecuteScriptInAllFrames(sHack);
 }
 
+void CHtmlCtrl::ErgodicElements(const SPIHTMLDocument2& doc, std::function<void(CComDispatchDriver& element)> funcErgodic)
+{
+	if (NULL == doc || !funcErgodic)
+		return;
+
+	CComQIPtr< IHTMLElementCollection > spElementCollection;
+	doc->get_all(&spElementCollection);
+	long lLen = 0;
+	spElementCollection->get_length(&lLen);
+	for (int i = 0; i < lLen; ++i)
+	{
+		CComDispatchDriver spDisp;
+		HRESULT hr = spElementCollection->item(CComVariant(i), CComVariant(), &spDisp);
+		if (FAILED(hr))
+			continue;
+
+		funcErgodic(spDisp);
+	}
+}
+
+void CHtmlCtrl::ErgodicElementsInAllFrames(const SPIHTMLDocument2& doc, std::function<void(CComDispatchDriver& element)> funcErgodic)
+{
+	if (NULL == doc || !funcErgodic)
+		return;
+
+	ErgodicElements(doc, funcErgodic);
+
+	CComPtr<IHTMLFramesCollection2> spFramesCol;
+	HRESULT hr = doc->get_frames(&spFramesCol);
+	if (SUCCEEDED(hr) && spFramesCol != NULL)
+	{
+		long lSize = 0;
+		hr = spFramesCol->get_length(&lSize);
+		if (SUCCEEDED(hr))
+		{
+			for (int i = 0; i < lSize; i++)
+			{
+				VARIANT frameRequested;
+				VARIANT frameOut;
+				frameRequested.vt = VT_UI4;
+				frameRequested.lVal = i;
+				hr = spFramesCol->item(&frameRequested, &frameOut);
+				if (SUCCEEDED(hr) && frameOut.pdispVal != NULL)
+				{
+					CComPtr<IHTMLWindow2> spChildWindow;
+					hr = frameOut.pdispVal->QueryInterface(IID_IHTMLWindow2, reinterpret_cast<void**>(&spChildWindow));
+					if (SUCCEEDED(hr) && spChildWindow != NULL)
+					{
+						SPIHTMLDocument2 spChildDocument;
+						hr = spChildWindow->get_document(reinterpret_cast<IHTMLDocument2**>(&spChildDocument));
+						if (SUCCEEDED(hr) && spChildDocument != NULL)
+						{
+							ErgodicElements(spChildDocument, funcErgodic);
+						}
+					}
+					frameOut.pdispVal->Release();
+				}
+			}
+		}
+	}
+}
+
+void CHtmlCtrl::ErgodicElements(std::function<void(CComDispatchDriver& element)> funcErgodic)
+{
+	SPIHTMLDocument2 doc = GetSafeHtmlDocument();
+	if (NULL == doc)
+		return;
+	ErgodicElements(doc, funcErgodic);
+	doc->close();
+}
+
+void CHtmlCtrl::ErgodicElementsInAllFrames(std::function<void(CComDispatchDriver& element)> funcErgodic)
+{
+	SPIHTMLDocument2 doc = GetSafeHtmlDocument();
+	if (NULL == doc)
+		return;
+	ErgodicElementsInAllFrames(doc, funcErgodic);
+	doc->close();
+}
+
 //////////////////////////////////////遍历器//////////////////////////////////////
 
 void CErgodicFrameHandler::Run(CComPtr<IHTMLDocument2> &parentDoc)

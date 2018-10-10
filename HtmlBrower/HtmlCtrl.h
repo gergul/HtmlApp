@@ -92,6 +92,12 @@ public:
 	CString GetElementValue(const CString& idElement);
 	void SetElementValue(const CString& idElement, const CString& val);
 	
+public://遍历element
+	static void ErgodicElements(const SPIHTMLDocument2& doc, std::function<void(CComDispatchDriver& element)> funcErgodic);
+	static void ErgodicElementsInAllFrames(const SPIHTMLDocument2& doc, std::function<void(CComDispatchDriver& element)> funcErgodic);
+	void ErgodicElements(std::function<void(CComDispatchDriver& element)> funcErgodic);
+	void ErgodicElementsInAllFrames(std::function<void(CComDispatchDriver& element)> funcErgodic);
+
 protected:
 	//把url分割出协议和命令
 	static bool SplitProtocol(const CString& src, CString& sProtocol, CString& sCmd);
@@ -159,9 +165,6 @@ public:
 
 protected:
 	virtual void OnFrame(CComPtr<IHTMLDocument2> &doc) = 0;
-
-private:
-
 };
 
 //class Script Error Handler

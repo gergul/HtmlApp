@@ -162,7 +162,7 @@ BOOL CHtmlBrowerDlg::foo1(const TCHAR* str1, LPCTSTR str2)
 void CHtmlBrowerDlg::OnBnClickedButton2()
 {
 	CComVariant res;
-	m_html.ExecuteScript(res, _T("\"123\""));
+	m_html.ExecuteScript(res, _T("function itemclick(item)        {            alert(item.text);        }        $(function ()        {            window['g'] =            $(\"#maingrid\").ligerGrid({                height:'100%',                columns: [                { display: '顾客', name: 'CustomerID', align: 'left', width: 100, minWidth: 60 },                { display: '公司名', name: 'CompanyName', minWidth: 120 },                { display: '联系名', name: 'ContactName', minWidth: 140 },                { display: '城市', name: 'City' }                ], data:CustomersData,  pageSize:30 ,rownumbers:true,                toolbar: { items: [                { text: '增加', click: itemclick, icon: 'add' },                { line: true },                { text: '修改', click: itemclick, icon: 'modify' },                { line: true },                { text: '删除', click: itemclick, img: '../../../lib/ligerUI/skins/icons/delete.gif' }                ]                }            });                         $(\"#pageloading\").hide();        });        function deleteRow()        {            g.deleteSelectedRow();        }"));
 
 	std::vector<std::pair<CString, CComVariant> > vctRes;
 	m_html.ExecuteScriptInAllFrames(vctRes, _T("document.getElementById('text123').value"));
@@ -173,29 +173,10 @@ void CHtmlBrowerDlg::OnBnClickedButton2()
 
 	m_html.ExecuteScript(_T("willError()"));
 
-	SPIHTMLDocument2 doc = m_html.GetSafeHtmlDocument();
-	if (NULL == doc)
-		return;
-	//IHTMLElement *pHtml = NULL;
-	//doc->get_body(&pHtml);
-	//CComBSTR bs = _T("123");
-
-	CComQIPtr< IHTMLElementCollection > spElementCollection;
-	doc->get_all(&spElementCollection);
-	long lLen = 0;
-	spElementCollection->get_length(&lLen);
-	for (int i=0; i<lLen; ++i)
-	{
-		CComDispatchDriver spDisp;
-		HRESULT hr = spElementCollection->item(CComVariant(i),CComVariant(),&spDisp);
-		if(FAILED(hr))
-			continue;
-
+	m_html.ErgodicElementsInAllFrames([&](CComDispatchDriver& element) {
 		CComVariant vValue = _T("我爱你");
-		spDisp.PutPropertyByName(L"value", &vValue);
-	}
-	
-	doc->close();
+		element.PutPropertyByName(L"value", &vValue);
+	});
 }
 
 void CHtmlBrowerDlg::onClickedHtmlButton(LPCTSTR pJsonStr)

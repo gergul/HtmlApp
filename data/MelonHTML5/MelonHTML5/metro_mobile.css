@@ -1,0 +1,83 @@
+body {
+    overflow: auto;
+    cursor: default;
+}
+#widget_scroll_container {
+    margin: 20px 0 0 20px;
+    position: relative;
+    width: auto !important;
+    left: 0 !important;
+    top: 0;
+}
+div.widget_container,
+div.widget_container.half {
+    overflow: hidden !important;
+    width: auto !important;
+    margin: 0;
+    float: none;
+    padding: 0;
+}
+div.widget {
+    float: none;
+    width: auto !important;
+    height: auto !important;
+    margin-bottom: 10px;
+    -webkit-box-shadow: none;
+       -moz-box-shadow: none;
+        -ms-box-shadow: none;
+         -o-box-shadow: none;
+            box-shadow: none;
+}
+div.widget:hover {
+    border: none;
+    -webkit-transform: scale(1) !important;
+       -moz-transform: scale(1) !important;
+        -ms-transform: scale(1) !important;
+         -o-transform: scale(1) !important;
+            transform: scale(1) !important;
+}
+div.widget.unloaded {
+    opacity: 0;
+    -webkit-transform: rotateY(0deg);
+       -moz-transform: rotateY(0deg);
+        -ms-transform: rotateY(0deg);
+         -o-transform: rotateY(0deg);
+            transform: rotateY(0deg);
+}
+div.widget:last-child {
+    margin-bottom: 0;
+}
+div.widget div.main {
+    width: 50px;
+    height: 50px;
+}
+div.widget div.widget_content,
+div.widget div.main {
+    overflow: visible;
+    position: static;
+    top: auto;
+    right: auto;
+    bottom: auto;
+    left: auto;
+    background-size: 70%;
+}
+div.widget div.main > span {
+    top: 0;
+    left: 50px;
+    bottom: 0;
+    right: 0;
+    padding: 0 20px 0 20px;
+    line-height: 50px;
+    text-shadow: none;
+    font-size: 20px;
+    font-weight: lighter;
+    text-transform: none;
+}
+div.widget {
+    background-color: transparent !important;
+}
+#widget_preview p input[type="text"],
+#widget_preview p input[type="email"],
+#widget_preview p input[type="password"] {
+    width: 100%;
+}
