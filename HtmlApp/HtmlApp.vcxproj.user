@@ -3,21 +3,21 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LocalDebuggerWorkingDirectory>$(SolutionDir)</LocalDebuggerWorkingDirectory>
     <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
-    <LocalDebuggerCommandArguments>"C:\Users\Administrator\Desktop\HtmlApp\data\jquery-ui-1.12.1.Overcast\dlg.html"</LocalDebuggerCommandArguments>
+    <LocalDebuggerCommandArguments>"C:\Users\Administrator\Desktop\HtmlBrower\data\test\mix\Dialog.html"</LocalDebuggerCommandArguments>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LocalDebuggerWorkingDirectory>$(SolutionDir)</LocalDebuggerWorkingDirectory>
     <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
-    <LocalDebuggerCommandArguments>"C:\Users\Administrator\Desktop\HtmlApp\data\jquery-ui-1.12.1.Overcast\dlg.html"</LocalDebuggerCommandArguments>
+    <LocalDebuggerCommandArguments>"C:\Users\Administrator\Desktop\HtmlBrower\data\test\mix\Dialog.html"</LocalDebuggerCommandArguments>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LocalDebuggerWorkingDirectory>$(SolutionDir)</LocalDebuggerWorkingDirectory>
     <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
-    <LocalDebuggerCommandArguments>"C:\Users\Administrator\Desktop\HtmlApp\data\jquery-ui-1.12.1.Overcast\dlg.html"</LocalDebuggerCommandArguments>
+    <LocalDebuggerCommandArguments>"C:\Users\Administrator\Desktop\HtmlBrower\data\test\mix\Dialog.html"</LocalDebuggerCommandArguments>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LocalDebuggerWorkingDirectory>$(SolutionDir)</LocalDebuggerWorkingDirectory>
     <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
-    <LocalDebuggerCommandArguments>"C:\Users\Administrator\Desktop\HtmlApp\data\jquery-ui-1.12.1.Overcast\dlg.html"</LocalDebuggerCommandArguments>
+    <LocalDebuggerCommandArguments>"C:\Users\Administrator\Desktop\HtmlBrower\data\test\mix\Dialog.html"</LocalDebuggerCommandArguments>
   </PropertyGroup>
 </Project>
