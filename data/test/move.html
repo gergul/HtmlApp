@@ -1,0 +1,37 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>无标题文档</title>
+<script src="jquery.js" type="text/javascript"></script>
+<script>
+//var hMouse;
+window.onload = function()
+{
+	//$("#weibo").keydown(function(){
+		//$("#weibo").css("background-image","url(weibobutton3.png)");
+		//});//这个是按键，说白点就是你的键盘上的键，这个是按下的效果
+	//$("#weibo").keyup(function(){
+		//$("#weibo").css("background-image","url(weibobutton.png)");
+		//});//这个是按键，说白点就是你的键盘上的键，这个是放开的效果
+	$("#tt").mousedown(function(event){
+		/*hMouse = setInterval(function(){
+	　　　　	console.log(event.screenX + "x" + event.screenY);
+			},
+			500
+		);*/
+		window.external.call('onClickTitle', '');
+		});//这个是鼠标键，是你鼠标左击按下的的效果
+	$("#tt").mouseup(function(event){
+		//clearInterval(hMouse);
+		//window.external.call('onClickTitle', '{"down":false}');
+		})//这个是鼠标键，是你鼠标左击放开后的效果
+}
+</script>
+</head>
+<body>
+<div>
+<input id="tt" type="button" value="Gergul"/>
+</div>
+</body>
+</html>

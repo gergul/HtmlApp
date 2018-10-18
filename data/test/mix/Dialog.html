@@ -1,0 +1,138 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>jQuery UI Example Page</title>
+	<link href="jquery-ui.css" rel="stylesheet">
+	<style>
+	html,body{height:99%}
+	
+	body{
+		font-family: "Trebuchet MS", sans-serif;
+		margin: 0px;
+	}
+	
+	#Logo {
+		float:left;
+		width:50px
+	}
+	
+	div#tabs {
+		height: 100%;
+	}
+			
+	#Minimize, #Maximize, #Restore, #Close {
+		float:right;
+	}
+	
+	.tab-content-body{position:absolute;left:0;right:0;top:50px;bottom:0;z-index:998;width:auto;overflow:hidden;box-sizing:border-box}
+	
+	</style>
+</head>
+<body>
+
+<div id="tabs" class="ui-tabs ui-corner-all ui-widget ui-widget-content">
+	<div id="title" role="tablist" class="ui-tabs-nav ui-corner-all ui-helper-reset ui-helper-clearfix ui-widget-header">
+		<span id="Logo"><img src="images/Logo.png"/></span>
+	
+		<li id="tab1" role="tab" tabindex="0" class="ui-tabs-tab ui-corner-top ui-state-default ui-tab ui-tabs-active ui-state-active" aria-controls="tabs-1" aria-labelledby="tab1" aria-selected="true" aria-expanded="true"><a href="#tabs-1" role="presentation" tabindex="-1" class="ui-tabs-anchor">First</a></li>
+		<li id="tab2" role="tab" tabindex="-1" class="ui-tabs-tab ui-corner-top ui-state-default ui-tab" aria-controls="tabs-2" aria-labelledby="tab2" aria-selected="false" aria-expanded="false"><a href="#tabs-2" role="presentation" tabindex="-1" class="ui-tabs-anchor">Second</a></li>
+		<li id="tab3" role="tab" tabindex="-1" class="ui-tabs-tab ui-corner-top ui-state-default ui-tab" aria-controls="tabs-3" aria-labelledby="tab3" aria-selected="false" aria-expanded="false"><a href="#tabs-3" role="presentation" tabindex="-1" class="ui-tabs-anchor">Third</a></li>
+		<li id="tab4" role="tab" tabindex="-1" class="ui-tabs-tab ui-corner-top ui-state-default ui-tab" aria-controls="tabs-4" aria-labelledby="tab4" aria-selected="false" aria-expanded="false"><a href="#tabs-4" role="presentation" tabindex="-1" class="ui-tabs-anchor">Four</a></li>
+		
+		<button id="Close" type="button" class="ui-button ui-corner-all ui-widget ui-button-icon-only ui-dialog-titlebar-close" title="Close">
+		<span class="ui-button-icon ui-icon ui-icon-closethick"></span><span class="ui-button-icon-space"> </span>Close</button>
+		
+		<button id="Maximize" type="button" class="ui-button ui-corner-all ui-widget ui-button-icon-only" title="Maximize">
+		<span class="ui-button-icon ui-icon ui-icon-arrowthick-2-ne-sw"></span><span class="ui-button-icon-space"> </span>Maximize</button>
+		
+		<button id="Restore" type="button" class="ui-button ui-corner-all ui-widget ui-button-icon-only" title="Restore">
+		<span class="ui-button-icon ui-icon ui-icon-arrowreturnthick-1-e"></span><span class="ui-button-icon-space"> </span>Restore</button>
+		
+		<button id="Minimize" type="button" class="ui-button ui-corner-all ui-widget ui-button-icon-only" title="Minimize">
+		<span class="ui-button-icon ui-icon ui-icon-minusthick"></span><span class="ui-button-icon-space"> </span>Minimize</button>
+	</div>
+	
+	<div class="tab-content-body">
+		<div id="content1" aria-labelledby="tab1" role="tabpanel" class="ui-tabs-panel ui-corner-bottom ui-widget-content" aria-hidden="false" style="height: 100%;left: 0px;right: 0px;top: 0px;bottom: 0px;padding-right: 0px;padding-left: 0px;padding-top: 2px; padding-bottom: 0px;">
+			<iframe id="f1" src="tab1.html" frameborder="none" scrolling="auto" style="width: 100%; height: 100%;"></iframe></iframe>
+		</div>
+		
+		<div id="content2" aria-labelledby="tab2" role="tabpanel" class="ui-tabs-panel ui-corner-bottom ui-widget-content" aria-hidden="true" style="display: none; height: 100%;left: 0px;right: 0px;top: 0px;bottom: 0px;padding-right: 0px;padding-left: 0px;padding-top: 2px; padding-bottom: 0px;">
+			<iframe id="f2" src="tab2.html" frameborder="none" scrolling="auto" style="width: 100%; height: 100%;">"></iframe></iframe>
+		</div>
+		
+		<div id="content3" aria-labelledby="tab3" role="tabpanel" class="ui-tabs-panel ui-corner-bottom ui-widget-content" aria-hidden="true" style="display: none; height: 100%;left: 0px;right: 0px;top: 0px;bottom: 0px;padding-right: 0px;padding-left: 0px;padding-top: 2px; padding-bottom: 0px;">
+			<iframe id="f3" src="tab3.html" frameborder="none" scrolling="auto" style="width: 100%; height: 100%;"></iframe></iframe>
+		</div>
+		
+		<div id="content4" aria-labelledby="tab4" role="tabpanel" class="ui-tabs-panel ui-corner-bottom ui-widget-content" aria-hidden="true" style="display: none; height: 100%;left: 0px;right: 0px;top: 0px;bottom: 0px;padding-right: 0px;padding-left: 0px;padding-top: 2px; padding-bottom: 0px;">
+			<iframe id="f4" src="tab4.html" frameborder="none" scrolling="auto" style="width: 100%; height: 100%;"></iframe></iframe>
+		</div>
+	</div>
+</div>
+<script src="external/jquery/jquery.js"></script>
+<script src="jquery-ui.js"></script>
+
+<script>
+$('#title').mousedown(function( event ) {
+	window.external.call('onClickTitle', '');
+	event.preventDefault();
+});
+$('#title').dblclick(function( event ) {
+	if ($('#Restore').is(':hidden')){
+		window.external.call('onClickMax', '');
+		$('#Maximize').hide();
+		$('#Restore').show();
+	}else{
+		window.external.call('onClickRestore', '');
+		$('#Maximize').show();
+		$('#Restore').hide();
+	}
+	event.preventDefault();
+});
+
+$('#Maximize').show();
+$('#Restore').hide();
+
+$("#Close").click(function( event ) {
+	window.external.call('onClickClose', '');
+	event.preventDefault();
+});
+$("#Maximize").click(function( event ) {
+	window.external.call('onClickMax', '');
+	$('#Maximize').hide();
+	$('#Restore').show();
+	event.preventDefault();
+});
+$("#Restore").click(function( event ) {
+	window.external.call('onClickRestore', '');
+	$('#Maximize').show();
+	$('#Restore').hide();
+	event.preventDefault();
+});
+$("#Minimize").click(function( event ) {
+	window.external.call('onClickMin', '');
+	event.preventDefault();
+});
+
+$(".ui-tabs-tab").each(function(i){
+     $(this).click(function(){
+		var tabs = $(".ui-tabs-tab");
+		tabs.each(function(j){
+			if (i == j) {
+				tabs.eq(j).attr("class", "ui-tabs-tab ui-corner-top ui-state-default ui-tab ui-tabs-active ui-state-active");
+				$(".ui-tabs-panel").eq(j).show();
+			} else {
+				tabs.eq(j).attr("class", "ui-tabs-tab ui-corner-top ui-state-default ui-tab");
+				$(".ui-tabs-panel").eq(j).hide();
+			}
+		});
+      })
+
+});
+
+</script>
+
+</body>
+</html>
