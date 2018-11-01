@@ -1,0 +1,172 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title></title>
+<!--框架必需start-->
+<script type="text/javascript" src="../../libs/js/jquery.js"></script>
+<script type="text/javascript" src="../../libs/js/language/cn.js"></script>
+<script type="text/javascript" src="../../libs/js/framework.js"></script>
+<link href="../../libs/css/import_basic.css" rel="stylesheet" type="text/css"/>
+<link rel="stylesheet" type="text/css" id="skin" prePath="../../"/>
+<link rel="stylesheet" type="text/css" id="customSkin"/>
+<!--框架必需end-->
+<script type="text/javascript" src="../../libs/js/graphical/raphael.js"></script>
+<script type="text/javascript" src="../../libs/js/graphical/svgmap.js"></script>
+<script type="text/javascript" src="../../libs/js/graphical/map_data/china.js"></script>
+
+<style type="text/css">
+			.demo {
+				width: 600px;
+				margin: 40px auto 0 auto;
+				font-size: 14px;
+			}
+
+			.demo2_bg {
+				background-image: url(mapBg.jpg);
+				width: 1400px;
+				background-repeat: no-repeat;
+				margin: 0px auto 0 auto;
+				height: 800px;
+				padding-top:80px;
+			}
+			.demo2 {
+				width: 600px;
+				margin: 0px auto 0 auto;
+				font-size: 14px;
+			}
+
+
+
+
+			.mapTip{
+				display:none; 
+				position:absolute; 
+				padding:8px; 
+				border: 1px solid #c4d0df;
+				background: #f7f8fa;
+				box-shadow: 0 0 6px 1px rgba(0,0,0,.08);
+				border-radius: 5px;
+				}
+
+			.mapTip .arrow,
+			.mapTip .arrowMask{ 
+				position: absolute; 
+				width: 0; 
+				height: 0; 
+				border-color: transparent; 
+				border-style: solid;
+			}
+			.mapTip .arrow{ 
+				bottom: -7px; 
+				left: 50%; 
+				margin-left: -7px; 
+				border-width: 7px; 
+				border-top-color: #c4d0df; 
+				border-bottom-width: 0;
+			}
+			.mapTip .arrowMask{
+				bottom: 1px; 
+				border-width: 6px; 
+				margin-left: -6px; 
+				border-top-color: #f7f8fa; 
+				border-bottom-width: 0;
+			}
+
+
+		</style>
+	</head>
+	<body>
+	<div class="page_content">
+		<div class="groupTitle"><span>示例说明</span></div>
+		这是一个基本的全国地图示例，可以控制地图的尺寸，是否显示地名，是否显示省会小红点，鼠标移入是否显示提示，自定义提示内容，是否响应省份点击。
+		<div class="demo">
+			<div id="chinaMap1"></div>
+		</div>
+
+		<div class="groupTitle"><span>示例说明</span></div>
+		这个示例缩小了尺寸，不显示地名，不显示省会小红点，自定义提示尺寸和内容
+		<div class="demo">
+			<div id="chinaMap2"></div>
+		</div>
+
+		<div class="groupTitle"><span>示例说明</span></div>
+		自定义了边框、背景透明度和文字颜色，适合做科技感界面使用
+		<div class="demo2_bg">
+			<div class="demo2">
+				<div id="chinaMap3"></div>
+			</div>
+		</div>
+	</div>
+		<script type="text/javascript">
+			$(function(){
+				var strokeWidth,strokeWidth2;
+				if(broswerFlag=="IE7"||broswerFlag=="IE8"){
+					strokeWidth=1;
+					strokeWidth2=3;
+				}
+				else{
+					strokeWidth=5;
+					strokeWidth2=15;
+				}
+
+	  			$('#chinaMap1').SVGMap({
+					mapName: 'china',
+					mapWidth: 600,
+					mapHeight: 500,
+					strokeWidth:strokeWidth,
+					showName:true,
+					showCapital:true,
+					showTip:true,
+					stateCursor: 'pointer',
+		            
+					clickCallback: function(stateData, obj){
+				        top.Toast("showNoticeToast",'点击了：'+obj.name);
+				    }
+				});
+
+				$('#chinaMap2').SVGMap({
+					mapName: 'china',
+					mapWidth: 400,
+					mapHeight: 300,
+					mapTipWidth: 150,
+					strokeWidth:strokeWidth,
+					showName:false,
+					showTip:true,
+					showCapital:false,
+					stateCursor: 'pointer',
+					mapTipHtml: function(stateData, obj){
+				        return 'id:' + ((stateData)[obj.id] && (stateData)[obj.id].baifenbi || obj.id) + '；name:' + obj.name;
+				    },
+					clickCallback: function(stateData, obj){
+				        top.Toast("showNoticeToast",'点击了：'+obj.name);
+				    }
+				});
+
+				$('#chinaMap3').SVGMap({
+					mapName: 'china',
+					mapWidth: 600,
+					mapHeight: 500,
+					showName:true,
+					showCapital:false,
+					showTip:false,
+					stateCursor: 'pointer',
+		            strokeWidth:strokeWidth2,
+		            strokeColor:"#0bd3fc",
+		            fillOpacity:0.2,
+		            showNameAttr: {
+						'fill': '#fff',
+						'font-family': 'Microsoft yahei',
+						'font-size': 20,
+						'font-weight': 'normal'
+					},
+					clickCallback: function(stateData, obj){
+				        top.Toast("showNoticeToast",'点击了：'+obj.name);
+				    }
+				});
+		});
+
+
+		</script>
+	</body>
+</html>

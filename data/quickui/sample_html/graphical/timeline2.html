@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<!--[if IE 7]><html class="ie7" lang="zh"><![endif]-->
+<!--[if gt IE 7]><!-->
+<html lang="zh">
+<!--<![endif]-->
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>树型时间轴特效</title>
+<!--框架必需start-->
+<script type="text/javascript" src="../../libs/js/jquery.js"></script>
+<script type="text/javascript" src="../../libs/js/language/cn.js"></script>
+<script type="text/javascript" src="../../libs/js/framework.js"></script>
+<link href="../../libs/css/import_basic.css" rel="stylesheet" type="text/css" />
+<link rel="stylesheet" type="text/css" id="skin" prePath="../../" />
+<link rel="stylesheet" type="text/css" id="customSkin" />
+<!--框架必需end-->
+<style type="text/css">
+
+.l {
+	float:left;
+}
+.r {
+	float:right;
+}
+.c {
+	clear:both;
+}
+.o {
+	overflow:hidden;
+}
+.left {
+	float:left;
+}
+.right {
+	float:right;
+}
+.clearfix {
+	*zoom:1;
+}
+.clearfix:before,.clearfix:after {
+	display:table;
+	content:"";
+}
+.clearfix:after {
+	clear:both;
+}
+.content {
+	position:relative;
+	width:1000px;
+	margin:0 auto;
+}
+.top{
+	margin-top: 60px;
+}
+.top img{
+	width: 100%;
+	margin-top: -10px;
+}
+.content {
+	padding: 50px 0;
+	min-height: 720px;
+	width: 100%;
+}
+.content .wrapper {
+	position: relative;
+	width: 960px;
+	margin: 0 auto;
+}
+.content .light {
+	position: absolute;
+	left: 55px;
+	top: -50px;
+	width: 152px;
+	height: 191px;
+}
+.content .light i {
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	top: 0;
+}
+.content .line-left {
+	position: absolute;
+	left: 0;
+	top: 15px;
+	width: 70px;
+}
+.content .line-right {
+	position: absolute;
+	right: 0;
+	top: 15px;
+	width: 460px;
+}
+.content .main {
+	background: url(timeline/line-bg.png) repeat-y 249px 0;
+}
+.content .main .title {
+	position: absolute;
+	line-height: 40px;
+	padding-left: 67px;
+	left: 230px;
+	top: 0;
+	color: #58a6fb;
+	font-size: 24px;
+	background: #fff url(timeline/clock.png) no-repeat left top;
+	margin: 0;
+}
+.content .main .year {
+	position: relative;
+	z-index: 100;
+}
+.content .main .year h2 {
+	height: 40px;
+	width: 170px;
+	padding-right: 30px;
+	font-size: 24px;
+	line-height: 40px;
+	text-align: right;
+	cursor: pointer;
+}
+.content .main .year h2 a {
+	color: #58a6fb;
+}
+.content .main .year h2 i{
+	display:block;
+	position:relative;
+	height:0;
+	width:0;
+	left:190px;
+	top:-20px;
+	border-width:6px;
+	border-style:solid;
+	border-color:#59a7fb transparent transparent transparent;
+	-webkit-transition:.5s;
+	-moz-transition:.5s;
+	-ms-transition:.5s;
+	-o-transition:.5s;
+	transition:.5s;
+	-webkit-transform-origin:6px 3px;
+	-moz-transform-origin:6px 3px;
+	-ms-transform-origin:6px 3px;
+	-o-transform-origin:6px 3px;
+	transform-origin:6px 3px
+}
+.content .main .year .list{
+	margin:10px 0;
+	position:relative;
+	overflow:hidden;
+}
+.content .main .year .list ul {
+	bottom: 0;
+}
+.content .main .year .list ul li {
+	background: url(timeline/circle.png) no-repeat 235px 31px;
+	padding: 30px 0;
+	/*color: #a1a4b8;*/
+}
+.content .main .year .list ul li.highlight {
+	background-image: url(timeline/circle20.png);
+}
+.cls {
+	zoom: 1;
+}
+.cls:after {
+	content: ".";
+	display: block;
+	height: 0;
+	clear: both;
+	visibility: hidden;
+}
+.content .main .year .list ul li.highlight .date_time, .content .main .year .list ul li.highlight .intro {
+	color: #ec6a13;
+}
+.content .main .year .list ul li .date_time,.content .main .year .list ul li .version{
+	float:left;
+	display:block;
+	clear:left;
+	width:200px;
+	line-height:24px;
+	text-align:right
+}
+.content .main .year .list ul li .date_time{
+	font-size:18px;
+	line-height:32px;
+}
+.content .main .year .list ul li .intro, .content .main .year .list ul li .more {
+	float: left;
+	display: block;
+	width: 400px;
+	margin-left: 100px;
+	line-height: 24px;
+}
+.content .main .year .list ul li .intro {
+	font-size: 18px;
+	line-height: 32px;
+	color: #63d029;
+}
+.content .wrapper:first-child .main .year.close h2 i{
+	transform:rotate(-90deg);
+	-webkit-transform:rotate(-90deg);
+	-moz-transform:rotate(-90deg);
+	-ms-transform:rotate(-90deg);
+	-o-transform:rotate(-90deg)
+}
+.content .wrapper:first-child .main .year.close .list{
+	opacity:0;
+	height:0!important;
+}
+.ie7 .content .main .year h2 i{
+	left:40px
+}
+
+</style>
+
+</head>
+<body>
+<div class="content">
+  <div class="wrapper">
+    <div class="light"><i></i></div>
+    <hr class="line-left">
+    <hr class="line-right">
+    <div class="main">
+      <h1 class="title">TOUCH UI产品概述</h1>
+      <div class="year">
+        <h2 data_off='0'><a href="javascript:;">2017年<i></i></a></h2>
+        <div class="list">
+          <ul>
+            <li class="cls highlight">
+              <p class="date_time">4月</p>
+              <p class="intro">HTML5开发APP</p>
+              <p class="version">&nbsp;</p>
+              <div class="more">
+                <p>用HTML5技术（以下简称H5）开发APP已经不是件新鲜的事了</p>
+                <p>因为H5技术入门的门槛低</p>
+                <p>一个开发者有一两年前端经验就能做</p>
+                <p>而且跨平台</p>
+                <p>一套代码可以用在安卓手机和苹果手机</p>
+                <p>让开发和维护一个APP的成本极大的降低</p>
+                <p>此外，我们知道，这几年所有的东西都是移动端</p>
+                <p>都会在手机上有应用</p>
+                <p>很多公司之前都有大量的网页开发者</p>
+                <p>随着移动化的浪潮来袭</p>
+                <p>PC端的网页开发需求锐减</p>
+                <p>而如果能使用H5技术开发APP</p>
+                <p>就可以更好的发挥原来团队的价值</p>
+                <p>不必再花费巨资组建移动开发团队</p>
+              </div>
+            </li>
+            <li class="cls">
+              <p class="date_time">3月</p>
+              <p class="intro">H5技术应用现状</p>
+              <p class="version">&nbsp;</p>
+              <div class="more">
+                <p>既然有这么多优点</p>
+                <p>如果能让H5技术替代原生技术成为主流技术平台那是一件多么令人兴奋的事情啊</p>
+                <p>事实上国内外已经有很多公司在这方面做了很多努力</p>
+                <p>比如推出了移动端开发框架帮助开发者实现这一目标</p>
+                <p>数据显示：移动开发框架phonegap网站的日访问ip为 555000</p>
+                <p>Ionic框架日访问ip为492000</p>
+                <p>可以看出大量的开发者都在寻求一个完美的H5开发APP方案</p>
+                <p>但是，用H5技术开发出来的APP效果怎么样呢</p>
+                <p>我觉得绝大部分的只能用“惨不忍睹”来形容</p>
+                <p>不但界面简陋，体验也很不流畅</p>
+                <p>有人说过这么一句话</p>
+                <p>关键在于用户体验，如果一个app用的卡，那无论功能多么强大，都是失败的</p>
+                <p>一个卡字，是永远的痛</p>
+                <p>我觉得还可以加上一句</p>
+                <p>如果一个app很丑，那无论功能多么强大，也都是失败的</p>
+                
+              </div>
+            </li>
+            <li class="cls">
+              <p class="date_time">2月</p>
+              <p class="intro">H5无法做出好的APP原因</p>
+              <p class="version">&nbsp;</p>
+              <div class="more">
+                <p>难道就没有人能用H5做出流畅、精美的APP吗</p>
+                <p>其实是有的，比如大众点评、美团、百度糯米甚至手机淘宝</p>
+                <p>都是采用了H5技术做出来的</p>
+                <p>但这些是建立在大厂拥有强大的技术团队的基础上的</p>
+                <p>对开发者的个人能力要求也非常高</p>
+                <p>这是因为除了功能的开发外，还涉及大量的技术点和工作量</p>
+                <p>比如组件需要对触控友好，性能的优化、H5调用手机端API、屏幕适配、真机调试、打包发布、实机测试、增量更新、APP运营等等</p>
+                <p>技术复杂度和工作量不亚于使用原生技术开发APP</p>
+                <p>这就导致了用H5开发出流畅、精美的APP实在是凤毛麟角</p>
+                <p>一般开发者根本别想能用H5做出一款像样的应用来</p>
+              </div>
+            </li>
+            <li class="cls">
+              <p class="date_time">1月</p>
+              <p class="intro">目前移动框架的短板</p>
+              <p class="version">&nbsp;</p>
+              <div class="more">
+                <p>而目前已有的移动端开发框架</p>
+                <p>也只解决了其中的两三项</p>
+                <p>比如有的框架提供了比较精美的UI控件</p>
+                <p>但是仅仅是一套组件库</p>
+                <p>开发者如果不会移动开发技术是没法用它做出APP来的</p>
+                <p>有的框架提供了比较全的开发技术体系</p>
+                <p>比如提供了UI库、手机API调用、开发调试和打包发布机制</p>
+                <p>但是上手难度太大，UI组件库太简陋，很难做出精美的APP</p>
+                <p>并且发布的APP在手机上运行卡顿，体验很差</p>
+              </div>
+            </li>
+           
+          </ul>
+        </div>
+      </div>
+      <div class="year">
+        <h2 data_off='0'><a href="javascript:;">2016年<i></i></a></h2>
+        <div class="list">
+          <ul>
+            <li class="cls highlight">
+              <p class="date_time">2月26日</p>
+              <p class="intro">Touch UI应运而生</p>
+              <p class="version">&nbsp;</p>
+              <div class="more">
+                <p>Touch UI是一套移动端开发一体化解决方案</p>
+                <p>主要包括了以下特点</p>
+              </div>
+            </li>
+            <li class="cls">
+              <p class="date_time">10月</p>
+              <p class="intro">特点一</p>
+              <p class="version">&nbsp;</p>
+              <div class="more">
+                <p>Touch UI有一套非常优秀的底层框架做支撑</p>
+                <p>将以前需要很大力气才能解决的</p>
+                <p>比如屏幕适配、运行卡顿、跳转白屏、滑动时不流畅等问题的解决方案封装起来</p>
+                <p>并且实现主题样式配置、多语言配置、跨域请求、数据存储等等</p>
+                <p>这些的内部机制都不需要开发者关心，只要使用就好</p>
+                <p>比如要从一个界面平滑流畅的转到另一个界面</p>
+                <p>H5开发者往往要做很多工作</p>
+                <p>但使用TouchUI只要用一句代码就能实现</p>
+                <p>这是因为框架内部做了很多技术处理保证跳转的流畅性</p>
+              </div>
+            </li>
+            <li class="cls">
+              <p class="date_time">9月</p>
+              <p class="intro">特点二</p>
+              <p class="version">&nbsp;</p>
+              <div class="more">
+                <p>Touch UI提供了一套制作精美、体验流畅的UI组件库</p>
+                <p>专为移动端打造</p>
+                <p>适合触摸操作</p>
+                <p>采用组件化封装的思想</p>
+                <p>将所有UI控件封装成组件标签</p>
+                <p>暴露给用户的都是非常简单的使用方法</p>
+                <p>比如可以通过修改一个配置文件就能实现底部tab栏</p>
+                <p>想用一个什么组件基本也都是一两句话就能搞定</p>
+              </div>
+            </li>
+            <li class="cls">
+              <p class="date_time">8月</p>
+              <p class="intro">特点三</p>
+              <p class="version">&nbsp;</p>
+              <div class="more">
+                <p>Touch UI提供了调用手机端系统功能的API</p>
+                <p>提供了调用手机端系统功能的API</p>
+                <p>而且封装的非常简单</p>
+                <p>比如一句话调用手机摄像头，调用手机相册、GPS定位、打开手机的其他应用等等</p>
+              </div>
+            </li>
+            <li class="cls">
+              <p class="date_time">7月</p>
+              <p class="intro">特点四</p>
+              <p class="version">&nbsp;</p>
+              <div class="more">
+                <p>Touch UI提供了一套完整的开发流程</p>
+                <p>基于我们研发的sublime编辑器的插件</p>
+                <p>开发者可以从创建Touch UI工程开始</p>
+                <p>到开发代码提示、边开发边预览效果、调试出错信息、一键真机运行查看效果、一键发布成苹果和安卓APP等等</p>
+                <p>开发者通过一条龙的方式</p>
+                <p>可以很快的从无到有开发并发布一个APP</p>
+              </div>
+            </li>
+            <li class="cls">
+              <p class="date_time">6月</p>
+              <p class="intro">特点五</p>
+              <p class="version">&nbsp;</p>
+              <div class="more">
+                <p>Touch UI的学习难度特别低</p>
+                <p>数据驱动机制，通过改变数据配置的方式来改变控件的展现效果</p>
+                <p>你要实现什么功能直接在标签上写属性，写事件就好了</p>
+                <p>只要稍微有点网页经验的人都很容易看懂</p>
+                <p>并且提供了完善的文档和丰富的示例</p>
+                <p>一个初级开发者只要学习了解3-5个小时</p>
+                <p>就能上手开发APP</p>
+
+              </div>
+            </li>
+            <li class="cls">
+              <p class="date_time">5月</p>
+              <p class="intro">特点六</p>
+              <p class="version">&nbsp;</p>
+              <div class="more">
+                <p>Touch UI提供了开发控制台用于APP的运营</p>
+                <p>开发者可以在这里实现APP消息的主动推送、监控APP的运行状态，增量更新APP等等</p>
+                <p>甚至可以做到当用户打开APP时自动静默更新</p>
+                <p>而不需要为了更新一个bug等着苹果商店审核好几周</p>
+              </div>
+            </li>
+            <li class="cls highlight">
+              <p class="date_time">4月</p>
+              <p class="intro">其他特点</p>
+              <p class="version">&nbsp;</p>
+              <div class="more">
+                <p>基于这些特点</p>
+                <p>Touch UI实现了让一个初级开发者在很短时间内开发出一款精美、流畅的APP来</p>
+                <p>诸位看到这里会不会觉得很兴奋？</p>
+                <p>别急，Touch UI的特点还远不止这些</p>
+              </div>
+            </li>
+            <li class="cls">
+              <p class="date_time">3月</p>
+              <p class="intro">特点七</p>
+              <p class="version">&nbsp;</p>
+              <div class="more">
+                <p>Touch UI已经为初级开发者想好了一切</p>
+                <p>做了大量的工作</p>
+                <p>依照主流的APP界面布局制作了大量的组件应用案例和界面模板</p>
+                <p>进一步减少开发者的工作量</p>
+                <p>这是个持续完善的过程</p>
+                <p>将来通过不断迭代完善覆盖目前80%的主流应用</p>
+                <p>也就是说将来开发者要实现其他主流APP中任何一个效果</p>
+                <p>差不多能从Touch UI找到类似的，拿过来简单改改就能用</p>
+                <p>从而实现积木拼装式的开发方式</p>
+                <p>所以Touch UI最终要达到的目标是</p>
+                <p>让一个会做网页的人3天做出一款很棒的APP来</p>
+              </div>
+            </li>
+            <li class="cls">
+              <p class="date_time">2月</p>
+              <p class="intro">特点八</p>
+              <p class="version">&nbsp;</p>
+              <div class="more">
+                <p>Touch UI还有一项专利技术</p>
+                <p>能够一键转成微信小程序工程</p>
+                <p>稍作调整就能发布成微信小程序</p>
+                <p>也就是说，使用TOUCH UI做的APP，5分钟就可以变为小程序！</p>
+                <p>同时也支持逆向转换，已经开发好的微信小程序</p>
+                <p>拿到TOUCH UI的平台上5分钟就能发布为APP！</p>
+              </div>
+            </li>
+            <li class="cls">
+              <p class="date_time">1月</p>
+              <p class="intro">特点九</p>
+              <p class="version">&nbsp;</p>
+              <div class="more">
+                <p>Touch UI工程本质是一套网页</p>
+                <p>所以不局限于开发APP和微信小程序，还可以开发任何基于H5的项目</p>
+                <p>比如：微信公众号、Web App、大型触控屏应用、物联网应用甚至是本地应用程序</p>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="year">
+        <h2 data_off='0'><a href="javascript:;">2015年<i></i></a></h2>
+        <div class="list">
+          <ul>
+            <li class="cls">
+              <p class="date_time">12月</p>
+              <p class="intro">服务</p>
+              <p class="version">&nbsp;</p>
+              <div class="more">
+                <p>一个APP开发完成后并不代表结束</p>
+                <p>尤其是在安卓手机严重碎片化的当下</p>
+                <p>用户手机类型的不同加上手机系统的版本有成百上千种运行环境</p>
+                <p>要让一个APP能完美运行在各种主流手机上不是一件容易的事情</p>
+                <p>很多有实力的公司会采购几百台各种类型的手机设备作为测试机</p>
+                <p>并且会动用整个技术团队三分之一的力量用于APP的测试</p>
+                <p>但是大部分公司尤其是中小企业和创业团队是没有这个余力来做这种大规模的APP测试的</p>
+                <p>为解决这个问题我们成立了一个APP测试团队</p>
+                <p>并且采购了上千台各种版本型号的主流手机</p>
+                <p>专门为使用Touch UI开发APP的企业用户提供真机测试服务</p>
+              </div>
+            </li>
+            <li class="cls highlight">
+              <p class="date_time">11月</p>
+              <p class="intro">官网</p>
+              <p class="version">&nbsp;</p>
+              <div class="more">
+                <p>更多关于Touch UI的信息请访问我们的网站</p>
+                <p><a href="http://www.uileader.com" target="_blank">http://www.uileader.com</a></p>
+              </div>
+            </li>
+
+          </ul>
+        </div>
+      </div>
+ 
+    </div>
+  </div>
+</div>
+<div class="footer">
+
+</div>
+<script>
+//	$(".main .year .list").each(function (e, target) {
+//	    var $target=  $(target),
+//	        $ul = $target.find("ul");
+//	    $target.height($ul.outerHeight()), $ul.css("position", "absolute");
+//	}); 
+	var list_off=0;
+	$(".main .year>h2").click(function (e) {
+	    if($(this).attr("data_off")=="0"){
+	    	$(this).parents(".year").find(".list").stop().slideUp();
+	    	$(this).attr("data_off","1")
+	    }else{
+	    	$(this).parents(".year").find(".list").stop().slideDown();
+	    	$(this).attr("data_off","0")
+	    }
+	    
+	});
+	</script>
+</body>
+</html>

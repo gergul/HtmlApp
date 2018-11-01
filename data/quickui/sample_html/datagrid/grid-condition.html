@@ -1,0 +1,569 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+		<title></title>
+		<!--框架必需start-->
+		<script type="text/javascript" src="../../libs/js/jquery.js"></script>
+		<script type="text/javascript" src="../../libs/js/language/cn.js"></script>
+		<script type="text/javascript" src="../../libs/js/framework.js"></script>
+		<link href="../../libs/css/import_basic.css" rel="stylesheet" type="text/css" />
+		<link rel="stylesheet" type="text/css" id="skin" prePath="../../" />
+		<link rel="stylesheet" type="text/css" id="customSkin" />
+		<!--框架必需end-->
+
+		<!-- 日期选择框start -->
+		<script type="text/javascript" src="../../libs/js/form/datePicker/WdatePicker.js"></script>
+		<!-- 日期选择框end -->
+
+		<!--数据表格start-->
+		<script src="../../libs/js/table/quiGrid.js" type="text/javascript"></script>
+		<!--数据表格end-->
+		
+	</head>
+	<body>
+<div class="page_content">	
+	<div class="conditionTop">
+		<table width="100%">
+			<tr class="conditionTop_items">
+				<td width="80" style="vertical-align:top;padding-top:5px;"><span class="conditionTop_title">已选条件：</span></td>
+				<td style="text-align:left;padding-top:5px;">
+					<div class="conditionContent">
+						<table width="100%" cellpadding="0" cellspacing="0">
+							<tr>
+								<td width="100">
+									<li class="condiComplexSubTitle">资金流向：</li>
+								</td>
+								<td>
+									<ul></ul>
+								</td>
+							</tr>
+							<tr>
+								<td width="100">
+									<li class="condiComplexSubTitle">账户：</li>
+								</td>
+								<td>
+									<ul></ul>
+								</td>
+							</tr>
+							<tr>
+								<td width="100">
+									<li class="condiComplexSubTitle">类型：</li>
+								</td>
+								<td>
+									<ul></ul>
+								</td>
+							</tr>
+							<tr>
+								<td width="100">
+									<li class="condiComplexSubTitle">起止日期：</li>
+								</td>
+								<td>
+									<ul></ul>
+								</td>
+							</tr>
+							<tr>
+								<td width="100">
+									<li class="condiComplexSubTitle">关键词：</li>
+								</td>
+								<td>
+									<ul></ul>
+								</td>
+							</tr>
+						</table>
+					</div>
+				</td>
+			</tr>
+			<tr class="conditionTop_tabs">
+				<td width="80"><span class="conditionTop_title">条件选择：</span></td>
+				<td style="text-align:left;">
+					<ul class="condition_tab">
+						<li>
+							<a>资金流向</a>
+						</li>
+						<li>
+							<a>账户</a>
+						</li>
+						<li>
+							<a>类型</a>
+						</li>
+						<li>
+							<a>起止日期</a>
+						</li>
+						<li>
+							<a>关键词</a>
+						</li>
+					</ul>
+				</td>
+			</tr>
+		</table>
+		<div class="condition_tab_content">
+			<input type="checkbox" id="1-1" name="1" value="全部" /><label for="1-1" class="hand">全部</label>
+			<input type="checkbox" id="1-2" name="1" value="收入" /><label for="1-2" class="hand">收入</label>
+			<input type="checkbox" id="1-3" name="1" value="支出" /><label for="1-3" class="hand">支出</label>
+			<input type="checkbox" id="1-4" name="1" value="转入" /><label for="1-4" class="hand">转入</label>
+			<input type="checkbox" id="1-5" name="1" value="转出" /><label for="1-5" class="hand">转出</label>
+		</div>
+
+		<div class="condition_tab_content">
+			<input type="checkbox" id="2-1" name="2" value="个人账户"/><label for="2-1" class="hand">个人账户</label>
+			<input type="checkbox" id="2-2" name="2" value="公司账户" /><label for="2-2" class="hand">公司账户</label>
+		</div>
+
+		<div class="condition_tab_content">
+			<input type="checkbox" id="3-1" name="3" value="全部" /><label for="3-1" class="hand">全部</label>
+			<input type="checkbox" id="3-2" name="3" value="衣服饰品" /><label for="3-2" class="hand">衣服饰品</label>
+			<input type="checkbox" id="3-3" name="3" value="食品酒水" /><label for="3-3" class="hand">食品酒水</label>
+			<input type="checkbox" id="3-4" name="3" value="居家物业" /><label for="3-4" class="hand">居家物业</label>
+			<input type="checkbox" id="3-5" name="3" value="行车交通" /><label for="3-5" class="hand">行车交通</label>
+			<input type="checkbox" id="3-6" name="3" value="交流通讯" /><label for="3-6" class="hand">交流通讯</label>
+			<input type="checkbox" id="3-7" name="3" value="玩乐休闲" /><label for="3-7" class="hand">玩乐休闲</label>
+			<input type="checkbox" id="3-8" name="3" value="学习培训" /><label for="3-8" class="hand">学习培训</label>
+			<input type="checkbox" id="3-9" name="3" value="礼金慈善" /><label for="3-9" class="hand">礼金慈善</label>
+			<input type="checkbox" id="3-10" name="3" value="医疗保健" /><label for="3-10" class="hand">医疗保健</label>
+			<input type="checkbox" id="3-11" name="3" value="生儿育女" /><label for="3-11" class="hand">生儿育女</label>
+			<input type="checkbox" id="3-12" name="3" value="偶然支出" /><label for="3-12" class="hand">偶然支出</label>
+			<input type="checkbox" id="3-13" name="3" value="差旅公务" /><label for="3-13" class="hand">差旅公务</label>
+			<input type="checkbox" id="3-14" name="3" value="企业支出" /><label for="3-14" class="hand">企业支出</label>
+			<input type="checkbox" id="3-15" name="3" value="杂项支出" /><label for="3-15" class="hand">杂项支出</label>
+			<input type="checkbox" id="3-16" name="3" value="网上购物" /><label for="3-16" class="hand">网上购物</label>
+			<input type="checkbox" id="3-17" name="3" value="职业工薪" /><label for="3-17" class="hand">职业工薪</label>
+			<input type="checkbox" id="3-18" name="3" value="业余工薪" /><label for="3-18" class="hand">业余工薪</label>
+			<input type="checkbox" id="3-19" name="3" value="人情收入" /><label for="3-19" class="hand">人情收入</label>
+			<input type="checkbox" id="3-20" name="3" value="偶然收入" /><label for="3-20" class="hand">偶然收入</label>
+			<input type="checkbox" id="3-21" name="3" value="公务收入" /><label for="3-21" class="hand">公务收入</label>
+			<input type="checkbox" id="3-22" name="3" value="企业收入" /><label for="3-22" class="hand">企业收入</label>
+			<input type="checkbox" id="3-23" name="3" value="杂项收入" /><label for="3-23" class="hand">杂项收入</label>
+		</div>
+
+		<div class="condition_tab_content">
+			<table>
+				<tr>
+					<td><input type="text" id="beginTime" class="dateIcon" /></td>
+					<td><input type="text" id="endTime" class="dateIcon" /></td>
+					<td><input type="button" value="确 定" class="button" id="timeRangeAdd" /></td>
+				</tr>
+			</table>
+		</div>
+
+		<div class="condition_tab_content">
+			<table>
+				<tr>
+					<td><input type="text" class="textinput" id="keywords" /></td>
+					<td><input type="button" value="确 定" class="button" id="keywordsAdd" /></td>
+				</tr>
+			</table>
+		</div>
+
+	</div>
+
+
+		<div id="maingrid"></div>
+</div>
+
+	</body>
+<script>
+			var testData = {
+				"form.paginate.pageNo": 1,
+				"form.paginate.totalRows": 13,
+				"rows": [{
+					"deptName": "部门1",
+					"sex": "女",
+					"remark": "好啊",
+					"hobby": ["唱歌"],
+					"beginworkDate": "2012-06-13 00:00:00.0",
+					"photo": null,
+					"version": null,
+					"id": 125,
+					"degree": "硕士结业",
+					"age": 20,
+					"name": "员工1",
+					"deptId": 12,
+					"ability": 1
+				}, {
+					"deptName": "部门1",
+					"sex": "男",
+					"remark": "备注啊",
+					"hobby": ["唱歌"],
+					"beginworkDate": "2012-06-13 00:00:00.0",
+					"photo": null,
+					"version": null,
+					"id": 124,
+					"degree": "本科毕业",
+					"age": 20,
+					"name": "员工2",
+					"deptId": 11,
+					"ability": 2
+				}, {
+					"deptName": "部门1",
+					"sex": "男",
+					"remark": null,
+					"hobby": ["唱歌", "跳舞"],
+					"beginworkDate": "2012-06-12 00:00:00.0",
+					"photo": null,
+					"version": null,
+					"id": 123,
+					"degree": "本科毕业",
+					"age": 20,
+					"name": "员工3",
+					"deptId": 9,
+					"ability": 2
+				}, {
+					"deptName": "部门1",
+					"sex": "女",
+					"remark": "不错啊",
+					"hobby": ["唱歌", "跳舞"],
+					"beginworkDate": "2012-06-12 00:00:00.0",
+					"photo": null,
+					"version": null,
+					"id": 121,
+					"degree": "硕士肄业",
+					"age": 20,
+					"name": "员工4",
+					"deptId": 8,
+					"ability": 3
+				}, {
+					"deptName": "部门1",
+					"sex": "男",
+					"remark": null,
+					"hobby": ["唱歌", "跳舞"],
+					"beginworkDate": "2012-06-12 00:00:00.0",
+					"photo": null,
+					"version": null,
+					"id": 120,
+					"degree": "博士肄业",
+					"age": 20,
+					"name": "员工5",
+					"deptId": 7,
+					"ability": 4
+				}, {
+					"deptName": "部门2",
+					"sex": "女",
+					"remark": null,
+					"hobby": ["唱歌", "跳舞"],
+					"beginworkDate": "2012-06-05 00:00:00.0",
+					"photo": null,
+					"version": null,
+					"id": 119,
+					"degree": "博士肄业",
+					"age": 20,
+					"name": "员工6",
+					"deptId": 6,
+					"ability": 5
+				}, {
+					"deptName": "部门2",
+					"sex": "女",
+					"remark": null,
+					"hobby": ["唱歌", "跳舞"],
+					"beginworkDate": "2012-06-05 00:00:00.0",
+					"photo": null,
+					"version": null,
+					"id": 118,
+					"degree": "博士肄业",
+					"age": 20,
+					"name": "员工7",
+					"deptId": 6,
+					"ability": 6
+				}, {
+					"deptName": "部门2",
+					"sex": "女",
+					"remark": null,
+					"hobby": ["唱歌", "跳舞"],
+					"beginworkDate": "2012-06-05 00:00:00.0",
+					"photo": null,
+					"version": null,
+					"id": 117,
+					"degree": "博士肄业",
+					"age": 20,
+					"name": "员工8",
+					"deptId": 6,
+					"ability": 5
+				}, {
+					"deptName": "部门2",
+					"sex": "女",
+					"remark": null,
+					"hobby": ["唱歌", "跳舞"],
+					"beginworkDate": "2012-06-05 00:00:00.0",
+					"photo": null,
+					"version": null,
+					"id": 116,
+					"degree": "博士肄业",
+					"age": 20,
+					"name": "员工9",
+					"deptId": 6,
+					"ability": 3
+				}, {
+					"deptName": "部门2",
+					"sex": "女",
+					"remark": null,
+					"hobby": ["唱歌", "跳舞"],
+					"beginworkDate": "2012-06-05 00:00:00.0",
+					"photo": null,
+					"version": null,
+					"id": 115,
+					"degree": "博士肄业",
+					"age": 20,
+					"name": "员工10",
+					"deptId": 6,
+					"ability": 1
+				}, {
+					"deptName": "部门2",
+					"sex": "女",
+					"remark": null,
+					"hobby": ["唱歌", "跳舞"],
+					"beginworkDate": "2012-06-05 00:00:00.0",
+					"photo": null,
+					"version": null,
+					"id": 114,
+					"degree": "博士肄业",
+					"age": 20,
+					"name": "员工11",
+					"deptId": 6,
+					"ability": 5
+				}, {
+					"deptName": "部门2",
+					"sex": "女",
+					"remark": null,
+					"hobby": ["唱歌", "跳舞"],
+					"beginworkDate": "2012-06-05 00:00:00.0",
+					"photo": null,
+					"version": null,
+					"id": 113,
+					"degree": "博士肄业",
+					"age": 20,
+					"name": "员工12",
+					"deptId": 6,
+					"ability": 5
+				}]
+			}
+
+			//数据表格使用
+			var g;
+			$(function() {
+				g = $("#maingrid").quiGrid({
+					columns: [{
+						display: '姓名',
+						name: 'name',
+						align: 'center',
+						width: "30%"
+					}, {
+						display: '性别',
+						name: 'sex',
+						align: 'center',
+						width: "20%"
+					}, {
+						display: '部门',
+						name: 'deptName',
+						align: 'center',
+						width: "30%"
+					}, {
+						display: '学历',
+						name: 'degree',
+						align: 'center',
+						width: "20%"
+					}],
+					data: testData,
+					pageSize: 10,
+					rownumbers: true,
+					checkbox: true,
+					percentWidthMode: true,
+					height: '100%',
+					width: "100%"
+				});
+
+				//自定义点击触发日期控件
+				document.getElementById('beginTime').onfocus = function() {
+					var endtimeTf = $dp.$('endTime');
+					WdatePicker({
+						skin: 'blue',
+						onpicked: function() {
+							endtimeTf.focus();
+						},
+						maxDate: '#F{$dp.$D(\'endTime\')}'
+					});
+				}
+				document.getElementById('endTime').onfocus = function() {
+					WdatePicker({
+						skin: 'blue',
+						minDate: '#F{$dp.$D(\'beginTime\')}'
+					});
+				}
+
+				//切换tab
+				$(".condition_tab").find("a").each(function(i) {
+					$(this).click(function() {
+						$(".condition_tab").find("a").removeClass("current");
+						$(this).addClass("current");
+						$(".condition_tab_content").hide();
+						$(".condition_tab_content").eq(i).show();
+
+						resetGridHeight()
+					})
+				})
+
+				$(".condition_tab_content").each(function(i) {
+
+					$(this).find("input:checkbox").each(function() {
+						
+						//得到对应的选项容器
+						var $ul = $(".conditionContent").find("ul").eq(i);
+
+						//初始化遍历checkbox
+						if($(this).attr("checked")) {
+							
+							//添加条件项
+							renderItem($(this), i, $ul);
+						}
+
+						//checkbox点击时
+						$(this).change(function() {
+							var instance = $(this);
+
+							//checkbox选中
+							if($(this).prop("checked")) {
+								//添加条件项
+								renderItem(instance, i, $ul);
+							}
+							//checkbox取消选中
+							else {
+								$ul.find("li").each(function() {
+									//找到与chekbox对应的条件项
+									if($(this).attr("id") == "item_" + instance.attr("id")) {
+										//移除条件项
+										removeItem($(this), $ul);
+
+									}
+								})
+							}
+						})
+
+					})
+				})
+
+				//初始化检查日期和关键字文本框
+				var value1 = $("#beginTime").val();
+				var value2 = $("#endTime").val();
+				var value3 = $("#keywords").val();
+				if(value1 != "" && value2 != "") {
+					var type = "timeRange";
+					var value = value1 + " - " + value2;
+					var i = 3;
+					var $ul = $(".conditionContent").find("ul").eq(i);
+					renderItem2(type, value, i, $ul);
+				}
+
+				if(value3 != "") {
+					var type = "keywords";
+					var i = 4;
+					var $ul = $(".conditionContent").find("ul").eq(i);
+					renderItem2(type, value3, i, $ul);
+				}
+
+				$("#timeRangeAdd").click(function() {
+					var value1 = $("#beginTime").val();
+					var value2 = $("#endTime").val();
+					if(value1 == "" || value2 == "") {
+						alert("时间段不完整！");
+						return;
+					}
+					var type = "timeRange";
+					var value = value1 + " - " + value2;
+					var i = 3;
+					var $ul = $(".conditionContent").find("ul").eq(i);
+					renderItem2(type, value, i, $ul);
+				})
+
+				$("#keywordsAdd").click(function() {
+					var value = $("#keywords").val();
+					if(value == "") {
+						alert("请填写关键字！");
+						return;
+					}
+					var type = "keywords";
+					var i = 4;
+					var $ul = $(".conditionContent").find("ul").eq(i);
+					renderItem2(type, value, i, $ul);
+				})
+
+			})
+
+			//添加条件项
+			function renderItem(instance, i, $ul) {
+				$(".conditionTop_items").show();
+
+				var $item = $('<li id="item_' + instance.attr("id") + '" class="item"><a>' + instance.val() + '</a></li>');
+				$ul.parent().parent().show();
+				$ul.show();
+				resetGridHeight()
+
+				$ul.append($item);
+				//点击条件项
+				$item.click(function() {
+					//移除条件项
+					removeItem($(this), $ul);
+
+					//将对应的checkbox设为不选中
+					$(".condition_tab_content").eq(i).find("input:checkbox").each(function() {
+						if($(this).attr("id") == instance.attr("id")) {
+							$(this).attr("checked", false);
+						}
+					})
+				})
+			}
+
+			//移除条件项
+			function removeItem(instance, $ul) {
+				instance.remove();
+
+				//如果没有条件项了，隐藏整行
+				if($ul.find("li").length == 0) {
+					$ul.parent().parent().hide();
+					$ul.hide();
+					resetGridHeight()
+						//如果所有行都隐藏了，隐藏整体
+					var mainShow = 0;
+					$(".conditionTop_items").find("ul").each(function() {
+						if($(this)[0].style.display == "block") {
+							mainShow = 1;
+						}
+					})
+					if(mainShow == 0) {
+						$(".conditionTop_items").hide();
+						resetGridHeight()
+					}
+				}
+			}
+
+			function renderItem2(type, value, i, $ul) {
+				$(".conditionTop_items").show();
+
+				var $item = $('<li id="item_' + type + '" class="item"><a>' + value + '</a></li>');
+				$ul.parent().parent().show();
+				$ul.show();
+				resetGridHeight()
+
+				$ul.append($item);
+				//点击条件项
+				$item.click(function() {
+					//移除条件项
+					removeItem($(this), $ul);
+
+					if(type == "timeRange") {
+						$("#beginTime").val("");
+						$("#endTime").val("");
+					}
+
+					if(type == "keywords") {
+						$("#keywords").val("");
+					}
+				})
+			}
+
+			function resetGridHeight() {
+				setTimeout(function() {
+					g.resetHeight();
+				}, 500)
+			}
+		</script>
+</html>

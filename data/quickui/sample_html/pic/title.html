@@ -1,0 +1,241 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title></title>
+<!--框架必需start-->
+<script type="text/javascript" src="../../libs/js/jquery.js"></script>
+<script type="text/javascript" src="../../libs/js/language/cn.js"></script>
+<script type="text/javascript" src="../../libs/js/framework.js"></script>
+<link href="../../libs/css/import_basic.css" rel="stylesheet" type="text/css"/>
+<link rel="stylesheet" type="text/css" id="skin" prePath="../../"/>
+<link rel="stylesheet" type="text/css" id="customSkin"/>
+<!--框架必需end-->
+
+<!--图片渐显start-->
+<script type="text/javascript" src="../../libs/js/pic/imgFade.js"></script>
+<!--图片渐显end-->
+<style>
+.boxgrid{ 
+	width: 200px; 
+	height: 122px; 
+	margin:10px; 
+	float:left; 
+	background:#161613; 
+	border: solid 1px #cccccc;
+	overflow: hidden; 
+	position: relative; 
+	border-radius: 10px;
+}
+.boxgrid2{
+	width: 200px; 
+	height: 122px; 
+	margin:10px; 
+	float:left; 
+	border: solid 1px #cccccc;
+	border-radius: 10px;
+	overflow: hidden;
+}
+.boxgrid2 img,
+.boxgrid img{
+	width: 100%;
+}
+</style>
+<script>
+function initComplete(){
+	//初始时无标题
+	$('.boxgrid.captionfull').each(function(){
+		$(".cover", this).css({
+			top:"160px"
+		})
+	})
+	$('.boxgrid.captionfull').hover(function(){
+		$(".cover", this).stop().animate({top:'60px'},{queue:false,duration:160});
+	}, function() {
+		$(".cover", this).stop().animate({top:'160px'},{queue:false,duration:160});
+	});
+	
+	//初始时有标题
+	$('.boxgrid.caption').each(function(){
+		$(".cover", this).css({
+			top:"95px"
+		})
+	})
+	$('.boxgrid.caption').hover(function(){
+		$(".cover", this).stop().animate({top:'60px'},{queue:false,duration:160});
+	}, function() {
+		$(".cover", this).stop().animate({top:'95px'},{queue:false,duration:160});
+	});
+	
+	//图片向右移动
+	$('.boxgrid.slideright').hover(function(){
+		$(".cover", this).stop().animate({left:'325px'},{queue:false,duration:300});
+	}, function() {
+		$(".cover", this).stop().animate({left:'0px'},{queue:false,duration:300});
+	});
+	
+	//图片斜向下移动
+	$('.boxgrid.thecombo').hover(function(){
+		$(".cover", this).stop().animate({top:'260px', left:'325px'},{queue:false,duration:300});
+	}, function() {
+		$(".cover", this).stop().animate({top:'0px', left:'0px'},{queue:false,duration:300});
+	});
+	
+	//图片向上移动
+	$('.boxgrid.slidedown').hover(function(){
+		$(".cover", this).stop().animate({top:'-260px'},{queue:false,duration:300});
+	}, function() {
+		$(".cover", this).stop().animate({top:'0px'},{queue:false,duration:300});
+	});
+}
+</script>
+</head>
+<body>
+	 <div class="page_content">
+
+
+	<div class="groupTitle"><span>鼠标移入出现信息</span></div>
+      	
+<div class="boxgrid captionfull">
+	<img src="../../libs/images/demo/gallery/1.jpg"/>
+	<div class="cover boxcaption">
+		<div class="boxgrid_title">图片标题</div>
+		<div class="boxgrid_con">这里是图片文字说明部分<br />这里是图片文字说明部分</div>
+	</div>		
+</div>
+<div class="boxgrid captionfull">
+	<img src="../../libs/images/demo/gallery/2.jpg"/>
+	<div class="cover boxcaption">
+		<div class="boxgrid_title">图片标题</div>
+		<div class="boxgrid_con">这里是图片文字说明部分<br />这里是图片文字说明部分</div>
+	</div>		
+</div>
+<div class="boxgrid captionfull">
+	<img src="../../libs/images/demo/gallery/4.jpg"/>
+	<div class="cover boxcaption">
+		<div class="boxgrid_title">图片标题</div>
+		<div class="boxgrid_con">这里是图片文字说明部分<br />这里是图片文字说明部分</div>
+	</div>		
+</div>
+<div class="clear"></div>
+
+       <div class="height_15"></div>
+       
+      
+
+
+	<div class="groupTitle"><span>初始时有标题</span></div>
+       	
+<div class="boxgrid caption">
+	<img src="../../libs/images/demo/gallery/5.jpg"/>
+	<div class="cover boxcaption">
+		<div class="boxgrid_title">图片标题</div>
+		<div class="boxgrid_con">这里是图片文字说明部分<br />这里是图片文字说明部分</div>
+	</div>		
+</div>
+<div class="boxgrid caption">
+	<img src="../../libs/images/demo/gallery/6.jpg"/>
+	<div class="cover boxcaption">
+		<div class="boxgrid_title">图片标题</div>
+		<div class="boxgrid_con">这里是图片文字说明部分<br />这里是图片文字说明部分</div>
+	</div>		
+</div>
+<div class="boxgrid caption">
+	<img src="../../libs/images/demo/gallery/7.jpg"/>
+	<div class="cover boxcaption">
+		<div class="boxgrid_title">图片标题</div>
+		<div class="boxgrid_con">这里是图片文字说明部分<br />这里是图片文字说明部分</div>
+	</div>		
+</div>
+<div class="clear"></div>
+
+       <div class="height_15"></div>
+       
+      
+
+
+	<div class="groupTitle"><span>图片向右移动</span></div>
+       	
+<div class="boxgrid slideright">
+	<img class="cover" src="../../libs/images/demo/gallery/8.jpg"/>
+	<div class="boxgrid_title">图片标题</div>
+	<div class="boxgrid_con">这里是图片文字说明部分<br />这里是图片文字说明部分</div>
+</div>
+<div class="boxgrid slideright">
+	<img class="cover" src="../../libs/images/demo/gallery/9.jpg"/>
+	<div class="boxgrid_title">图片标题</div>
+	<div class="boxgrid_con">这里是图片文字说明部分<br />这里是图片文字说明部分</div>
+</div>
+<div class="boxgrid slideright">
+	<img class="cover" src="../../libs/images/demo/gallery/1.jpg"/>
+	<div class="boxgrid_title">图片标题</div>
+	<div class="boxgrid_con">这里是图片文字说明部分<br />这里是图片文字说明部分</div>
+</div>
+<div class="clear"></div>
+
+       <div class="height_15"></div>
+       
+      
+
+
+	<div class="groupTitle"><span>图片斜向下移动</span></div>
+       	
+<div class="boxgrid thecombo">
+	<img class="cover" src="../../libs/images/demo/gallery/2.jpg"/>
+	<div class="boxgrid_title">图片标题</div>
+	<div class="boxgrid_con">这里是图片文字说明部分<br />这里是图片文字说明部分</div>
+</div>
+<div class="boxgrid thecombo">
+	<img class="cover" src="../../libs/images/demo/gallery/6.jpg"/>
+	<div class="boxgrid_title">图片标题</div>
+	<div class="boxgrid_con">这里是图片文字说明部分<br />这里是图片文字说明部分</div>
+</div>
+<div class="boxgrid thecombo">
+	<img class="cover" src="../../libs/images/demo/gallery/4.jpg"/>
+	<div class="boxgrid_title">图片标题</div>
+	<div class="boxgrid_con">这里是图片文字说明部分<br />这里是图片文字说明部分</div>
+</div>
+<div class="clear"></div>
+
+       <div class="height_15"></div>
+       
+      
+
+
+	<div class="groupTitle"><span>图片向上移动</span></div>
+       	
+<div class="boxgrid slidedown">
+	<img class="cover" src="../../libs/images/demo/gallery/5.jpg"/>
+	<div class="boxgrid_title">图片标题</div>
+	<div class="boxgrid_con">这里是图片文字说明部分<br />这里是图片文字说明部分</div>
+</div>
+<div class="boxgrid slidedown">
+	<img class="cover" src="../../libs/images/demo/gallery/2.jpg"/>
+	<div class="boxgrid_title">图片标题</div>
+	<div class="boxgrid_con">这里是图片文字说明部分<br />这里是图片文字说明部分</div>
+</div>
+<div class="boxgrid slidedown">
+	<img class="cover" src="../../libs/images/demo/gallery/7.jpg"/>
+	<div class="boxgrid_title">图片标题</div>
+	<div class="boxgrid_con">这里是图片文字说明部分<br />这里是图片文字说明部分</div>
+</div>
+<div class="clear"></div>
+
+       <div class="height_15"></div>
+
+       <div class="groupTitle"><span>渐显特效</span></div>
+   
+	<div class="boxgrid2"><img src="../../libs/images/demo/gallery/1.jpg" class="imgFade"/></div>
+	<div class="boxgrid2"><img src="../../libs/images/demo/gallery/2.jpg" class="imgFade"/></div>
+	<div class="boxgrid2"><img src="../../libs/images/demo/gallery/4.jpg" class="imgFade"/></div>
+	<div class="boxgrid2"><img src="../../libs/images/demo/gallery/5.jpg" class="imgFade"/></div>
+	<div class="boxgrid2"><img src="../../libs/images/demo/gallery/7.jpg" class="imgFade"/></div>
+	<div class="boxgrid2"><img src="../../libs/images/demo/gallery/6.jpg" class="imgFade"/></div>
+	<div class="clear"></div>
+
+  <div class="height_15"></div>
+       
+       
+     </div>
+</body>
+</html>

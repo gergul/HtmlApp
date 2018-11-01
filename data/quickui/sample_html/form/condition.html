@@ -1,0 +1,213 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title></title>
+<!--框架必需start-->
+<script type="text/javascript" src="../../libs/js/jquery.js"></script>
+<script type="text/javascript" src="../../libs/js/language/cn.js"></script>
+<script type="text/javascript" src="../../libs/js/framework.js"></script>
+<link href="../../libs/css/import_basic.css" rel="stylesheet" type="text/css"/>
+<link rel="stylesheet" type="text/css" id="skin" prePath="../../"/>
+<link rel="stylesheet" type="text/css" id="customSkin"/>
+<!--框架必需end-->
+
+<!-- 条件过滤器2 start -->
+<script type="text/javascript" src="../../libs/js/form/condition.js"></script>
+<!-- 条件过滤器2 end -->
+</head>
+<body style="padding:10px;">	
+<div style="width:1000px;">
+
+
+			<div class="groupTitle"><span>1、基本使用</span></div>
+			
+			<div id="condition-1" class="condition"></div>
+			
+			<br/>
+			选中项：<br/>
+			<textarea id="condition-1-value" style="width:400px;"></textarea>
+
+	  <div class="height_15"></div>
+	  
+
+
+			<div class="groupTitle"><span>2、多选模式</span></div>
+			
+			<div id="condition-2" class="condition" multiMode="true"></div>
+			
+			<br/>
+			选中项：<br/>
+			<textarea id="condition-2-value" style="width:400px;"></textarea>
+
+	  <div class="height_15"></div>
+	  
+	  
+
+
+			<div class="groupTitle"><span>3、使用隐藏域</span></div>
+			
+			<div id="condition-3" name="condition-3" class="condition"></div>
+			
+			<br/>
+			<input type="button" class="button" value="获取隐藏域选中值" onclick="getHiddenValue()"/>
+
+	  <div class="height_15"></div>
+	  
+
+
+			<div class="groupTitle"><span>4、自定义尺寸</span></div>
+			
+			自定义选中项尺寸<br/>
+			<div id="condition4-1" class="condition" itemWidth="120"></div>
+			<br/><br/>
+			自定义整体尺寸<br/>
+			<div id="condition4-2" class="condition" conditionWidth="550"></div>
+
+	  <div class="height_15"></div>
+	  
+
+
+			<div class="groupTitle"><span>5、设置初始值</span></div>
+			
+			单选模式<br/>
+			<div id="condition5-1" class="condition" selectedValue="11,22,32,43"></div>
+			<br/><br/>
+			多选模式<br/>
+			<div id="condition5-2" class="condition" multiMode="true" selectedValue="11,22,23,24,32,43"></div>
+
+	  <div class="height_15"></div>
+	  
+
+
+			<div class="groupTitle"><span>6、动态生成</span></div>
+			
+			<input type="button" class="button" value="点击生成" id="testBtn" onclick="dynamicCondition()" /><br/><br/>
+
+	  <div class="height_15"></div>
+	  
+
+
+			<div class="groupTitle"><span>7、动态选中</span></div>
+			
+			<div id="condition-7" class="condition"></div>
+			<input type="button" class="button" value="动态选中" id="testBtn" onclick="setValue()" />
+
+	  <div class="height_15"></div>
+	  
+
+
+			<div class="groupTitle"><span>8、同步跳转模式</span></div>
+			
+			某些场景中选中一项页面需要进行跳转，例如很多电商类网站。
+			<div id="condition-8" class="condition" ajaxMode="false"></div>
+
+	  <div class="height_15"></div>
+</div>
+<script>
+	var conditionData={"list":[
+		{"name":"认购期限","list":[
+			{"key":"全部","value":"11"},{"key":"在售","value":"12"},{"key":"预售","value":"13"},{"key":"已停售","value":"14"}
+		]},
+		{"name":"产品类型","list":[
+			{"key":"全部","value":"21"},{"key":"活期","value":"22"},{"key":"定期","value":"23"},{"key":"通知存款","value":"24"},{"key":"理财产品","value":"25"},{"key":"无抵押贷款","value":"26"}
+		]},
+		{"name":"起购金额","list":[
+			{"key":"全部","value":"31"},{"key":"5千元以下（不含）","value":"32"},{"key":"5千-5万元（不含）","value":"33"},{"key":"5万元及以上","value":"34"}
+		]},
+		{"name":"理财期限","list":[
+			{"key":"全部","value":"41"},{"key":"1个月以下（不含）","value":"42"},{"key":"1-6个月（不含）","value":"43"},{"key":"6个月-1年（不含）","value":"44"},{"key":"1-5年","value":"45"},{"key":"不定期","value":"46"}
+		]},
+		{"name":"内测年化收益","list":[
+			{"key":"全部","value":"51"},{"key":"3%以下（不含）","value":"52"},{"key":"3%-5%（不含）","value":"53"},{"key":"5%及以上","value":"54"}
+		]}
+	]};
+	
+	var conditionData2={"list":[
+		{"name":"认购期限","list":[
+			{"key":"全部","value":"11"},{"key":"在售","value":"12"},{"key":"预售","value":"13"},{"key":"已停售","value":"14"}
+		]},
+		{"name":"产品类型","list":[
+			{"key":"全部","value":"21"},{"key":"活期","value":"22"},{"key":"定期","value":"23"}
+		]},
+		{"name":"起购金额","list":[
+			{"key":"全部","value":"31"},{"key":"5千元以下（不含）","value":"32"},{"key":"5千-5万元（不含）","value":"33"}
+		]}
+	]};
+	
+	$(function(){
+		$("#condition-1").data("data",conditionData);
+		$("#condition-1").render();
+		$("#condition-1").bind("change",function(e,values){
+			$("#condition-1-value").val(values);
+		})
+		
+		$("#condition-2").data("data",conditionData);
+		$("#condition-2").render();
+		$("#condition-2").bind("change",function(e,values){
+			$("#condition-2-value").val(values);
+		})
+		
+		$("#condition-3").data("data",conditionData);
+		$("#condition-3").render();
+		
+		$("#condition4-1").data("data",conditionData);
+		$("#condition4-1").render();
+		
+		$("#condition4-2").data("data",conditionData2);
+		$("#condition4-2").render();
+		
+		$("#condition5-1").data("data",conditionData);
+		$("#condition5-1").render();
+		
+		$("#condition5-2").data("data",conditionData);
+		$("#condition5-2").render();
+		
+		$("#condition-7").data("data",conditionData);
+		$("#condition-7").render();
+		
+		$("#condition-8").data("data",conditionData);
+		
+		//用cookies模拟前后台传值
+		var cookValue=jQuery.jCookie('condition');
+		if(cookValue!=false){
+			$("#condition-8").attr("selectedValue",cookValue.toString());
+		}
+		$("#condition-8").render();
+		$("#condition-8").bind("change",function(e,values){
+			top.Notice('showNotice', {
+				title	: "使用说明",
+				text    : "这里将组件所有选中项："+values+"项传入后台，通过location进行跳转，跳转后重设组件的selectedValue。这里用cookies模拟前后台传值。"
+			})
+			
+			//用cookies模拟前后台传值
+			jQuery.jCookie('condition',values);
+			window.location.reload();
+		})
+		
+	})
+	
+	//获取隐藏域值
+	function getHiddenValue(){
+		top.Toast("showNoticeToast", $("input:hidden[name='condition-3']").val());
+	}
+	function dynamicCondition(){
+		var $condition = $('<div class="condition" conditionWidth="550"></div>');
+		//赋给data属性
+		$condition.data("data",conditionData2);
+		//加到按钮的后面
+		$("#testBtn").after($condition);   
+		$("#testBtn").after("<br/><br/>");  
+		//渲染
+		$condition.render(); 
+	}
+	
+	//动态选中
+	function setValue(){
+		$("#condition-7").attr("selectedValue","11,22,32,43")
+	    $("#condition-7").render();
+	}
+	
+</script>
+</body>
+</html>

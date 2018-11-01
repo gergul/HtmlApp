@@ -1,0 +1,104 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title></title>
+<!--框架必需start-->
+<script type="text/javascript" src="../../libs/js/jquery.js"></script>
+<script type="text/javascript" src="../../libs/js/language/cn.js"></script>
+<script type="text/javascript" src="../../libs/js/framework.js"></script>
+<link href="../../libs/css/import_basic.css" rel="stylesheet" type="text/css"/>
+<link rel="stylesheet" type="text/css" id="skin" prePath="../../"/>
+<link rel="stylesheet" type="text/css" id="customSkin"/>
+<!--框架必需end-->
+<script src="../../libs/js/graphical/jquery.rotate.min.js" type="text/javascript"></script>
+<style>
+	 .ring_button{
+     	width: 110px;
+     	margin:50px auto;
+     }
+
+	 .dashBg {
+        width: 295px;
+        height: 173px;
+        background-image: url(../../sample/graphical/dashboard/dash_bg.png);
+		background-repeat: no-repeat;
+		margin:50px auto;
+		position: relative;
+     }
+     
+     .dashPointer {
+        width: 191px;
+        height: 16px;
+        background-image: url(../../sample/graphical/dashboard/dash_pointer.png);
+		background-repeat: no-repeat;
+		background-position: 100% 0;
+		position: absolute;
+		left: 52px;
+		top:140px;
+     }
+
+     .dashBg2 {
+        width: 428px;
+        height: 366px;
+        background-image: url(../../sample/graphical/dashboard/dash_bg2.png);
+		background-repeat: no-repeat;
+		margin:50px auto;
+		position: relative;
+     }
+     
+     .dashPointer2 {
+        width: 271px;
+        height: 42px;
+		position: absolute;
+		left: 84px;
+		top:190px;
+     }
+
+  </style>         
+</head>
+<body>
+<div class="page_content">
+	<!--
+	<div class="dashBg">
+		<div class="dashPointer"></div>
+	</div>
+-->
+	<div class="dashBg2">
+		<img class="dashPointer2" src="../../sample/graphical/dashboard/dash_pointer3.png"/>
+	</div>
+
+
+	<div class="ring_button">
+	<input type="button" value="-" class="default" onclick="ringChange(1)" />&nbsp
+	<input type="button"  value="+" class="default" onclick="ringChange(0)"/>
+	</div>
+
+	<div id="demo"></div>
+</div>
+<script>
+	$(function(){
+		//$('.dashPointer').rotate({animateTo:240});
+		$('.dashPointer2').rotate({animateTo:240});
+	})
+	var val=240;
+	function ringChange(state){
+
+        if(state==0){
+            val=val+20;
+            if(val>400){
+               val=400;
+            }
+        }
+        else if(state==1){
+            val=val-20;
+            if(val<140){
+                val=140;
+            }
+        }
+        $('.dashPointer2').rotate({animateTo:val});
+        
+    }
+</script>
+</body>
+</html>

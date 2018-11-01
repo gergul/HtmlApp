@@ -1,0 +1,334 @@
+*{
+	box-sizing: border-box;
+	padding: 0;
+	margin: 0;
+	font-size: 12px;
+	font-family: "微软雅黑";
+}
+[type="checkbox"]:not(:checked),
+[type="checkbox"]:checked {
+	position: absolute;
+	left: -9999px;
+}
+[type="checkbox"]:not(:checked)+ label,
+[type="checkbox"]:checked+ label {
+	position: relative;
+	padding-left: 25px;
+	cursor: pointer;
+	font-size: 14px;
+	color: #fff;
+	-webkit-tap-highlight-color:rgba(0,0,0,0);
+}
+
+[type="checkbox"]:not(:checked)+ label:before,
+[type="checkbox"]:checked+ label:before {
+	content: '';
+	position: absolute;
+	left: 4px;
+	top: 1px;
+	width: 15px;
+	height: 15px;
+	background: #f8f8f8;
+	border-radius: 2px;
+	/*box-shadow: inset 0 1px 3px rgba(0, 0, 0, .3);*/
+	line-height: 150%;
+	border: 1px solid #DCDCDC;
+}
+
+[type="checkbox"]:not(:checked)+ label:after,
+[type="checkbox"]:checked+ label:after {
+ 	content: '✔';
+	position: absolute;
+	top: 0px;
+	left: 7px;
+	font-size: 12px;
+	color: #39f;
+	transition: all .2s;
+	line-height: 150%;
+
+	font-weight: bold;
+}
+
+[type="checkbox"]:not(:checked)+ label:after {
+	opacity: 0;
+	transform: scale(0);
+}
+
+[type="checkbox"]:checked+ label:after {
+	opacity: 1;
+	transform: scale(1);
+}
+
+[type="checkbox"]:disabled:not(:checked)+ label:before,
+[type="checkbox"]:disabled:checked+ label:before {
+	box-shadow: none;
+	border-color: #bbb;
+	background-color: #ddd;
+}
+
+[type="checkbox"]:disabled:checked+ label:after {
+	color: #999;
+}
+
+[type="checkbox"]:disabled+ label {
+	color: #aaa;
+}
+
+[type="checkbox"]:checked:focus+ label:before,
+[type="checkbox"]:not(:checked):focus+ label:before {}
+
+
+
+html,body{
+	width: 100%;
+	height: 100%;
+}
+.win{
+	width: 100%;
+	height: 100%;
+	background: #1D8BD8 url(bg.jpg) no-repeat center center;
+	background-size: 1920px 100%;
+	padding-top: 5%;
+	
+}
+.login_win{
+	width: 400px;
+	/*height: 600px;*/
+	position: fixed;
+	top: 50%;
+	left: 50%;
+	margin: -300px 0 0 -150px;
+	/*border: 1px solid red;*/
+}
+.login_title{
+	width: 100%;
+	height: 120px;
+	background: url(login_title.png) no-repeat center center;
+	background-size: 100%;
+	margin-bottom: 40px;
+	/*border: 1px solid red;*/
+}
+.form_win{
+	width: 100%;
+	/*height: 400px;*/
+	/*background-color:#FFFFFF;*/
+	border-radius: 10px;
+	/*box-shadow: 0 0 5px 2px rgba(0,0,0,.1);*/
+	/*border: 1px solid red;*/
+}
+.form_win>div{
+	width: 80%;
+	height: 50px;
+	margin: auto;
+	/*border: 1px solid #DCDCDC;*/
+	border-radius: 5px;
+	position: relative;
+	background: #FFFFFF;
+}
+
+.form_win>div.form_title{
+	height: 80px;
+	border: 0;
+	border-radius:0;
+	border-bottom: 1px solid #DCDCDC;
+	display: none;
+}
+
+.form_win>div.form_title span{
+	color: #656B69;
+	font-size: 18px;
+	text-align: center;
+	line-height: 80px;
+	display: block;
+}
+
+.form_win>div i{
+	display: block;
+	width: 35px;
+	height: 40px;
+	position: absolute;
+	top: 0;
+	left: 0;
+	/*border: 1px solid red;*/
+	border-right: 1px solid #DCDCDC;
+	background: #EEEEEE;
+	display: none;
+}
+.form_win>div.user i{
+	background: url(user.png) no-repeat center center;
+	background-size: 50%;
+}
+.form_win>div.user{
+	margin-top: 20px;
+	border-radius: 5px 5px 0 0;
+	border-bottom: 0;
+	-moz-box-shadow:0px 2px 5px #c5c5c5 inset;              /* For Firefox3.6+ */
+	-webkit-box-shadow:0px 2px 5px #c5c5c5 inset;           /* For Chrome5+, Safari5+ */
+	box-shadow:0px 2px 5px #c5c5c5 inset;                   /* For Latest Opera */
+	border-bottom: 1px solid #C5C5C5;
+}
+.form_win>div.passerword{
+	border-radius: 0 0 5px 5px;
+}
+.form_win>div.passerword i{
+	background: url(password.png) no-repeat center center;
+	background-size: 50%;
+}
+.form_win>div input::-moz-placeholder{
+	color: #EEEEEE;
+}
+.form_win>div input{
+	width: 100%;
+	height: 25px;
+	margin-top: 15px;
+	font-size: 12px;
+	padding: 0 10px 0 10px;
+	line-height: 25px;
+	outline: none;
+	border: 0;
+	background: transparent;
+	-webkit-tap-highlight-color:rgba(0,0,0,0);
+}
+.form_win>div.remember{
+	border: 0;
+	background: none;
+	height: 20px;
+	margin: 10px auto;
+}
+.form_win>div.remember label{
+	*float: left;
+}
+.form_win>div.remember input{
+	width: 15px;
+	height: 15px;
+	border-radius: 5px;
+	background: #FFFFFF;
+	float: left;
+	margin-right: 10px;
+	padding: 0;
+}
+.form_win>div.remember span{
+	display: block;
+	color: #5B595B;
+	font-size: 14px;
+	float: left;
+}
+.form_win>div.remember a{
+	display: block;
+	color: #fff;
+	font-size: 14px;
+	float: right;
+	text-decoration: none;
+}
+.form_win>div.login_info{
+	border: 0;
+	width: 80%;
+	line-height: 20px;
+	color: red;
+	background: none;
+	font-size: 14px;
+	height: 20px;
+	/*border: 1px solid red;*/
+	margin: 10px auto;
+	/*display: inline-block;*/
+}
+.form_win .submit{
+	width: 80%;
+	height: 40px;
+	margin: auto;
+	text-align: center;
+	line-height: 35px;
+	color: #FFFFFF;
+	background: #66D354;
+	font-size: 18px;
+	border: 0;
+	outline: none;
+	border-radius: 5px;
+	-webkit-appearance: none;
+	cursor: pointer;
+	display: block;
+	-webkit-tap-highlight-color:rgba(0,0,0,0);
+}
+.form_win>div.login_copy{
+	width: 100%;
+	line-height: 25px;
+	text-align: center;
+	margin-top: 35px;
+	border: 0;
+	background: none;
+}
+.form_win>div.login_copy a{
+	color: #fff;
+	text-decoration: none;
+	font-size: 14px;
+}
+
+
+.footer{
+	width: 240px;
+	/*height: 60px;*/
+	/*border: 1px solid red;*/
+	position: fixed;
+	left: 50%;
+	bottom: 40px;
+	margin: 0 0 0 -120px;
+	color: #FFFFFF;
+	font-size: 14px;
+	line-height: 35px;
+}
+.footer a{
+	color: #FFFFFF;
+	font-size: 14px;
+	text-decoration: none;
+}
+
+/*清除浮动样式*/
+.clear:after{
+	content: "";
+	clear: both;
+	display: block;
+	zoom: 1;
+	visibility: hidden;
+	font-size: 0;
+	line-height: 0;
+}
+@media screen and (max-width:960px ) {
+	
+}
+@media screen and (max-width:640px ) {
+	.login_win{
+		width: 330px;
+		margin: -230px 0 0 -165px;
+	}
+	.footer{
+		line-height: 20px;
+		bottom: 20px;
+	}
+}
+@media screen and (max-width:400px ) {
+	.footer{
+		line-height: 20px;
+		bottom: 20px;
+	}
+}
+@media screen and (max-width:320px ) {
+	.login_win{
+		width: 280px;
+		margin: -230px 0 0 -140px;
+		
+	}
+	.login_title{
+		margin-top: 30px;
+		margin-bottom: 10px;
+		
+	}
+	.form_win{
+		height: 380px;
+	}
+	.footer{
+		bottom: 10px;
+	}
+	.form_win>div.login_copy{
+		margin-top: 20px;
+	}
+}

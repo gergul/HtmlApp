@@ -1,0 +1,403 @@
+/*解决card组件包含表格时左侧没有边框*/
+.infoCard2{
+	overflow: hidden;
+}
+
+
+/*操作*/
+.popupMenu{
+	width: 100%;
+}
+.popupMenu2{
+	width: auto;
+	float: left;
+}
+.popupMenu_link{
+	position: relative;
+}
+.popupMenu_link a{
+	padding: 6px 25px 6px 20px;
+	display: inline-block;
+	line-height: 15px;
+	font-size: 12px;
+	border-radius: 3px;
+	color: #fff;
+	margin-top: 8px;
+	background-image: url(popupMenu_link_a.png);
+	background-repeat: no-repeat;
+	background-position: 90% center;
+}
+
+.popupMenu_link2 a{
+	background-image: none;
+	padding: 6px 25px;
+}
+.popupMenu_link a:hover {
+	color: #fff;
+}
+
+
+
+
+.content_win{
+	/*padding: 20px 15px;*/
+	
+}
+.demo_operation{
+	padding-bottom: 10px;
+}
+.demo_operation .project_title{
+	display: block;
+	font-size: 18px;
+	color: #757575;
+	font-weight: 500;
+	line-height: 30px;
+}
+
+.demo_operation .Cost_total{
+	float: left;
+	display: inline-block;
+	margin-left: 10px;
+	border: 1px solid #D5D5D5;
+	border-radius: 3px;
+	overflow: hidden;
+	background: #fff;
+	padding: 0 10px;
+	line-height: 30px;
+}
+.demo_operation .Cost_total em{
+	color: #65BD77;
+}
+
+
+.attendance_list_operation{
+	/*border: 1px solid red;*/
+}
+.search_content{
+	float: right;
+}
+.search_content td{
+	padding: 10px 5px;
+}
+
+/*考勤录入*/
+.announcement_title{
+	width: 100%;
+	overflow: visible;
+	
+}
+.announcement_title td{
+	padding: 20px 0;
+	border-bottom: 1px dashed #E8E8E8;
+	
+}
+.announcement_title table td{
+	padding: 0;
+	border: 0;
+}
+/*日历*/
+.calendar_win{
+	width: 1000px;
+	margin: auto;
+	border: 1px solid #EFEFEF;
+	padding: 20px;
+}
+#calendar{
+	width:100%;
+}
+
+
+/*公司公告列表*/
+
+.notice_content{
+	width: 100%;
+	
+}
+.notice_content td{
+	vertical-align: top;
+	padding: 15px 0px 10px 0;
+	border-bottom: 1px solid #EFEFEF;
+}
+.last_list td{
+	border: 0;
+}
+
+.notice_content td em.num{
+	display: block;
+	width: 20px;
+	height: 20px;
+	margin: auto;
+	background: #717171;
+	border-radius: 50%;
+	color: #fff;
+	line-height: 20px;
+	text-align: center;
+}
+.notice_content td span.notice_title{
+	display: block;
+	font-size: 16px;
+	line-height: 20px;
+}
+.notice_content td p{
+	font-size: 12px;
+	line-height: 25px;
+}
+.notice_content td p b{
+	color: #CB2E24;
+}
+
+
+/*公告详情*/
+.notice_details_win{
+	padding: 15px;
+}
+.notice_details_content{
+	width: 100%;
+	border: 1px solid #EEEEEE;
+	border-top: 0;
+	border-right: 0;
+	margin-bottom: 15px;
+}
+
+.notice_details_content td{
+	border: 1px solid #EEEEEE;
+	border-left: 0;
+	border-bottom: 0;
+}
+.notice_details_content td span,
+.notice_details_content td p{
+	font-size: 12px;
+	/*color: #76777D;*/
+	line-height: 40px;
+	text-align: right;
+	display: block;
+	padding: 0 10px;
+	font-weight: 700;
+}
+.notice_details_content td p{
+	/*color: #79767B;*/
+	text-align: left;
+	font-weight: normal;
+	font-size: 12px;
+}
+.notice_details_content td p em{
+	color: #8EC165;
+}
+
+/*考勤归档*/
+.classification{
+	padding: 10px;
+}
+.classification td{
+	padding: 0px 5px;
+}
+
+/*报销单录入*/
+
+.account_win{
+	width: 100%;
+	padding: 10px 0;
+}
+.account_win td{
+	padding: 5px 10px;
+}
+
+.total_win{
+	width: 100%;
+	border-bottom: 1px dashed #F3F3F3;
+}
+.total_win td{
+	padding: 5px 10px;
+}
+.total_win td p{
+	
+}
+.account_bottom{
+	margin: auto;
+	padding: 15px 0;
+}
+
+
+/*分类录入*/
+.classification_wrap{
+	width: 100%;
+}
+.classification_wrap td{
+	padding: 10px;
+}
+.classification_win{
+	width: 250px;
+	min-height: 300px;
+	border: 1px solid #E2E2E2;
+}
+
+.classification_content{
+	width: 100%;
+}
+.classification_content td{
+	border-bottom: 1px dashed #EFEFEF;
+}
+.classification_brand td{
+	border: 0;
+	padding: 0;
+}
+
+
+
+/*查看按钮样式*/
+.operation_look,
+.operation_delete,
+.operation_add,
+.operation_picking,
+.operation_out_warehouse{
+	display: inline-block;
+	padding: 6px 25px;
+	line-height: 15px;
+	font-size: 12px;
+	border-radius: 3px;
+	color: #fff;
+	background: #4CC0C1;
+	margin: 8px;
+	cursor: pointer;
+}
+.operation_look{
+	float: left;
+}
+.operation_delete{
+	text-align: center;
+	background: #FB6B5B;
+}
+
+.operation_add{
+	background: #65BD77;
+}
+.operation_picking{
+	background: #FFC333;
+}
+.operation_out_warehouse{
+	background: #FB6B5B;
+}
+/*采购单录入详情*/ 
+
+.Purchase_content_win{
+	padding: 15px;
+}
+.Purchase_content{
+	width: 100%;
+	border-right: 1px solid #F0F0F0;
+	border-bottom: 1px solid #F0F0F0;
+}
+.Purchase_content td{
+	border: 1px solid #F0F0F0;
+	border-right: 0;
+	border-bottom: 0;
+	line-height: 40px;
+	padding: 0 10px;
+}
+
+.Purchase_back{
+	padding: 20px;
+	text-align: center;
+}
+.Purchase_back span{
+	display: inline-block;
+	padding: 0 25px;
+	font-size: 12px;
+	line-height: 25px;
+	border: 1px solid #EFEFEF;
+	border-radius: 3px;
+	cursor: pointer;
+	background: #FAFAFA;
+}
+
+
+
+/*新增采购商品*/
+.purchased{
+	display: block;
+	/*padding: 6px 25px 6px 25px;*/
+	width: 90%;
+	line-height: 30px;
+	font-size: 12px;
+	border-radius: 3px;
+	background: #EEEEEE;
+	margin: 6px auto;
+	border: 1px solid #DFDFDF;
+	text-align: center;
+	outline: none;
+}
+.purchased2{
+	background: #fff;
+}
+
+
+/*审批过程*/
+.user_win{
+	/*padding: 5px 0;*/
+}
+.user_win p.name{
+	display: block;
+	padding: 10px 0;
+	line-height: 15px;
+}
+.user_win em{
+	display: block;
+	width: 100%;
+	height: 50px;
+	background: url(transition.png) no-repeat center center;
+}
+
+/*新增采购商品*/
+.new_purchased_bottom{
+	position: absolute;
+	left: 10px;
+	bottom: 10px;
+}
+
+
+/*对账单*/
+
+.account_statement{
+	display: block;
+	text-align: center;
+	font-weight: 600px;
+	font-size: 18px;
+	line-height: 20px;
+	padding: 10px 0;
+}
+
+
+/*设置预警*/
+.early_warning{
+	padding: 0px 10px 0 10px;
+}
+.early_warning td{
+	padding-bottom: 20px;
+}
+.early_warning td p em{
+	color: #FC797E;
+}
+
+
+/*库房出入录入*/
+
+.check_tip{
+	display: block;
+	line-height: 30px;
+	background: #DFF0D8;
+	color: #649154;
+	padding: 0 20px;
+	font-size: 12px;
+	border-radius: 3px;
+}
+.storeroom_becareful{
+	display: block;
+	background: #F2DEDE;
+	color: #C25D57;
+	padding: 10px 20px;
+	font-size: 12px;
+	border-radius: 3px;
+}
+.storeroom_becareful p{
+	font-size: 16px;
+}

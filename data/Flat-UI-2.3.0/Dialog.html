@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Flat UI - Free Bootstrap Framework and Theme</title>
+    <meta name="description" content="Flat UI Kit Free is a Twitter Bootstrap Framework design and Theme, this responsive framework includes a PSD and HTML version."/>
+
+    <meta name="viewport" content="width=1000, initial-scale=1.0, maximum-scale=1.0">
+
+    <!-- Loading Bootstrap -->
+    <link href="dist/css/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Loading Flat UI -->
+    <link href="dist/css/flat-ui.css" rel="stylesheet">
+    <link href="docs/assets/css/demo.css" rel="stylesheet">
+
+    <link rel="shortcut icon" href="img/favicon.ico">
+
+    <!-- HTML5 shim, for IE6-8 support of HTML5 elements. All other JS at the end of file. -->
+    <!--[if lt IE 9]>
+      <script src="dist/js/vendor/html5shiv.js"></script>
+      <script src="dist/js/vendor/respond.min.js"></script>
+    <![endif]-->
+	<style>
+	.navbar-inverse .navbar-form .btn {
+		color: #ffffff;
+		background-color: #bdc3c7;
+	}
+	</style>
+  </head>
+  <body>
+    
+	<div class="container" style="
+    margin-left: 0px;
+    margin-right: 0px;
+    padding-left: 0px;
+    padding-right: 0px;
+">
+      
+    <div class="row demo-row" style="
+    margin-bottom: 0px;
+    margin-left: 0px;
+    margin-right: 0px;
+">
+        <div class="col-xs-12" style="padding-left: 0px;padding-right: 0px;height: 54px;">
+          <nav class="navbar navbar-inverse navbar-embossed" role="navigation">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-collapse-01">
+                <span class="sr-only">Toggle navigation</span>
+              </button>
+              <a class="navbar-brand" href="#">Flat UI</a>
+            </div>
+            <div class="collapse navbar-collapse" id="title" style="padding-right: 6px;">
+              <ul class="nav navbar-nav navbar-left">
+                <li><a href="#fakelink">Menu Item<span class="navbar-unread">1</span></a></li>
+                <li class="dropdown">
+                  <a href="#" class="dropdown-toggle" data-toggle="dropdown">Messages <b class="caret"></b></a>
+                  <span class="dropdown-arrow"></span>
+                  <ul class="dropdown-menu">
+                    <li><a href="#">Action</a></li>
+                    <li><a href="#">Another action</a></li>
+                    <li><a href="#">Something else here</a></li>
+                    <li class="divider"></li>
+                    <li><a href="#">Separated link</a></li>
+                  </ul>
+                </li>
+                <li><a href="#fakelink">About Us</a></li>
+               </ul>
+               <div class="navbar-form navbar-right" action="#" role="search">
+                <div class="form-group">
+					<div id="Minimize" class="col-xs-3" style="
+							width: 46px;
+							padding-left: 10px;
+							padding-right: 0px;">
+						<a href="#fakelink" class="btn btn-block btn-lg btn-default" style="
+							padding-top: 10px;
+							padding-right: 0px;
+							padding-bottom: 0px;
+							padding-left: 0px;"><span class="fui-triangle-down-small"></span></a>
+					</div>
+					<div id="Close" class="col-xs-3" style="
+						width: 46px;
+						padding-left: 10px;
+						padding-right: 0px;">
+					<a href="#fakelink" class="btn btn-block btn-lg btn-default" style="
+						padding-top: 10px;
+						padding-right: 0px;
+						padding-bottom: 0px;
+						padding-left: 0px;"><span class="fui-cross"></span></a>
+				  </div>
+                </div>
+              </div>
+            </div><!-- /.navbar-collapse -->
+          </nav><!-- /navbar -->
+        </div>
+      </div>
+	
+		<iframe src="content.html" frameborder="none" scrolling="auto" style="width:966px; height:500px;"></iframe>
+	  
+    </div>
+	
+    <footer>
+      <div class="container">
+        <div class="row">
+          
+        </div>
+      </div>
+    </footer>
+
+    <script src="dist/js/vendor/jquery.min.js"></script>
+    <script src="dist/js/vendor/video.js"></script>
+    <script src="dist/js/flat-ui.min.js"></script>
+    <script src="docs/assets/js/application.js"></script>
+
+    <script>
+		$('#title').mousedown(function( event ) {
+			window.external.call('onHitTestCaption', '');
+			//event.preventDefault();
+		});
+		$('#title').dblclick(function( event ) {
+			if ($('#Restore').is(':hidden')){
+				window.external.call('onClickMax', '');
+				$('#Maximize').hide();
+				$('#Restore').show();
+			}else{
+				window.external.call('onClickRestore', '');
+				$('#Maximize').show();
+				$('#Restore').hide();
+			}
+			event.preventDefault();
+		});
+
+		$('#Maximize').show();
+		$('#Restore').hide();
+
+		$("#Close").click(function( event ) {
+			window.external.call('onClickClose', '');
+			event.preventDefault();
+		});
+		$("#Maximize").click(function( event ) {
+			window.external.call('onClickMax', '');
+			$('#Maximize').hide();
+			$('#Restore').show();
+			event.preventDefault();
+		});
+		$("#Restore").click(function( event ) {
+			window.external.call('onClickRestore', '');
+			$('#Maximize').show();
+			$('#Restore').hide();
+			event.preventDefault();
+		});
+		$("#Minimize").click(function( event ) {
+			window.external.call('onClickMin', '');
+			event.preventDefault();
+		});
+		
+		window.external.call('setWindowSize', '966,613');
+    </script>
+  </body>
+</html>

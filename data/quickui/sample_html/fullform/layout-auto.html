@@ -1,0 +1,284 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title></title>
+<!--框架必需start-->
+<script type="text/javascript" src="../../libs/js/jquery.js"></script>
+<script type="text/javascript" src="../../libs/js/language/cn.js"></script>
+<script type="text/javascript" src="../../libs/js/framework.js"></script>
+<link href="../../libs/css/import_basic.css" rel="stylesheet" type="text/css"/>
+<link rel="stylesheet" type="text/css" id="skin" prePath="../../"/>
+<link rel="stylesheet" type="text/css" id="customSkin"/>
+<!--框架必需end-->
+
+<!-- 日期选择框start -->
+<script type="text/javascript" src="../../libs/js/form/datePicker/WdatePicker.js"></script>
+<!-- 日期选择框end -->
+
+<!-- 数字步进器start -->
+<script type="text/javascript" src="../../libs/js/form/stepper.js"></script>
+<!-- 数字步进器end -->
+
+
+<!-- 表单验证start -->
+<script src="../../libs/js/form/validationRule.js" type="text/javascript"></script>
+<script src="../../libs/js/form/validation.js" type="text/javascript"></script>
+<!-- 表单验证end -->
+</head>
+<style>
+.formLayoutContent{
+	border: 0!important;
+}
+.formLayoutContent  .ele{
+	/*在这里自定义表单元素容器宽度*/
+}
+.formLayoutContent  .eleValidateInfo{
+	/*在这里自定义表单元素容器宽度*/
+}
+</style>
+<script>
+
+	function validateForm2(containerId){
+	    var valid = $(containerId).validationEngine({returnIsValid: true,showOnMouseOver:false});
+		if(valid == true){
+			top.Toast("showNoticeToast", '进行提交处理');
+		}else{
+		    top.Toast("showNoticeToast", '表单填写不正确，请按要求填写！');
+		} 
+	} 
+</script>
+<body>
+<div class="page_content">
+			<div class="groupTitle"><span>浏览器尺寸变化时，表单会重新排列</span></div>
+	
+	
+	
+	<div class="infoCard">
+		<div class="title">
+			<span>信息添加</span>
+		</div>
+		<div class="content">
+			<table cellpadding="0" cellspacing="0" width="100%">
+				<tr>
+					<td width="210" class="ver01">
+						<img src="../../libs/images/demo/demo5.jpg"/>
+					</td>
+					<td width="100%" class="ver01">
+						<form id="form2" method="post" action="" showOnMouseOver="false">
+						<div class="formLayout">
+							<div class="formLayoutContent">
+								<dl>
+									<dd class="label">身份证号码：</dd>
+									<dd class="eleValidateInfo"><input type="text" class="validate[required] float_left"/><span class="star float_left">*</span><div class="validation_info"></div><div class="clear"></div></dd>
+									<div class="clear"></div>
+								</dl>
+								<dl>
+									<dd class="label">姓名：</dd>
+									<dd class="eleValidateInfo"><input type="text" class="validate[required,custom[chinese],length[0,20]] float_left"/><span class="star float_left">*</span><div class="validation_info"></div><div class="clear"></div></dd>
+									<div class="clear"></div>
+								</dl>
+								<dl>
+									<dd class="label">曾用名：</dd>
+									<dd class="eleValidateInfo"><input type="text"/></dd>
+									<div class="clear"></div>
+								</dl>
+								<dl>
+									<dd class="label">性别：</dd>
+									<dd class="eleValidateInfo"><select><option value="1">男</option><option value="2">女</option></select></dd>
+									<div class="clear"></div>
+								</dl>
+								<dl>
+									<dd class="label">出生日期：</dd>
+									<dd class="eleValidateInfo"><input type="text" class="date validate[required] float_left"/><span class="star float_left">*</span><div class="validation_info"></div><div class="clear"></div></dd>
+									<div class="clear"></div>
+								</dl>
+								<dl>
+									<dd class="label">年龄：</dd>
+									<dd class="eleValidateInfo"><input type="text" class="stepper"/></dd>
+									<div class="clear"></div>
+								</dl>
+								<dl>
+									<dd class="label">身高：</dd>
+									<dd class="eleValidateInfo"><input type="text"/></dd>
+									<div class="clear"></div>
+								</dl>
+								<dl>
+									<dd class="label">血型：</dd>
+									<dd class="eleValidateInfo"><select><option value="1">A型</option><option value="2">B型</option><option value="3">O型</option></select></dd>
+									<div class="clear"></div>
+								</dl>
+								<dl>
+									<dd class="label">职业：</dd>
+									<dd class="eleValidateInfo"><select><option value="1">法学研究人员</option><option value="2">授课教师</option><option value="3">学生</option></select></dd>
+									<div class="clear"></div>
+								</dl>
+								<dl>
+									<dd class="label">文化程度：</dd>
+									<dd class="eleValidateInfo"><select><option value="1">本科</option><option value="2">硕士</option><option value="3">博士</option></select></dd>
+									<div class="clear"></div>
+								</dl>
+								<dl>
+									<dd class="label">政治面貌：</dd>
+									<dd class="eleValidateInfo"><select><option value="1">党员</option><option value="2">团员</option><option value="3">群众</option></select></dd>
+									<div class="clear"></div>
+								</dl>
+								<dl>
+									<dd class="label">婚姻状况：</dd>
+									<dd class="eleValidateInfo"><select><option value="1">已婚</option><option value="2">未婚</option></select></dd>
+									<div class="clear"></div>
+								</dl>
+								<dl>
+									<dd class="label">民族：</dd>
+									<dd class="eleValidateInfo"><select><option value="1">汉族</option><option value="2">满族</option><option value="3">维吾尔族</option></select></dd>
+									<div class="clear"></div>
+								</dl>
+								<dl>
+									<dd class="label">户籍所在地：</dd>
+									<dd class="eleValidateInfo"><input type="text"/></dd>
+									<div class="clear"></div>
+								</dl>
+								<div class="clear"></div>
+								<table  cellpadding="0" cellspacing="0" width="100%" style="padding-top:5px;">
+									<tr>
+										<td width="100" class="ver01"><dd class="label">现居住地：</dd></td>
+										<td><textarea style="width:80%;" class="validate[required,custom[chinese],length[0,20]] float_left"></textarea><span class="star float_left">*</span><div class="validation_info"></div><div class="clear"></div></td>
+									</tr>
+								</table>
+								<table  cellpadding="0" cellspacing="0" width="100%" style="padding-top:5px;">
+									<tr>
+										<td width="100" class="ver01"><dd class="label">备注信息：</dd></td>
+										<td><textarea style="width:80%;"></textarea></td>
+									</tr>
+								</table>
+								<table width="100%">
+									<tr>
+										<td class="ali02">
+											<button type="button" class="primary" onclick="validateForm2('#form2');"><span class="icon_save">保存</span></button>
+											<button type="button"><span class="icon_clear">取消</span></button>
+										</td>
+									</tr>
+								</table>
+							</div>
+						</div>
+						</form>
+					</td>
+				</tr>
+			</table>
+		</div>
+	</div>
+	
+	<div class="height_15"></div>
+	
+	<div class="infoCard">
+		<div class="title">
+			<span>信息展示</span>
+		</div>
+		<div class="content">
+			<table cellpadding="0" cellspacing="0" width="100%">
+				<tr>
+					<td width="210" class="ver01">
+						<img src="../../libs/images/demo/demo5.jpg"/>
+					</td>
+					<td width="100%" class="ver01">
+						<div class="formLayout">
+							<div class="formLayoutContent">
+								<dl>
+									<dd class="label">身份证号码：</dd>
+									<dd class="ele">232303195121254548</dd>
+									<div class="clear"></div>
+								</dl>
+								<dl>
+									<dd class="label">姓名：</dd>
+									<dd class="ele">张小三</dd>
+									<div class="clear"></div>
+								</dl>
+								<dl>
+									<dd class="label">曾用名：</dd>
+									<dd class="ele">张三</dd>
+									<div class="clear"></div>
+								</dl>
+								<dl>
+									<dd class="label">性别：</dd>
+									<dd class="ele">男</dd>
+									<div class="clear"></div>
+								</dl>
+								<dl>
+									<dd class="label">出生日期：</dd>
+									<dd class="ele">1985-12-12</dd>
+									<div class="clear"></div>
+								</dl>
+								<dl>
+									<dd class="label">年龄：</dd>
+									<dd class="ele">30</dd>
+									<div class="clear"></div>
+								</dl>
+								<dl>
+									<dd class="label">身高：</dd>
+									<dd class="ele">178cm</dd>
+									<div class="clear"></div>
+								</dl>
+								<dl>
+									<dd class="label">血型：</dd>
+									<dd class="ele">O型</dd>
+									<div class="clear"></div>
+								</dl>
+								<dl>
+									<dd class="label">职业：</dd>
+									<dd class="ele">法学研究人员</dd>
+									<div class="clear"></div>
+								</dl>
+								<dl>
+									<dd class="label">文化程度：</dd>
+									<dd class="ele">本科</dd>
+									<div class="clear"></div>
+								</dl>
+								<dl>
+									<dd class="label">政治面貌：</dd>
+									<dd class="ele">党员</dd>
+									<div class="clear"></div>
+								</dl>
+								<dl>
+									<dd class="label">婚姻状况：</dd>
+									<dd class="ele">已婚</dd>
+									<div class="clear"></div>
+								</dl>
+								<dl>
+									<dd class="label">民族：</dd>
+									<dd class="ele">汉族</dd>
+									<div class="clear"></div>
+								</dl>
+								<dl>
+									<dd class="label">户籍所在地：</dd>
+									<dd class="ele">黑龙江</dd>
+									<div class="clear"></div>
+								</dl>
+								<div class="clear"></div>
+								<table  cellpadding="0" cellspacing="0" width="100%" style="padding-top:5px;">
+									<tr>
+										<td width="100" class="ver01"><dd class="label">现居住地：</dd></td>
+										<td>北京市海淀区北四环西路9号银谷大厦8层</td>
+									</tr>
+								</table>
+								<table  cellpadding="0" cellspacing="0" width="100%" style="padding-top:5px;">
+									<tr>
+										<td width="100" class="ver01"><dd class="label">备注信息：</dd></td>
+										<td>无备注信息</td>
+									</tr>
+								</table>
+							</div>
+						</div>
+					</td>
+					<td width="80" class="ver01">
+						<div style="width:80px;padding-top:10px;">
+							<button><span class="icon_edit">编 辑</span></button>
+						</div>
+					</td>
+				</tr>
+			</table>
+		</div>
+	</div>
+	
+</div>	
+</body>
+</html>

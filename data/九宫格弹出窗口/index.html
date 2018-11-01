@@ -1,0 +1,349 @@
+﻿<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>js+css3九宫格弹出窗口代码 - 站长素材</title>
+
+<style>
+html, body {
+  padding: 0px;
+  margin: 0px;
+  background: #222;
+  font-family: 'Arvo', sans-serif;
+  color: #FFF;
+  height: 100%;
+}
+
+body {
+  display: flex;
+  padding: 10px;
+}
+
+cs-app, cs-app * {
+  box-sizing: border-box;
+  border: none;
+  background: transparent;
+  padding: 0;
+  margin: 0;
+  display: block;
+}
+
+cs-app {
+  margin: auto;
+  width: 100%;
+  max-width: 450px;
+}
+cs-app cs-title {
+  text-align: center;
+  margin-bottom: 10px;
+  font-size: 21px;
+}
+cs-app cs-tiles {
+  height: 344px;
+  position: relative;
+}
+cs-app cs-tiles input {
+  display: none;
+}
+cs-app cs-tiles cs-tile-container {
+  display: flex;
+  position: absolute;
+  height: 85px;
+  -webkit-transform: translateX(-50%);
+          transform: translateX(-50%);
+  transition: all 0.15s 0.15s;
+  z-index: 1000;
+}
+cs-app cs-tiles cs-tile-container cs-tile {
+  background: #36f;
+  margin: auto;
+  width: 90%;
+  height: 80%;
+  border-radius: 2px;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+  position: relative;
+  transition: all 0.15s 0.15s, background 0.15s;
+}
+cs-app cs-tiles cs-tile-container cs-tile:hover {
+  box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.75);
+  background: #668cff;
+}
+cs-app cs-tiles cs-tile-container cs-tile cs-text {
+  transition: all 0.15s 0.15s;
+  width: 100%;
+  text-align: center;
+  line-height: 70px;
+  white-space: nowrap;
+  text-transform: uppercase;
+}
+cs-app cs-tiles cs-tile-container cs-tile cs-content {
+  transition: all 0.15s, max-height 0s;
+  opacity: 0;
+  pointer-events: none;
+  overflow: hidden;
+  max-height: 0;
+}
+cs-app cs-tiles cs-tile-container cs-tile .cs-open {
+  cursor: pointer;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+}
+cs-app cs-tiles cs-tile-container cs-tile .cs-close {
+  cursor: pointer;
+  transition: all 0.15s;
+  position: absolute;
+  opacity: 0;
+  top: 25px;
+  right: 25px;
+  -webkit-transform: rotateZ(45deg) translateX(-50%) translateY(-50%);
+          transform: rotateZ(45deg) translateX(-50%) translateY(-50%);
+  font-size: 25px;
+}
+cs-app cs-tiles input:checked + cs-tile-container {
+  transition: all 0.25s;
+  width: 100%;
+  height: 100%;
+  left: 50%;
+  top: 50%;
+  -webkit-transform: translateX(-50%) translateY(-50%);
+          transform: translateX(-50%) translateY(-50%);
+  z-index: 10000;
+}
+cs-app cs-tiles input:checked + cs-tile-container cs-tile {
+  transition: all 0.25s;
+  background: #3b3;
+  height: 80%;
+  width: 80%;
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.5);
+}
+cs-app cs-tiles input:checked + cs-tile-container cs-tile:hover {
+  cursor: initial;
+}
+cs-app cs-tiles input:checked + cs-tile-container cs-tile .cs-open {
+  display: none;
+}
+cs-app cs-tiles input:checked + cs-tile-container cs-tile .cs-close {
+  transition: all 0.15s 0.25s;
+  opacity: 1;
+}
+cs-app cs-tiles input:checked + cs-tile-container cs-tile .cs-close:hover {
+  transition: all 0.15s;
+  opacity: 0.5;
+}
+cs-app cs-tiles input:checked + cs-tile-container cs-tile cs-text {
+  transition: all 0.15s 0.25s;
+  font-size: 24px;
+  line-height: 50px;
+}
+cs-app cs-tiles input:checked + cs-tile-container cs-tile cs-content {
+  flex: 1;
+  transition: all 0.25s 0.4s, max-height 0s 0.4s, flex 0s 0.4s;
+  opacity: 1;
+  margin-top: 10px;
+  pointer-events: initial;
+  width: 100%;
+  max-height: 1000000px;
+  overflow: hidden;
+}
+cs-app cs-tile-container:nth-of-type(1) {
+  left: calc(0 * 33.334% + 1 * 16.667%);
+  top: calc(0 * 85px);
+  width: 33.334%;
+}
+cs-app cs-tile-container:nth-of-type(2) {
+  left: calc(1 * 33.334% + 1 * 16.667%);
+  top: calc(0 * 85px);
+  width: 33.334%;
+}
+cs-app cs-tile-container:nth-of-type(3) {
+  left: calc(2 * 33.334% + 1 * 16.667%);
+  top: calc(0 * 85px);
+  width: 33.334%;
+}
+cs-app cs-tile-container:nth-of-type(4) {
+  left: calc(0 * 33.334% + 1 * 16.667%);
+  top: calc(1 * 85px);
+  width: 33.334%;
+}
+cs-app cs-tile-container:nth-of-type(5) {
+  left: calc(1 * 33.334% + 1 * 16.667%);
+  top: calc(1 * 85px);
+  width: 33.334%;
+}
+cs-app cs-tile-container:nth-of-type(6) {
+  left: calc(2 * 33.334% + 1 * 16.667%);
+  top: calc(1 * 85px);
+  width: 33.334%;
+}
+cs-app cs-tile-container:nth-of-type(7) {
+  left: calc(0 * 33.334% + 1 * 16.667%);
+  top: calc(2 * 85px);
+  width: 33.334%;
+}
+cs-app cs-tile-container:nth-of-type(8) {
+  left: calc(1 * 33.334% + 1 * 16.667%);
+  top: calc(2 * 85px);
+  width: 33.334%;
+}
+cs-app cs-tile-container:nth-of-type(9) {
+  left: calc(2 * 33.334% + 1 * 16.667%);
+  top: calc(2 * 85px);
+  width: 33.334%;
+}
+cs-app cs-tile-container:nth-of-type(10) {
+  left: calc(0 * 33.334% + 1 * 16.667%);
+  top: calc(3 * 85px);
+  width: 33.334%;
+}
+cs-app cs-tile-container:nth-of-type(11) {
+  left: calc(1 * 33.334% + 1 * 16.667%);
+  top: calc(3 * 85px);
+  width: 33.334%;
+}
+cs-app cs-tile-container:nth-of-type(12) {
+  left: calc(2 * 33.334% + 1 * 16.667%);
+  top: calc(3 * 85px);
+  width: 33.334%;
+}
+</style>
+</head>
+<body>
+
+<cs-app>
+  <cs-title>打开动画</cs-title>
+  <cs-tiles>
+    <input type="checkbox" id="demo-1">
+    <cs-tile-container>
+      <cs-tile>
+        <label class="cs-open" for="demo-1"></label>
+        <label class="cs-close" for="demo-1">+</label>
+        <cs-text>demo 1</cs-text>
+        <cs-content>demo text. demo text. demo text. demo text. demo text. demo text. demo text. demo text. demo text. demo text. demo text. demo text. demo text. demo text. demo text. demo text. demo text. demo text. demo text. demo text. demo text. demo text. demo text. demo text. demo text. demo text. demo text.</cs-content>
+      </cs-tile>
+    </cs-tile-container>
+    <input type="checkbox" id="demo-2">
+    <cs-tile-container>
+      <cs-tile>
+        <label class="cs-open" for="demo-2"></label>
+        <label class="cs-close" for="demo-2">+</label>
+        <cs-text>demo 2</cs-text>
+        <cs-content>demo text. demo text. demo text. demo text. demo text. demo text. demo text. demo text. demo text. demo text. demo text. demo text. demo text. demo text. demo text. demo text. demo text. demo text. demo text. demo text. demo text. demo text. demo text. demo text. demo text. demo text. demo text.</cs-content>
+      </cs-tile>
+    </cs-tile-container>
+    <input type="checkbox" id="demo-3">
+    <cs-tile-container>
+      <cs-tile>
+        <label class="cs-open" for="demo-3"></label>
+        <label class="cs-close" for="demo-3">+</label>
+        <cs-text>demo 3</cs-text>
+        <cs-content>demo text. demo text. demo text. demo text. demo text. demo text. demo text. demo text. demo text. demo text. demo text. demo text. demo text. demo text. demo text. demo text. demo text. demo text. demo text. demo text. demo text. demo text. demo text. demo text. demo text. demo text. demo text.</cs-content>
+      </cs-tile>
+    </cs-tile-container>
+    <input type="checkbox" id="demo-4">
+    <cs-tile-container>
+      <cs-tile>
+        <label class="cs-open" for="demo-4"></label>
+        <label class="cs-close" for="demo-4">+</label>
+        <cs-text>demo 4</cs-text>
+        <cs-content>demo text. demo text. demo text. demo text. demo text. demo text. demo text. demo text. demo text. demo text. demo text. demo text. demo text. demo text. demo text. demo text. demo text. demo text. demo text. demo text. demo text. demo text. demo text. demo text. demo text. demo text. demo text.</cs-content>
+      </cs-tile>
+    </cs-tile-container>
+    <input type="checkbox" id="demo-5">
+    <cs-tile-container>
+      <cs-tile>
+        <label class="cs-open" for="demo-5"></label>
+        <label class="cs-close" for="demo-5">+</label>
+        <cs-text>demo 5</cs-text>
+        <cs-content>demo text. demo text. demo text. demo text. demo text. demo text. demo text. demo text. demo text. demo text. demo text. demo text. demo text. demo text. demo text. demo text. demo text. demo text. demo text. demo text. demo text. demo text. demo text. demo text. demo text. demo text. demo text.</cs-content>
+      </cs-tile>
+    </cs-tile-container>
+    <input type="checkbox" id="demo-6">
+    <cs-tile-container>
+      <cs-tile>
+        <label class="cs-open" for="demo-6"></label>
+        <label class="cs-close" for="demo-6">+</label>
+        <cs-text>demo 6</cs-text>
+        <cs-content>demo text. demo text. demo text. demo text. demo text. demo text. demo text. demo text. demo text. demo text. demo text. demo text. demo text. demo text. demo text. demo text. demo text. demo text. demo text. demo text. demo text. demo text. demo text. demo text. demo text. demo text. demo text.</cs-content>
+      </cs-tile>
+    </cs-tile-container>
+    <input type="checkbox" id="demo-7">
+    <cs-tile-container>
+      <cs-tile>
+        <label class="cs-open" for="demo-7"></label>
+        <label class="cs-close" for="demo-7">+</label>
+        <cs-text>demo 7</cs-text>
+        <cs-content>demo text. demo text. demo text. demo text. demo text. demo text. demo text. demo text. demo text. demo text. demo text. demo text. demo text. demo text. demo text. demo text. demo text. demo text. demo text. demo text. demo text. demo text. demo text. demo text. demo text. demo text. demo text.</cs-content>
+      </cs-tile>
+    </cs-tile-container>
+    <input type="checkbox" id="demo-8">
+    <cs-tile-container>
+      <cs-tile>
+        <label class="cs-open" for="demo-8"></label>
+        <label class="cs-close" for="demo-8">+</label>
+        <cs-text>demo 8</cs-text>
+        <cs-content>demo text. demo text. demo text. demo text. demo text. demo text. demo text. demo text. demo text. demo text. demo text. demo text. demo text. demo text. demo text. demo text. demo text. demo text. demo text. demo text. demo text. demo text. demo text. demo text. demo text. demo text. demo text.</cs-content>
+      </cs-tile>
+    </cs-tile-container>
+    <input type="checkbox" id="demo-9">
+    <cs-tile-container>
+      <cs-tile>
+        <label class="cs-open" for="demo-9"></label>
+        <label class="cs-close" for="demo-9">+</label>
+        <cs-text>demo 9</cs-text>
+        <cs-content>demo text. demo text. demo text. demo text. demo text. demo text. demo text. demo text. demo text. demo text. demo text. demo text. demo text. demo text. demo text. demo text. demo text. demo text. demo text. demo text. demo text. demo text. demo text. demo text. demo text. demo text. demo text.</cs-content>
+      </cs-tile>
+    </cs-tile-container>
+    <input type="checkbox" id="demo-10">
+    <cs-tile-container>
+      <cs-tile>
+        <label class="cs-open" for="demo-10"></label>
+        <label class="cs-close" for="demo-10">+</label>
+        <cs-text>demo 10</cs-text>
+        <cs-content>demo text. demo text. demo text. demo text. demo text. demo text. demo text. demo text. demo text. demo text. demo text. demo text. demo text. demo text. demo text. demo text. demo text. demo text. demo text. demo text. demo text. demo text. demo text. demo text. demo text. demo text. demo text.</cs-content>
+      </cs-tile>
+    </cs-tile-container>
+    <input type="checkbox" id="demo-11">
+    <cs-tile-container>
+      <cs-tile>
+        <label class="cs-open" for="demo-11"></label>
+        <label class="cs-close" for="demo-11">+</label>
+        <cs-text>demo 11</cs-text>
+        <cs-content>demo text. demo text. demo text. demo text. demo text. demo text. demo text. demo text. demo text. demo text. demo text. demo text. demo text. demo text. demo text. demo text. demo text. demo text. demo text. demo text. demo text. demo text. demo text. demo text. demo text. demo text. demo text.</cs-content>
+      </cs-tile>
+    </cs-tile-container>
+    <input type="checkbox" id="demo-12">
+    <cs-tile-container>
+      <cs-tile>
+        <label class="cs-open" for="demo-12"></label>
+        <label class="cs-close" for="demo-12">+</label>
+        <cs-text>demo 12</cs-text>
+        <cs-content>demo text. demo text. demo text. demo text. demo text. demo text. demo text. demo text. demo text. demo text. demo text. demo text. demo text. demo text. demo text. demo text. demo text. demo text. demo text. demo text. demo text. demo text. demo text. demo text. demo text. demo text. demo text.</cs-content>
+      </cs-tile>
+    </cs-tile-container>
+  </cs-tiles>
+</cs-app>
+
+<script>
+// demo or it did not happen
+
+var demo1 = document.querySelector('#demo-1')
+var demo2 = document.querySelector('#demo-2')
+
+setTimeout(() => { demo1.checked = true }, 500)
+setTimeout(() => { demo1.checked = false}, 1500)
+setTimeout(() => { demo2.checked = true }, 2000)
+setTimeout(() => { demo2.checked = false}, 3000)
+</script>
+
+</body>
+</html>
+

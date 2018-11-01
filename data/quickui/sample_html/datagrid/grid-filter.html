@@ -1,0 +1,108 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+		<title></title>
+		<!--框架必需start-->
+		<script type="text/javascript" src="../../libs/js/jquery.js"></script>
+		<script type="text/javascript" src="../../libs/js/language/cn.js"></script>
+		<script type="text/javascript" src="../../libs/js/framework.js"></script>
+		<link href="../../libs/css/import_basic.css" rel="stylesheet" type="text/css" />
+		<link rel="stylesheet" type="text/css" id="skin" prePath="../../" />
+		<link rel="stylesheet" type="text/css" id="customSkin" />
+		<!--框架必需end-->
+		<!-- 条件过滤器2 start -->
+		<script type="text/javascript" src="../../libs/js/form/condition.js"></script>
+		<!-- 条件过滤器2 end -->
+		<!--数据表格start-->
+		<script src="../../libs/js/table/quiGrid.js" type="text/javascript"></script>
+		<!--数据表格end-->
+	</head>
+	<body>
+		<div class="page_content">
+			<div class="tab_content" style="display: block;">
+				<div id="condition-1" class="condition" multiMode="true"></div>
+				<div style="height:8px;overflow:hidden;"></div>
+				<div style="height:8px;overflow:hidden;"></div>
+				<div id="maingrid"></div>
+			</div>
+		</div>
+		
+		<script>
+			var conditionData={"list":[
+		{"name":"认购期限","list":[
+			{"key":"全部","value":"11"},{"key":"在售","value":"12"},{"key":"预售","value":"13"},{"key":"已停售","value":"14"}
+		]},
+		{"name":"产品类型","list":[
+			{"key":"全部","value":"21"},{"key":"活期","value":"22"},{"key":"定期","value":"23"},{"key":"通知存款","value":"24"},{"key":"理财产品","value":"25"},{"key":"无抵押贷款","value":"26"}
+		]},
+		{"name":"起购金额","list":[
+			{"key":"全部","value":"31"},{"key":"5千元以下（不含）","value":"32"},{"key":"5千-5万元（不含）","value":"33"},{"key":"5万元及以上","value":"34"}
+		]},
+		{"name":"理财期限","list":[
+			{"key":"全部","value":"41"},{"key":"1个月以下（不含）","value":"42"},{"key":"1-6个月（不含）","value":"43"},{"key":"6个月-1年（不含）","value":"44"},{"key":"1-5年","value":"45"},{"key":"不定期","value":"46"}
+		]},
+		{"name":"内测年化收益","list":[
+			{"key":"全部","value":"51"},{"key":"3%以下（不含）","value":"52"},{"key":"3%-5%（不含）","value":"53"},{"key":"5%及以上","value":"54"}
+		]}
+	]};
+	
+	
+	$(function(){
+		$("#condition-1").data("data",conditionData);
+		$("#condition-1").render();
+		$("#condition-1").bind("change",function(e,values){
+			//$("#condition-1-value").val(values);
+		})
+	})
+	
+	   var testData={"form.paginate.pageNo":1,"form.paginate.totalRows":13,"rows":[
+      {"name":"000001","hot":0,"date":"专卖高手","start":"1万元","duration":"15002333696","rate":"POS机组...","count":"普通会员"},
+      {"name":"000002","hot":0,"date":"专卖高手","start":"1万元","duration":"15002333696","rate":"POS机组...","count":"普通会员"},
+      {"name":"000003","hot":0,"date":"专卖高手","start":"10万元","duration":"15002333696","rate":"POS机组...","count":"普通会员"},
+      {"name":"000004","hot":0,"date":"专卖高手","start":"10万元","duration":"15002333696","rate":"POS机组...","count":"普通会员"},
+      {"name":"000005","hot":0,"date":"专卖高手","start":"1万元","duration":"15002333696","rate":"POS机组...","count":"普通会员"},
+      {"name":"000006","hot":0,"date":"专卖高手","start":"15万元","duration":"15002333696","rate":"POS机组...","count":"普通会员"}
+      ]}
+       
+       //数据表格使用
+        var g;
+		$(function(){
+			 g = $("#maingrid").quiGrid({
+                columns: [ 
+	                { display: '卡号', name: 'name', align: 'left',  width: 200,
+						 render: function (rowdata, rowindex, value, column){
+						 	var strhtml;
+						 	if(rowdata.hot==1){
+						 		strhtml='<div class="tdContentStyle1">' + rowdata.name+ '</div>';
+						 	}
+						 	else{
+						 		strhtml='<div class="tdContentStyle2">' + rowdata.name+ '</div>';
+						 	}
+	                 	    return strhtml;
+		                 }},
+	                { display: '会员名称', name: 'date', align: 'center' , width: "20%"},
+	                { display: '标签', name: 'start',  align: 'center' , width: "20%"},
+	                { display: '电话号码', name: 'duration',  align: 'center', width: "20%" },
+	                { display: '分组', name: 'rate',  align: 'center', width: "20%" },
+	                { display: '等级', name: 'count',  align: 'left', width: "20%",
+						 render: function (rowdata, rowindex, value, column){
+						 	var strhtml='<div class="tdContentStyle4">' + rowdata.count+ '</div>';
+	                 	    return strhtml;
+		                 }  },
+	                { display: '操作', name: 'count',  align: 'center', width: 100,
+						 render: function (rowdata, rowindex, value, column){
+						 	var strhtml='<div class="tdContentStyle3">记账</div>';
+	                 	    return strhtml;
+		                 } }
+                ], data:testData, pageSize: 10, rownumbers:false, checkbox:true,percentWidthMode:true,
+                height: '100%', width:"100%"
+                
+                
+                
+            });
+		})
+		</script>
+	</body>
+
+</html>

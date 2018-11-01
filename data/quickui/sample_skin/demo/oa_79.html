@@ -1,0 +1,133 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<title>无标题文档</title>
+		<!--框架必需start-->
+		<script type="text/javascript" src="../../libs/js/jquery.js"></script>
+		<script type="text/javascript" src="../../libs/js/language/cn.js"></script>
+		<script type="text/javascript" src="../../libs/js/framework.js"></script>
+		<link href="../../libs/css/import_basic.css" rel="stylesheet" type="text/css" />
+		<link rel="stylesheet" type="text/css" id="skin" prePath="../../" />
+		<link rel="stylesheet" type="text/css" id="customSkin" />
+		<!--框架必需end-->
+		<link rel="stylesheet" type="text/css" href="style/style.css" />
+
+		<script src="../../libs/js/table/quiGrid.js" type="text/javascript"></script>
+
+		<style type="text/css">
+			/*body {
+				background: #fff;
+			}*/
+		</style>
+	</head>
+
+	<body>
+		<div class="page_content">
+			
+			<div class="infoCard infoCard2">
+				<div class="title">
+					<span>审批流配置</span>
+				</div>
+				<div class="attendance_list_operation">
+					<table border="0" cellspacing="0" cellpadding="0" class="search_content">
+						<tr>
+							<td>搜索：</td>
+							<td><input type="text" /></td>
+							<td><input type="button" value="搜索" class="" /></td>
+						</tr>
+					</table>
+					<div class="clear"></div>
+				</div>
+				<div id="dataBasic"></div>
+			</div>
+		</div>
+
+		<script type="text/javascript">
+			var grid = null;
+			//数据表格使用
+			var gridData = {
+				"form.paginate.pageNo": 1,
+				"form.paginate.totalRows": 13,
+				"rows": [{
+						"id": 5418,
+						"Type": "采购退货"
+					},{
+						"id": 5418,
+						"Type": "报销单据"
+					},{
+						"id": 5418,
+						"Type": "人工受订单"
+					},{
+						"id": 5418,
+						"Type": "考勤-外勤单"
+					},{
+						"id": 5418,
+						"Type": "考勤-请假单"
+					},{
+						"id": 5418,
+						"Type": "考勤-加班单"
+					},{
+						"id": 5418,
+						"Type": "采购单"
+					}
+				]
+			}
+
+			function initComplete() {
+				grid = $("#dataBasic").quiGrid({
+					columns: [{
+							display: '编号',
+							name: 'id',
+							width: "30%",
+							cellClick: true
+						},{
+							display: '单据类型',
+							name: 'Type',
+							width: "70%"
+						},
+						{
+							display: '操作',
+							name: 'name',
+							align: 'left',
+							width: 95,
+							render: function(rowdata, rowindex, value, column) {
+								var mainCon = $('<div></div>');
+								var con = $('<span class="operation_add" onclick="" style="float:none;">编辑</span>');
+								mainCon.append(con);
+								return mainCon.html();
+							}
+						}
+					],
+					data: gridData,
+					sortName: 'id',
+					rownumbers: false,
+					checkbox: false,
+					height: '100%',
+					width: "100%",
+					pageSize: 10,
+					percentWidthMode: true,
+					onAfterShowData: onAfterShowData
+
+				});
+			}
+			
+			function onAfterShowData(data) {
+
+				$("#dataBasic").find(".popupMenu").each(function() {
+					$(this).hover(function() {
+						$(this).find(".popupMenu_con").show();
+					}, function() {
+						$(this).find(".popupMenu_con").hide();
+					});
+				})
+			}
+			
+			function earlyWarning(){
+				top.Dialog.open({URL:"../../sample_skin/demo/oa_52.html",Title:"设置预警",Width:400,Height:250});
+			}
+		</script>
+	</body>
+
+</html>

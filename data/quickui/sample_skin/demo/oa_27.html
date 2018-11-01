@@ -1,0 +1,220 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<title>无标题文档</title>
+		<!--框架必需start-->
+		<script type="text/javascript" src="../../libs/js/jquery.js"></script>
+		<script type="text/javascript" src="../../libs/js/language/cn.js"></script>
+		<script type="text/javascript" src="../../libs/js/framework.js"></script>
+		<link href="../../libs/css/import_basic.css" rel="stylesheet" type="text/css" />
+		<link rel="stylesheet" type="text/css" id="skin" prePath="../../" />
+		<link rel="stylesheet" type="text/css" id="customSkin" />
+		<!--框架必需end-->
+		<link rel="stylesheet" type="text/css" href="style/style.css" />
+
+		<script src="../../libs/js/table/quiGrid.js" type="text/javascript"></script>
+
+		<style type="text/css">
+			/*body {
+				background: #fff;
+			}*/
+		
+		</style>
+	</head>
+
+	<body>
+		<div class="page_content">
+			<div class="demo_operation">
+				<input type="button" value="商品SKU录入" class="primary" onclick="window.location='oa_29.html'" />
+			</div>
+			<div class="infoCard infoCard2">
+				<div class="title">
+					<span>商品SKU列表</span>
+				</div>
+				<div class="attendance_list_operation">
+					<table border="0" cellspacing="0" cellpadding="0" class="search_content">
+						<tr>
+							<td>搜索：</td>
+							<td><input type="text" /></td>
+							<td><input type="button" value="搜索" class="" /></td>
+						</tr>
+					</table>
+					<div class="clear"></div>
+				</div>
+				<div id="dataBasic"></div>
+			</div>
+		</div>
+
+		<script type="text/javascript">
+			var grid = null;
+			//数据表格使用
+			var gridData = {
+				"form.paginate.pageNo": 1,
+				"form.paginate.totalRows": 13,
+				"rows": [{
+						"id": 5418,
+						"Barcode": "zbb123412",
+						"Internal_barcode": "zbb123412",
+						"name": "隐鲉淘友1239D12341牛仔裤+蓝色80",
+						"specification": "",
+						"counterpart": "未设置",
+						"money": "30.75",
+						"franchise_price": "36.9",
+						"cost_price": "1.5",
+						"State": "上架"
+					},{
+						"id": 5418,
+						"Barcode": "zbb123412",
+						"Internal_barcode": "zbb123412",
+						"name": "隐鲉淘友1239D12341牛仔裤+蓝色80",
+						"specification": "",
+						"counterpart": "未设置",
+						"money": "30.75",
+						"franchise_price": "36.9",
+						"cost_price": "1.5",
+						"State": "下架"
+					},{
+						"id": 5418,
+						"Barcode": "zbb123412",
+						"Internal_barcode": "zbb123412",
+						"name": "隐鲉淘友1239D12341牛仔裤+蓝色80",
+						"specification": "",
+						"counterpart": "未设置",
+						"money": "30.75",
+						"franchise_price": "36.9",
+						"cost_price": "1.5",
+						"State": "上架"
+					},{
+						"id": 5418,
+						"Barcode": "zbb123412",
+						"Internal_barcode": "zbb123412",
+						"name": "隐鲉淘友1239D12341牛仔裤+蓝色80",
+						"specification": "",
+						"counterpart": "未设置",
+						"money": "30.75",
+						"franchise_price": "36.9",
+						"cost_price": "1.5",
+						"State": "上架"
+					},{
+						"id": 5418,
+						"Barcode": "zbb123412",
+						"Internal_barcode": "zbb123412",
+						"name": "隐鲉淘友1239D12341牛仔裤+蓝色80",
+						"specification": "",
+						"counterpart": "未设置",
+						"money": "30.75",
+						"franchise_price": "36.9",
+						"cost_price": "1.5",
+						"State": "下架"
+					}
+				]
+			}
+
+			function initComplete() {
+				grid = $("#dataBasic").quiGrid({
+					columns: [{
+							display: '编号',
+							name: 'id',
+							width: "10%",
+							cellClick: true
+						},{
+							display: '国际条码',
+							name: 'Barcode',
+							width: "10%",
+							cellClick: true
+						},{
+							display: '内部条码',
+							name: 'Internal_barcode',
+							width: "10%",
+							cellClick: true
+						},
+						{
+							display: '商品名称',
+							name: 'name',
+							width: "35%"
+						},
+						{
+							display: '商品规格',
+							name: 'specification',
+							width: "5%"
+						},
+						{
+							display: '对应商品',
+							name: 'counterpart ',
+							width: "5%"
+						},
+						{
+							display: '单价',
+							name: 'money',
+							width: "5%"
+						},
+						{
+							display: '加盟价',
+							name: 'franchise_price',
+							width: "5%"
+						},
+						{
+							display: '成本价',
+							name: 'cost_price',
+							width: "5%"
+						},
+						{
+							display: '状态',
+							name: 'State',
+							width: "10%",
+							render: function(rowdata, rowindex, value, column) {
+								return "上架" == value ? "<font color='#8EC165'>" + value + "</font>" : "<font color='#FB6B5B'>" + value + "</font>";
+							}
+						},
+						{
+							display: '操作',
+							name: 'name',
+							align: 'left',
+							width: 355,
+							render: function(rowdata, rowindex, value, column) {
+								var mainCon = $('<div></div>');
+								var con = $('<span class="operation_look" onclick="">编辑</span><span class="operation_picking" style="float:left;margin-left:0;" onclick="set_price()">设置价格</span><div class="popupMenu popupMenu2"><div class="popupMenu_link"><a href="javascript:;" class="themeBgColor">操作</a></div><div class="popupMenu_con white_con"><a href="javascript:;" onclick=""><span>上架</span></a><a href="javascript:;" onclick=""><span>设置货位</span></a><a href="javascript:;" onclick=""><span>删除</span></a></div></div>');
+								mainCon.append(con);
+								return mainCon.html();
+							}
+						}
+					],
+					data: gridData,
+					sortName: 'id',
+					rownumbers: false,
+					checkbox: false,
+					height: '100%',
+					width: "100%",
+					pageSize: 10,
+					percentWidthMode: true,
+					onAfterShowData: onAfterShowData
+
+				});
+			}
+			
+
+			function onAfterShowData(data) {
+
+				$("#dataBasic").find(".popupMenu").each(function() {
+					$(this).hover(function() {
+						$(this).find(".popupMenu_con").show();
+					}, function() {
+						$(this).find(".popupMenu_con").hide();
+					});
+				})
+			}
+			
+			function set_price(){
+				var diag = new top.Dialog();
+			    diag.Title = "设置价格";
+			    diag.URL = "../../sample_skin/demo/oa_28.html";
+			    diag.ShowButtonRow = true;
+			    diag.show();
+			}
+			
+		</script>
+	</body>
+
+</html>

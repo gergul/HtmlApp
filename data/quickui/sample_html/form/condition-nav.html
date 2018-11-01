@@ -1,0 +1,286 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title></title>
+<!--框架必需start-->
+<script type="text/javascript" src="../../libs/js/jquery.js"></script>
+<script type="text/javascript" src="../../libs/js/language/cn.js"></script>
+<script type="text/javascript" src="../../libs/js/framework.js"></script>
+<link href="../../libs/css/import_basic.css" rel="stylesheet" type="text/css"/>
+<link rel="stylesheet" type="text/css" id="skin" prePath="../../"/>
+<link rel="stylesheet" type="text/css" id="customSkin"/>
+<!--框架必需end-->
+
+<!-- 条件过滤器3 start -->
+<script type="text/javascript" src="../../libs/js/form/conditionNav.js"></script>
+<!-- 条件过滤器3 end -->
+</head>
+<body >	
+<div class="page_content">
+
+			<div class="groupTitle"><span>1、单选模式</span></div>
+<table width="100%">
+	<tr>
+		<td style="vertical-align:top;">
+			<div id="condition-1" class="conditionNav" conditionWidth="180" conditionTitle="标题" conditionTarget="conditionTarget01" itemWidth="50"></div>
+		</td>
+		<td style="vertical-align:top;width:100%;">
+			<div class="conditionNavSelContent">
+				<table>
+					<tr>
+						<td style="width:70px;">筛选条件：</td>
+						<td >
+							<ul class="conditionTarget"  id="conditionTarget01"></ul>
+						</td>
+					</tr>
+				</table>
+			</div>
+			选中项：<br/>
+			<textarea id="condition-1-value" style="width:90%;height:130px"></textarea>
+		</td>
+	</tr>
+</table>
+<br />
+<br />
+
+			<div class="groupTitle"><span>2、多选模式</span></div>
+<table width="100%">
+	<tr>
+		<td style="vertical-align:top;">
+			<div id="condition-2" class="conditionNav" conditionWidth="180" conditionTitle="标题" conditionTarget="conditionTarget02" itemWidth="50" multiMode="true"></div>
+		</td>
+		<td style="vertical-align:top;width:100%;">
+			<div class="conditionNavSelContent">
+				<table>
+					<tr>
+						<td style="width:70px;">筛选条件：</td>
+						<td >
+							<ul class="conditionTarget"  id="conditionTarget02"></ul>
+						</td>
+					</tr>
+				</table>
+			</div>
+			选中项：<br/>
+			<textarea id="condition-2-value" style="width:90%;height:130px"></textarea>
+		</td>
+	</tr>
+</table>
+
+<br />
+<br />
+
+			<div class="groupTitle"><span>3、鼠标移入展开</span></div>
+<table width="100%">
+	<tr>
+		<td style="vertical-align:top;">
+			<div id="condition-3" class="conditionNav" conditionWidth="180" conditionTitle="标题" conditionTarget="conditionTarget03" itemWidth="50"></div>
+		</td>
+		<td style="vertical-align:top;width:100%;">
+			<div class="conditionNavSelContent">
+				<table>
+					<tr>
+						<td style="width:70px;">筛选条件：</td>
+						<td >
+							<ul class="conditionTarget"  id="conditionTarget03"></ul>
+						</td>
+					</tr>
+				</table>
+			</div>
+			选中项：<br/>
+			<textarea id="condition-3-value" style="width:90%;height:130px"></textarea>
+		</td>
+	</tr>
+</table>
+
+<br />
+<br />
+
+			<div class="groupTitle"><span>4、初始赋值（单选模式）</span></div>
+<table width="100%">
+	<tr>
+		<td style="vertical-align:top;">
+			<div id="condition-4" class="conditionNav" conditionWidth="180" conditionTitle="标题" conditionTarget="conditionTarget04" itemWidth="50" selectedValue="12,23"></div>
+		</td>
+		<td style="vertical-align:top;width:100%;">
+			<div class="conditionNavSelContent">
+				<table>
+					<tr>
+						<td style="width:70px;">筛选条件：</td>
+						<td >
+							<ul class="conditionTarget"  id="conditionTarget04"></ul>
+						</td>
+					</tr>
+				</table>
+			</div>
+		</td>
+	</tr>
+</table>
+<br />
+<br />
+
+			<div class="groupTitle"><span>5、初始赋值（多选模式）</span></div>
+<table width="100%">
+	<tr>
+		<td style="vertical-align:top;">
+			<div id="condition-5" class="conditionNav" conditionWidth="180" conditionTitle="标题" conditionTarget="conditionTarget05" itemWidth="50" multiMode="true" selectedValue="12,23,22,24"></div>
+		</td>
+		<td style="vertical-align:top;width:100%;">
+			<div class="conditionNavSelContent">
+				<table>
+					<tr>
+						<td style="width:70px;">筛选条件：</td>
+						<td >
+							<ul class="conditionTarget"  id="conditionTarget05"></ul>
+						</td>
+					</tr>
+				</table>
+			</div>
+		</td>
+	</tr>
+</table>
+
+<br />
+<br />
+
+			<div class="groupTitle"><span>6、同步模式（单选）</span></div>
+<table width="100%">
+	<tr>
+		<td style="vertical-align:top;">
+			<div id="condition-6" class="conditionNav" conditionWidth="180" conditionTitle="标题" conditionTarget="conditionTarget06" itemWidth="50" ajaxMode="false"></div>
+		</td>
+		<td style="vertical-align:top;width:100%;">
+			<div class="conditionNavSelContent">
+				<table>
+					<tr>
+						<td style="width:70px;">筛选条件：</td>
+						<td >
+							<ul class="conditionTarget"  id="conditionTarget06"></ul>
+						</td>
+					</tr>
+				</table>
+			</div>
+		</td>
+	</tr>
+</table>
+
+
+<br />
+<br />
+
+			<div class="groupTitle"><span>7、同步模式（多选）</span></div>
+<table width="100%">
+	<tr>
+		<td style="vertical-align:top;">
+			<div id="condition-7" class="conditionNav" conditionWidth="180" conditionTitle="标题" conditionTarget="conditionTarget07" itemWidth="50" ajaxMode="false" multiMode="true"></div>
+		</td>
+		<td style="vertical-align:top;width:100%;">
+			<div class="conditionNavSelContent">
+				<table>
+					<tr>
+						<td style="width:70px;">筛选条件：</td>
+						<td >
+							<ul class="conditionTarget"  id="conditionTarget07"></ul>
+						</td>
+					</tr>
+				</table>
+			</div>
+		</td>
+	</tr>
+</table>
+</div>
+<script>
+	var conditionData={"list":[
+		{"name":"按属性","id":1,"list":[
+			{"key":"正片","value":"11"},{"key":"连载","value":"12"},{"key":"完结","value":"13"},{"key":"短片","value":"14"}
+		]},
+		{"name":"按年龄","id":2,"list":[
+			{"key":"全部","value":"21"},{"key":"6岁以下","value":"22"},{"key":"6-12岁","value":"23"},{"key":"12-18岁","value":"24"},{"key":"18岁以上","value":"25"}
+		]}
+	]};
+	
+	var conditionData2={"list":[
+		{"name":"按属性","id":1,"list":[
+			{"key":"正片","value":"11"},{"key":"连载","value":"12"},{"key":"完结","value":"13"},{"key":"短片","value":"14"}
+		]},
+		{"name":"按年龄","id":2,"list":[
+			{"key":"全部","value":"21"},{"key":"6岁以下","value":"22"},{"key":"6-12岁","value":"23"},{"key":"12-18岁","value":"24"},{"key":"18岁以上","value":"25"}
+		]},
+		{"name":"按类型","id":3,"height":150,"maxWidth":490,"list":[
+			{"key":"全部","value":"31"},{"key":"战斗","value":"32"},{"key":"热血","value":"33"},{"key":"冒险","value":"34"},{"key":"励志 ","value":"35"},{"key":"英雄 ","value":"36"},{"key":"后宫 ","value":"37"},{"key":"百合 ","value":"38"},{"key":"耽美 ","value":"39"},{"key":"魔法 ","value":"310"},
+			{"key":"奇幻 ","value":"311"},{"key":"搞笑 ","value":"312"},{"key":"恋爱 ","value":"313"},{"key":"校园 ","value":"314"},{"key":"宠物 ","value":"315"},{"key":"日常 ","value":"316"},{"key":"童话 ","value":"317"},{"key":"惊悚","value":"318"},{"key":"竞技","value":"319"},{"key":"都市","value":"320"},
+			{"key":"动作","value":"321"},{"key":"科幻","value":"322"},{"key":"治愈","value":"323"},{"key":"教育","value":"324"},{"key":"怪物","value":"325"},{"key":"成人","value":"326"},{"key":"轻松","value":"327"},{"key":"神话","value":"328"},{"key":"生活","value":"329"},{"key":"益智","value":"330"},
+			{"key":"机战","value":"331"},{"key":"运动","value":"332"},{"key":"神魔","value":"333"},{"key":"真人","value":"334"},{"key":"魔幻","value":"335"},{"key":"LOLI","value":"336"},{"key":"女性向","value":"337"},{"key":"美少女","value":"338"},{"key":"男性向","value":"339"},{"key":"悬疑推理","value":"340"}
+		]}
+	]};
+	
+	
+	$(function(){
+		$("#condition-1").data("data",conditionData);
+		$("#condition-1").render();
+		$("#condition-1").bind("change",function(e,values){
+			$("#condition-1-value").val(values);
+		})
+		
+		$("#condition-2").data("data",conditionData);
+		$("#condition-2").render();
+		$("#condition-2").bind("change",function(e,values){
+			$("#condition-2-value").val(values);
+		})
+		
+		$("#condition-3").data("data",conditionData2);
+		$("#condition-3").render();
+		$("#condition-3").bind("change",function(e,values){
+			$("#condition-3-value").val(values);
+		})
+		
+		$("#condition-4").data("data",conditionData);
+		$("#condition-4").render();
+		
+		$("#condition-5").data("data",conditionData);
+		$("#condition-5").render();
+		
+		
+		//用cookies模拟前后台传值
+		var cookValue=jQuery.jCookie('conditionNav');
+		if(cookValue!=false){
+			$("#condition-6").attr("selectedValue",cookValue.toString());
+		}
+		$("#condition-6").data("data",conditionData);
+		$("#condition-6").render();
+		$("#condition-6").bind("change",function(e,values){
+			top.Notice('showNotice', {
+				title	: "使用说明",
+				text    : "这里将组件所有选中项："+values+"项传入后台，通过location进行跳转，跳转后重设组件的selectedValue。这里用cookies模拟前后台传值。"
+			})
+
+
+			//用cookies模拟前后台传值
+			jQuery.jCookie('conditionNav',values);
+			window.location.reload();
+		})
+		
+		
+		//用cookies模拟前后台传值
+		var cookValue2=jQuery.jCookie('conditionNav2');
+		if(cookValue2!=false){
+			$("#condition-7").attr("selectedValue",cookValue2.toString());
+		}
+		$("#condition-7").data("data",conditionData);
+		$("#condition-7").render();
+		$("#condition-7").bind("change",function(e,values){
+			top.Notice('showNotice', {
+				title	: "使用说明",
+				text    : "这里将组件所有选中项："+values+"项传入后台，通过location进行跳转，跳转后重设组件的selectedValue。这里用cookies模拟前后台传值。"
+			})
+			
+			//用cookies模拟前后台传值
+			jQuery.jCookie('conditionNav2',values);
+			window.location.reload();
+		})
+	})
+	
+	  
+</script>
+</body>
+</html>

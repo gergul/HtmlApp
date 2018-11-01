@@ -1,0 +1,71 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<!--框架必需start-->
+<script type="text/javascript" src="../../libs/js/jquery.js"></script>
+<script type="text/javascript" src="../../libs/js/language/cn.js"></script>
+<script type="text/javascript" src="../../libs/js/framework.js"></script>
+<link href="../../libs/css/import_basic.css" rel="stylesheet" type="text/css"/>
+<link rel="stylesheet" type="text/css" id="skin" prePath="../../"/>
+<link rel="stylesheet" type="text/css" id="customSkin"/>
+<!--框架必需end-->
+
+<!--拖拽排序start-->
+<script type="text/javascript" src="../../libs/js/drag/dragSort.js"></script>
+<!--拖拽排序end-->
+<style>
+	#list1, #list2 { width:100%; list-style-type:none; margin:0px; min-height:70px;  }
+	#list1 li, #list2 li { float:left; padding:5px; width:80px; height:80px; }
+	#list1 div, #list2 div { width:70px; height:70px; text-align:center; text-align:center;line-height:70px; }
+	.placeHolder div { background-color:#ffffec !important; border:dashed 1px gray !important;border-radius: 3px 3px 3px 3px; }
+	.group_line{
+		border-bottom:solid 1px #000000;
+		height:30px;
+	}
+	.group_line2{
+		height:30px;
+	}
+</style>
+
+<body>
+<div class="page_content">
+<ul id="list2">
+	<li><div><img src="../../libs/icons/icon_flat/youtube.png"/></div></li>
+	<li><div><img src="../../libs/icons/icon_flat/yahoo.png"/></div></li>
+	<li><div><img src="../../libs/icons/icon_flat/xbox.png"/></div></li>
+	<li><div><img src="../../libs/icons/icon_flat/wordpress.png"/></div></li>
+	<li><div><img src="../../libs/icons/icon_flat/windows.png"/></div></li>
+	<li><div><img src="../../libs/icons/icon_flat/wikipedia.png"/></div></li>
+	<li><div><img src="../../libs/icons/icon_flat/vimeo.png"/></div></li>
+	<li><div><img src="../../libs/icons/icon_flat/upload.png"/></div></li>
+	<li><div><img src="../../libs/icons/icon_flat/unlock.png"/></div></li>
+	<dt class="clear"></dt>
+</ul>
+<div class="group_line"></div>
+<div class="group_line2"></div>
+<ul id="list1">
+	<li><div><img src="../../libs/icons/icon_flat/twitter.png"/></div></li>
+	<li><div><img src="../../libs/icons/icon_flat/technorati.png"/></div></li>
+	<li><div><img src="../../libs/icons/icon_flat/skype.png"/></div></li>
+	<li><div><img src="../../libs/icons/icon_flat/setting.png"/></div></li>
+	<li><div><img src="../../libs/icons/icon_flat/screen.png"/></div></li>
+	<li><div><img src="../../libs/icons/icon_flat/removelocation.png"/></div></li>
+	<li><div><img src="../../libs/icons/icon_flat/pinterest.png"/></div></li>
+	<li><div><img src="../../libs/icons/icon_flat/picasa2.png"/></div></li>
+	<li><div><img src="../../libs/icons/icon_flat/pen.png"/></div></li>
+	<dt class="clear"></dt>
+</ul>
+<input name="list1SortOrder" type="hidden" />
+</div>
+<script type="text/javascript">
+	function initComplete(){
+		$("#list1, #list2").dragSort({ dragSelector: "div", dragBetween: true, dragEnd: saveOrder, placeHolderTemplate: "<li class='placeHolder'><div></div></li>" });
+	}
+	function saveOrder() {
+		var serialStr = "";
+		$("#list1 li").each(function(i, elm) { serialStr += (i > 0 ? "|" : "") + $(elm).children().html(); });
+		$("input[name=list1SortOrder]").val(serialStr);
+	};
+</script>
+</body>
+</html>

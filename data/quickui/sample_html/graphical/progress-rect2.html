@@ -1,0 +1,151 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<title>跑分检验</title>
+		<!--框架必需start-->
+		<script type="text/javascript" src="../../libs/js/jquery.js"></script>
+		<script type="text/javascript" src="../../libs/js/language/cn.js"></script>
+		<script type="text/javascript" src="../../libs/js/framework.js"></script>
+		<link href="../../libs/css/import_basic.css" rel="stylesheet" type="text/css"/>
+		<link rel="stylesheet" type="text/css" id="skin" prePath="../../"/>
+		<link rel="stylesheet" type="text/css" id="customSkin"/>
+		<!--框架必需end-->
+		<script src="../../libs/js/graphical/raphael.js" type="text/javascript"></script>
+		<script src="../../libs/js/graphical/progress.js" type="text/javascript"></script>
+		<style type="text/css">
+			clearfix:after {
+				content: '\20';
+				display: block;
+				height: 0;
+				clear: both;
+				visibility: hidden;
+				overflow: hidden
+			}
+			.clearfix {zoom: 1;}
+			.mod-ucenter-cright {
+				width: 690px;
+				margin: 40px auto;
+			}
+			.ucenter-cright-title {
+				font-size: 22px;
+				color: #404040;
+				font-weight: normal;
+				line-height: 40px;
+				padding-top: 20px;
+			}
+			.score-step {
+				width: 435px;
+				height: 10px;
+				margin: 14px 0 0 0;
+				float: left;
+			}
+			.score-num {
+				font-size: 28px;
+				margin-left: 10px;
+				line-height: 34px;
+				float: left;
+				color: #f4a830;
+			}
+			.score-btn {
+				width: 111px;
+				height: 38px;
+				line-height: 38px;
+				float: right;
+				cursor: pointer;
+				color: #fff;
+				background: #3399FF;
+				font-size: 20px;
+				text-align: center;
+				border-radius: 5px;
+			}
+			.score-tip{
+				clear: both;
+				font-size: 14px;
+				font-weight: normal;
+				height: 24px;
+				line-height: 24px;
+				color: #333;
+				padding: 10px 0 10px 0;
+			}
+			.score-detail {
+				padding-bottom: 20px;
+				border-bottom: 1px dashed #dfdfdf;
+			}
+			.score-detail .score-good-list {
+				height: 30px;
+				color: #666;
+				padding-left: 24px;
+				font-size: 12px;
+				margin-bottom: 10px;
+				margin-right: 180px;
+				clear: both;
+			}
+			.score-detail .score-good-list span {
+				float: left;
+				display: block;
+				margin-top: 6px;
+			}
+			 #holder {
+                position: relative;
+                width: 350px;
+                height: 180px;
+            }
+		</style>
+
+		<script type="text/javascript">
+			var current = 0;
+			$(document).ready(function() {
+				var rectWidth = 350;
+			    var paramBg = {stroke: "#ebf1f7", "stroke-width": 8};
+			    var paramBlue = {stroke: "#00aaef", "stroke-width": 0};
+			   	var bfb_val=0;
+			   	var bfb_time=900/70;
+		       	var paper =initPaper("holder", 400, 30);   
+		        drawRectProgress(paper,70,0,100,5,5,rectWidth,paramBlue,paramBg);
+				function fun(){
+					$(".score-detail").show();
+				};
+				$("#check-secure").click(function() {
+					paper.clear();
+					var paramBlue = {stroke: "#00aaef", "stroke-width": 8};
+		       		drawRectProgress(paper,70,0,100,5,5,rectWidth,paramBlue,paramBg,fun);
+		       		t = setInterval(Start,bfb_time);
+				});	
+				function Start() {
+					if(bfb_val >= 70) {
+						clearInterval(t);
+						bfb_val = 0;
+						return;
+					}
+					bfb_val++;
+					$("#scorenum").text(bfb_val)
+				}
+			});
+		</script>
+		</head>
+	<body>
+		<div class="mod-ucenter-cright">
+			<div id="" class="clearfix">
+				<p class="ucenter-cright-title">安全评分</p>
+				<div class="score-step">
+					<div id="holder"></div>
+				</div>
+				<div class="score-num"><span id="scorenum">0</span>分!</div>
+				<div class="score-btn" id="check-secure">重新检测</div>
+				<div class="score-tip">您的帐号存在安全风险，建议立即优化以下项目</div>
+			</div>
+			<div class="score-detail" style="display:none;">
+				<ul class="score-detail-ul clearfix" id="">
+					<li class="score-good-list clearfix"><span>您已完成实名认证</span></li>
+					<li class="score-good-list clearfix"><span>恭喜您，您还没有实名认证！</span></li>
+					<li class="score-good-list clearfix"><span>您已完成绑定手机</span></li>
+					<li class="score-good-list clearfix"><span>绑定密保手机，帐号安全一步到位</span></li>
+					<li class="score-good-list clearfix"><span>您已绑定谷歌身份验证器</span></li>
+				</ul>
+			</div>
+		</div>
+		</body>
+
+</html>

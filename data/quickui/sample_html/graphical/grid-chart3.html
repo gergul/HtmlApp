@@ -1,0 +1,195 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>锁定列</title>
+<!--框架必需start-->
+<script type="text/javascript" src="../../libs/js/jquery.js"></script>
+<script type="text/javascript" src="../../libs/js/language/cn.js"></script>
+<script type="text/javascript" src="../../libs/js/framework.js"></script>
+<link href="../../libs/css/import_basic.css" rel="stylesheet" type="text/css"/>
+<link rel="stylesheet" type="text/css" id="skin" prePath="../../" scrollerY="false"/>
+<link rel="stylesheet" type="text/css" id="customSkin"/>
+<!--框架必需end-->
+
+<!--数据表格start-->
+<script src="../../libs/js/table/quiGrid.js" type="text/javascript"></script>
+<!--数据表格end-->
+
+<!-- 日期选择框start -->
+<script type="text/javascript" src="../../libs/js/form/datePicker/WdatePicker.js"></script>
+<!-- 日期选择框end -->
+
+<!--布局控件start-->
+<script type="text/javascript" src="../../libs/js/nav/layout.js"></script>
+<!--布局控件end-->
+<script src="../../libs/thirdparty/highcharts/js/highcharts.js"></script>
+<style>
+.formBoxContent{
+  padding: 5px 0 0 5px;
+}
+  .tdContentStyle1{
+
+
+    background-repeat:no-repeat;
+
+    padding:5px 0 0 10px;
+  line-height:150%;
+
+}
+  .tdContentStyle2{
+
+
+
+    background-repeat:no-repeat;
+
+    padding:5px 0 0 10px;
+  line-height:150%;
+
+}
+</style>
+</head>
+<body>
+<div class="page_content">
+<div id="layout1">
+      <div position="top" id="bottomCon" style="" panelTitle="条件检索">
+          <div class="formBoxContent">
+      <table>
+        <tr>
+          <td width="60" class="ali03">类型：</td>
+          <td><select id="dd">
+            <option value="0">请选择</option>
+            <option value="1">类型1</option>
+            <option value="2">类型2</option>
+            <option value="3">类型3</option>
+          </select></td>
+          <td width="60" class="ali03">时间：</td>
+          <td><input type="text" class="date"/></td>
+          <td width="60" class="ali03">关键词：</td>
+          <td><input type="text" /></td>
+          <td>
+             <input type="checkbox" id="checkbox-1" value="0"/><label for="checkbox-1" >全站搜索</label>
+          </td>
+          <td><button><span class="icon_find">查询</span></button></td>
+        </tr>
+      </table>
+    </div>            
+        </div>
+        <div   position="left" panelTitle="数据列表">
+          <div id="leftCon">
+
+       <div id="maingrid2"></div>  
+      </div>
+        </div>
+        <div  position="center" panelTitle="对比图表">
+         
+<div id="container" style="min-width: 310px; margin: 0 auto"></div>
+
+        </div>
+        
+    </div> 
+
+ </div>	
+	<script type="text/javascript">
+       
+       
+	   
+	    var testData2={"form.paginate.pageNo":1,"form.paginate.totalRows":13,"rows":[
+      {"deptName":"10:00-12:00<br>监控时间","sex":"10:00-12:00<br>运行时间","degree":"0<br>疲劳警告","age":20,"name":"G123<br>南京-北京"},
+      {"deptName":"10:00-12:00<br>监控时间","sex":"10:00-12:00<br>运行时间","degree":"0<br>疲劳警告","age":20,"name":"G123<br>南京-北京"},
+      {"deptName":"10:00-12:00<br>监控时间","sex":"10:00-12:00<br>运行时间","degree":"0<br>疲劳警告","age":20,"name":"G123<br>南京-北京"},
+      {"deptName":"10:00-12:00<br>监控时间","sex":"10:00-12:00<br>运行时间","degree":"0<br>疲劳警告","age":20,"name":"G123<br>南京-北京"},
+      {"deptName":"10:00-12:00<br>监控时间","sex":"10:00-12:00<br>运行时间","degree":"0<br>疲劳警告","age":20,"name":"G123<br>南京-北京"},
+      {"deptName":"10:00-12:00<br>监控时间","sex":"10:00-12:00<br>运行时间","degree":"0<br>疲劳警告","age":20,"name":"G123<br>南京-北京"},
+      {"deptName":"10:00-12:00<br>监控时间","sex":"10:00-12:00<br>运行时间","degree":"0<br>疲劳警告","age":20,"name":"G123<br>南京-北京"},
+      {"deptName":"10:00-12:00<br>监控时间","sex":"10:00-12:00<br>运行时间","degree":"0<br>疲劳警告","age":20,"name":"G123<br>南京-北京"},
+      {"deptName":"10:00-12:00<br>监控时间","sex":"10:00-12:00<br>运行时间","degree":"0<br>疲劳警告","age":20,"name":"G123<br>南京-北京"}
+      
+      ]}
+       //数据表格使用
+        var g2;
+		function initComplete(){
+      var currentwidth = document.documentElement.clientWidth;
+      var layout=$("#layout1").layout({ leftWidth: currentwidth/2,topHeight:80,allowLeftResize:false,allowTopResize:false}); 
+
+			 $('#container').highcharts({
+            chart: {
+                type: 'bar'
+            },
+            title: {
+                text: '载客数据'
+            },
+            xAxis: {
+                categories: ['高铁', '动车', '软卧', '硬卧', '硬座']
+            },
+            yAxis: {
+                min: 0,
+                title: {
+                    text: '运营时间'
+                }
+            },
+            legend: {
+                backgroundColor: '#FFFFFF',
+                reversed: true
+            },
+            plotOptions: {
+                series: {
+                    stacking: 'normal'
+                }
+            },
+                series: [{
+                name: '工作日',
+                data: [5, 3, 4, 7, 2]
+            }, {
+                name: '周末',
+                data: [2, 2, 3, 2, 1]
+            }, {
+                name: '小长假',
+                data: [3, 4, 4, 2, 5]
+            }]
+        });
+			
+			g2 = $("#maingrid2").quiGrid({
+                columns: [ 
+	                
+					  { display: '姓名', name: 'name', align: 'center',  width: "30%", render: function (rowdata, rowindex, value, column){
+
+                        var strhtml='<div class="tdContentStyle1">' + rowdata.name+ '</div>';
+
+                     return strhtml;
+
+}  },
+	                { display: '性别', name: 'sex', align: 'center' , width: "20%", render: function (rowdata, rowindex, value, column){
+
+                        var strhtml='<div class="tdContentStyle2">' + rowdata.sex+ '</div>';
+
+                     return strhtml;
+
+}  },
+	                { display: '部门', name: 'deptName',  align: 'center' , width: "30%", render: function (rowdata, rowindex, value, column){
+
+                        var strhtml='<div class="tdContentStyle2">' + rowdata.deptName+ '</div>';
+
+                     return strhtml;
+
+}  },
+	                { display: '学历', name: 'degree',  align: 'center', width: "20%" , render: function (rowdata, rowindex, value, column){
+
+                        var strhtml='<div class="tdContentStyle1">' + rowdata.degree+ '</div>';
+
+                     return strhtml;
+
+}  }
+                ], data:testData2, pageSize: 10, rownumbers:false, checkbox:false,percentWidthMode:true,
+                height: '100%', width:"100%",rowHeight:65,onReload:function(){return false}
+            });
+			
+			
+
+		}
+  function customHeightSet(contentHeight){
+   // $("#leftCon").height(contentHeight-80);
+  }
+    </script>	
+</body>
+</html>

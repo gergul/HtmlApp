@@ -1,0 +1,242 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title></title>
+<!--框架必需start-->
+<script type="text/javascript" src="../../libs/js/jquery.js"></script>
+<script type="text/javascript" src="../../libs/js/language/cn.js"></script>
+<script type="text/javascript" src="../../libs/js/framework.js"></script>
+<link href="../../libs/css/import_basic.css" rel="stylesheet" type="text/css"/>
+<link rel="stylesheet" type="text/css" id="skin" prePath="../../"/>
+<link rel="stylesheet" type="text/css" id="customSkin"/>
+<!--框架必需end-->
+<script type="text/javascript" src="../../libs/js/graphical/raphael.js"></script>
+<script type="text/javascript" src="../../libs/js/graphical/svgmap.js"></script>
+<script type="text/javascript" src="../../libs/js/graphical/map_data/china.js"></script>
+
+<style type="text/css">
+			.demo {
+				width: 600px;
+				position: absolute;
+				left: 420px;
+				font-size: 14px;
+			}
+
+			#label {
+				width: 200px;
+				height: 25px;
+				line-height: 25px;
+				margin: 10px auto
+			}
+			
+			#label span {
+				height: 25px;
+				width: 25px;
+				display: block;
+				float: left;
+				text-align: center
+			}
+
+
+
+			.mapTip{
+				display:none; 
+				position:absolute; 
+				padding:8px; 
+				border: 1px solid #c4d0df;
+				background: #f7f8fa;
+				box-shadow: 0 0 6px 1px rgba(0,0,0,.08);
+				border-radius: 5px;
+				}
+
+			.mapTip .arrow,
+			.mapTip .arrowMask{ 
+				position: absolute; 
+				width: 0; 
+				height: 0; 
+				border-color: transparent; 
+				border-style: solid;
+			}
+			.mapTip .arrow{ 
+				bottom: -7px; 
+				left: 50%; 
+				margin-left: -7px; 
+				border-width: 7px; 
+				border-top-color: #c4d0df; 
+				border-bottom-width: 0;
+			}
+			.mapTip .arrowMask{
+				bottom: 1px; 
+				border-width: 6px; 
+				margin-left: -6px; 
+				border-top-color: #f7f8fa; 
+				border-bottom-width: 0;
+			}
+
+
+			.mapInfo i{ 
+				display:inline-block; 
+				width:15px; 
+				height:15px; 
+				margin-top:5px; 
+				line-height:15px; 
+				font-style:normal; 
+				background:#39f; 
+				color:#fff; 
+				font-size:11px; 
+				font-family: Tahoma; 
+				-webkit-border-radius:15px; 
+				border-radius:15px; 
+				text-align:center
+			}
+			.mapInfo i.active{background:#1fc695;}
+			.mapInfo span{ padding:0 5px 0 3px;}
+			.mapInfo b{ font-weight:normal; color:#2770B5}
+			.svgmap .back{ display: none; position: absolute; top: 0; left: 0; z-index: 10000; height: 20px; padding: 10px; font-size: 14px;}
+			.regionList{position: absolute;left:10px;top:150px;}
+			.regionList ul{float:left; width:140px; height:100%; margin-right:5px; display:inline; }
+			.regionList ul li{ height:24px; margin-left:10px; padding:0 0 0 5px; border:1px solid #fff; line-height:24px;cursor: pointer;cursor: hand;}
+			.regionList ul li.select{border:1px solid #c4d0df; background:#f7f8fa}
+
+
+		</style>
+	</head>
+	<body>
+	<div class="page_content">
+		<div class="groupTitle"><span>示例说明</span></div>
+		鼠标移入列表，地图相应区域变色
+				<div class="regionList" id="MapControl">
+					<ul class="list1"></ul>
+					<ul class="list2"></ul>
+					<ul class="list3"></ul>
+				</div>
+				<div class="demo">
+					<div id="label">
+						<span>高</span>
+						<span style="background-color:#3399ff"></span>
+						<span style="background-color:#5daeff"></span>
+						<span style="background-color:#79bcff"></span>
+						<span style="background-color:#9cceff"></span>
+						<span style="background-color:#baddff"></span>
+						<span style="background-color:#e4f2ff"></span>
+						<span>低</span>
+					</div>
+
+					
+					<div class="regionMap" id="RegionMap"></div>
+
+
+				</div>
+		</div>
+
+		<script type="text/javascript">
+			$(function(){
+
+
+	  			var data = {
+	  				"jiangsu":{"value":"30.05%","index":"1","stateInitColor":"5"},
+	  				"henan":{"value":"19.77%","index":"2","stateInitColor":"5"},
+	  				"anhui":{"value":"10.85%","index":"3","stateInitColor":"5"},
+	  				"zhejiang":{"value":"10.02%","index":"4","stateInitColor":"5"},
+	  				"liaoning":{"value":"8.46%","index":"5","stateInitColor":"5"},
+	  				"beijing":{"value":"4.04%","index":"6","stateInitColor":"4"},
+	  				"hubei":{"value":"3.66%","index":"7","stateInitColor":"4"},
+	  				"jilin":{"value":"2.56%","index":"8","stateInitColor":"4"},
+	  				"shanghai":{"value":"2.47%","index":"9","stateInitColor":"4"},
+	  				"guangxi":{"value":"2.3%","index":"10","stateInitColor":"4"},
+	  				"sichuan":{"value":"1.48%","index":"11","stateInitColor":"4"},
+	  				"guizhou":{"value":"0.99%","index":"12","stateInitColor":"4"},
+	  				"hunan":{"value":"0.78%","index":"13","stateInitColor":"4"},
+	  				"shandong":{"value":"0.7%","index":"14","stateInitColor":"4"},
+	  				"guangdong":{"value":"0.44%","index":"15","stateInitColor":"4"},
+	  				"jiangxi":{"value":"0.34%","index":"16","stateInitColor":"3"},
+	  				"fujian":{"value":"0.27%","index":"17","stateInitColor":"3"},
+	  				"yunnan":{"value":"0.23%","index":"18","stateInitColor":"3"},
+	  				"hainan":{"value":"0.21%","index":"19","stateInitColor":"3"},
+	  				"shanxi":{"value":"0.11%","index":"20","stateInitColor":"3"},
+	  				"hebei":{"value":"0.11%","index":"21","stateInitColor":"2"},
+	  				"neimenggu":{"value":"0.04%","index":"22","stateInitColor":"2"},
+	  				"tianjin":{"value":"0.04%","index":"23","stateInitColor":"2"},
+	  				"gansu":{"value":"0.04%","index":"24","stateInitColor":"2"},
+	  				"shaanxi":{"value":"0.02%","index":"25","stateInitColor":"2"},
+	  				"aomen":{"value":"0.0%","index":"26","stateInitColor":"1"},
+	  				"xianggang":{"value":"0.0%","index":"27","stateInitColor":"1"},
+	  				"taiwan":{"value":"0.0%","index":"28","stateInitColor":"1"},
+	  				"qinghai":{"value":"0.0%","index":"29","stateInitColor":"1"},
+	  				"xizang":{"value":"0.0%","index":"30","stateInitColor":"1"},
+	  				"ningxia":{"value":"0.0%","index":"31","stateInitColor":"1"},
+	  				"xinjiang":{"value":"0.0%","index":"32","stateInitColor":"1"},
+	  				"heilongjiang":{"value":"0.0%","index":"33","stateInitColor":"1"},
+	  				"chongqing":{"value":"0.0%","index":"34","stateInitColor":"1"}};
+			var i = 1;
+			for(k in data){
+				if(i <= 12){
+					var _cls = i < 4 ? 'active' : ''; 
+					$('#MapControl .list1').append('<li name="'+k+'"><div class="mapInfo"><i class="'+_cls+'">'+(i++)+'</i><span>'+chinaMapConfig.names[k]+'</span><b>'+data[k].value+'</b></div></li>')
+				}else if(i <= 24){
+					$('#MapControl .list2').append('<li name="'+k+'"><div class="mapInfo"><i>'+(i++)+'</i><span>'+chinaMapConfig.names[k]+'</span><b>'+data[k].value+'</b></div></li>')
+				}else{
+					$('#MapControl .list3').append('<li name="'+k+'"><div class="mapInfo"><i>'+(i++)+'</i><span>'+chinaMapConfig.names[k]+'</span><b>'+data[k].value+'</b></div></li>')
+				}
+			}
+
+			var stateColorList = ['#e4f2ff', '#baddff', '#9cceff', '#79bcff', '#5daeff', '#3399ff'];
+			
+			var strokeWidth;
+			if(broswerFlag=="IE7"||broswerFlag=="IE8"){
+				strokeWidth=1;
+			}
+			else{
+				strokeWidth=5;
+			}
+			var mapRegion = $('#RegionMap').SVGMap({
+				external: true,
+				mapName: 'china',
+				mapWidth: 550,
+				mapHeight: 550,
+				strokeWidth:strokeWidth,
+				stateData: data,
+				mapTipHtml: function (mapData, obj) {
+					var _value = mapData[obj.id].value;
+					var _idx = mapData[obj.id].index;
+					var active = '';
+					_idx < 4 ? active = 'active' : active = '';
+					var tipStr = '<div class="mapInfo"><i class="' + active + '">' + _idx + '</i><span>' + obj.name + '</span><b>' + _value + '</b></div>';
+					return tipStr;
+				}
+			});
+			$('#MapControl li').hover(function () {
+				var thisName = $(this).attr('name');
+				var thisHtml = $(this).html();
+				$('#MapControl li').removeClass('select');
+				$(this).addClass('select');
+				$(document.body).append('<div id="MapTip1" class="mapTip"><div class="con"></div></div');
+
+				$('#MapTip1 .con').html(thisHtml);
+				$('#MapTip1').css({
+					left: $(mapRegion.externalData[thisName].node).offset().left - 50,
+					top: $(mapRegion.externalData[thisName].node).offset().top - 40
+				}).show();
+				mapRegion.externalData[thisName].attr({
+					fill: '#1fc695'
+				});
+			}, function () {
+				var thisName = $(this).attr('name');
+
+				$('#MapTip1').remove();
+				$('#MapControl li').removeClass('select');
+				mapRegion.externalData[$(this).attr('name')].attr({
+					fill:  stateColorList[data[$(this).attr('name')].stateInitColor]
+				});
+			});
+			
+			$('#MapColor').show();
+
+				
+		});
+
+
+		</script>
+	</body>
+</html>

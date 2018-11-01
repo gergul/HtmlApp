@@ -1,0 +1,166 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<title>无标题文档</title>
+		<!--框架必需start-->
+		<script type="text/javascript" src="../../libs/js/jquery.js"></script>
+		<script type="text/javascript" src="../../libs/js/language/cn.js"></script>
+		<script type="text/javascript" src="../../libs/js/framework.js"></script>
+		<link href="../../libs/css/import_basic.css" rel="stylesheet" type="text/css" />
+		<link rel="stylesheet" type="text/css" id="skin" prePath="../../" />
+		<link rel="stylesheet" type="text/css" id="customSkin" />
+		<!--框架必需end-->
+		<link rel="stylesheet" type="text/css" href="style/style.css" />
+
+		
+		<!--树组件start -->
+		<script type="text/javascript" src="../../libs/js/tree/ztree/ztree.js"></script>
+		<link href="../../libs/js/tree/ztree/ztree.css" rel="stylesheet" type="text/css"/>
+		<!--树组件end -->
+		
+		<!-- 条件过滤器 start -->
+		<script type="text/javascript" src="../../libs/js/form/filter.js"></script>
+		<!-- 条件过滤器 end -->
+		
+
+
+		<style type="text/css">
+			/*body {
+				background: #fff;
+			}*/
+		</style>
+	</head>
+
+	<body>
+		<div class="page_content">
+			
+			<div class="infoCard infoCard2">
+				<div class="title">
+					<span>分类录入</span>
+				</div>
+				<table border="0" cellspacing="0" cellpadding="0" class="classification_wrap"> 
+					<tr>
+						<td style="vertical-align: top;">
+							<div class="classification_win">
+								<ul id="tree-1" class="ztree"></ul>
+							</div>
+						</td>
+						<td style="vertical-align: top;width: 100%;">
+							<table border="0" cellspacing="0" cellpadding="0" class="classification_content">
+								<tr>
+									<td style="text-align: right;padding-right: 20px;width: 100px;">上级分类</td>
+									<td>
+										<input type="text" name="" id="" value="" style="width: 400px;"/>
+									</td>
+								</tr>
+								<tr>
+									<td style="text-align: right;padding-right: 20px;">分类名称</td>
+									<td>
+										<input type="text" name="" id="" value="" style="width: 400px;"/>
+									</td>
+								</tr>
+								<tr>
+									<td style="text-align: right;padding-right: 20px;">排序</td>
+									<td>
+										<input type="text" name="" id="" value="" style="width: 400px;"/>
+									</td>
+								</tr>
+								<tr>
+									<td style="text-align: right;padding-right: 20px;vertical-align: top;">品牌</td>
+									<td>
+										<table border="0" cellspacing="0" cellpadding="0" class="classification_brand">
+											<tr>
+												<td>
+													<div class="filter" multiMode="true" selectedValue="1"  data='{"list":[
+														{"value":"1","key":"熊桐童"},
+														{"value":"2","key":"小蓝羊"},
+														{"value":"3","key":"哈特王国"},
+														{"value":"4","key":"1025"},
+														{"value":"5","key":"贝卡尔小猪"},
+														{"value":"6","key":"熊桐童"},
+														{"value":"7","key":"小蓝羊"},
+														{"value":"8","key":"哈特王国"},
+														{"value":"9","key":"1025"},
+														{"value":"10","key":"贝卡尔小猪"},
+														{"value":"11","key":"熊桐童"},
+														{"value":"12","key":"小蓝羊"},
+														{"value":"13","key":"哈特王国"},
+														{"value":"14","key":"1025"},
+														{"value":"15","key":"贝卡尔小猪"},
+														{"value":"16","key":"熊桐童"},
+														{"value":"17","key":"小蓝羊"},
+														{"value":"18","key":"哈特王国"},
+														{"value":"19","key":"1025"},
+														{"value":"20","key":"贝卡尔小猪"},
+														{"value":"21","key":"熊桐童"},
+														{"value":"22","key":"小蓝羊"},
+														{"value":"23","key":"哈特王国"},
+														{"value":"24","key":"1025"},
+														{"value":"25","key":"贝卡尔小猪"},
+														{"value":"26","key":"小蓝羊"},
+														{"value":"27","key":"哈特王国"},
+														{"value":"28","key":"1025"},
+														{"value":"29","key":"贝卡尔小猪"},
+														{"value":"30","key":"熊桐童"},
+														{"value":"31","key":"小蓝羊"},
+														{"value":"32","key":"哈特王国"},
+														{"value":"33","key":"1025"},
+														{"value":"34","key":"贝卡尔小猪"},
+														{"value":"35","key":"熊桐童"},
+														{"value":"36","key":"小蓝羊"},
+														{"value":"37","key":"哈特王国"},
+														{"value":"38","key":"1025"},
+														{"value":"39","key":"贝卡尔小猪"},
+														{"value":"40","key":"小蓝羊"}
+														]}'></div>
+												</td>
+												
+											</tr>
+										</table>
+										
+										
+									</td>
+								</tr>
+							</table>
+						</td>
+					</tr>
+				</table>
+			</div>
+		</div>
+
+		<script type="text/javascript">
+			var nodes1 = [
+				{ id:1,  parentId:0, name:"奶粉", open: true},
+				{ id:11, parentId:1, name:"牛奶粉"},
+				{ id:12, parentId:1, name:"羊奶粉"},
+				{ id:13, parentId:1, name:"孕妇奶粉"},
+				{ id:14, parentId:1, name:"奶粉冲调机"},
+				{ id:2,  parentId:0, name:"营养辅食"},
+				{ id:21, parentId:2, name:"香蕉"},
+				{ id:22, parentId:2, name:"苹果"},
+				{ id:23, parentId:2, name:"梨"},
+				{ id:3,  parentId:0, name:"营养辅食1"},
+				{ id:31, parentId:3, name:"香蕉"},
+				{ id:32, parentId:3, name:"苹果"},
+				{ id:33, parentId:3, name:"梨"},
+				{ id:4,  parentId:0, name:"营养辅食2"},
+				{ id:41, parentId:4, name:"香蕉"},
+				{ id:42, parentId:4, name:"苹果"},
+				{ id:43, parentId:4, name:"梨"},
+				{ id:5,  parentId:0, name:"营养辅食3"},
+				{ id:51, parentId:5, name:"香蕉"},
+				{ id:52, parentId:5, name:"苹果"},
+				{ id:53, parentId:5, name:"梨"}
+//				{ id:24, parentId:0, name:"部门3(强制显示为父节点样子)", isParent:true}
+			];
+
+			function initComplete(){
+        		//本地数据源
+				$.fn.zTree.init($("#tree-1"), {}, nodes1);
+			}
+		</script>
+	</body>
+
+</html>

@@ -1,0 +1,240 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<title>无标题文档</title>
+		<!--框架必需start-->
+		<script type="text/javascript" src="../../libs/js/jquery.js"></script>
+		<script type="text/javascript" src="../../libs/js/language/cn.js"></script>
+		<script type="text/javascript" src="../../libs/js/framework.js"></script>
+		<link href="../../libs/css/import_basic.css" rel="stylesheet" type="text/css" />
+		<link rel="stylesheet" type="text/css" id="skin" prePath="../../" />
+		<link rel="stylesheet" type="text/css" id="customSkin" />
+		<!--框架必需end-->
+		<link rel="stylesheet" type="text/css" href="style/style.css" />
+
+		<script src="../../libs/js/table/quiGrid.js" type="text/javascript"></script>
+
+		<style type="text/css">
+			/*body {
+				background: #fff;
+			}*/
+		</style>
+	</head>
+
+	<body>
+		<div class="page_content">
+			<div class="demo_operation">
+				<input type="button" value="供应商录入" class="primary" onclick="window.location='oa_56.html'" />
+			</div>
+			<div class="infoCard infoCard2">
+				<div class="title">
+					<span>供应商列表</span>
+				</div>
+				<div class="attendance_list_operation">
+					<table border="0" cellspacing="0" cellpadding="0" class="search_content">
+						<tr>
+							<td>搜索：</td>
+							<td><input type="text" /></td>
+							<td><input type="button" value="搜索" class="" /></td>
+						</tr>
+					</table>
+					<div class="clear"></div>
+				</div>
+				<div id="dataBasic"></div>
+			</div>
+		</div>
+
+		<script type="text/javascript">
+			var grid = null;
+			//数据表格使用
+			var gridData = {
+				"form.paginate.pageNo": 1,
+				"form.paginate.totalRows": 13,
+				"rows": [{
+						"id": 5418,
+						"Name": "北京上不去科技有限公司",
+						"province": "北京",
+						"Detailed_address": "玉环路大馕㕛街道对面1609",
+						"Tell": "苏三：18334223312",
+						"Opening_bank": "北京农村合作社王府井分理出",
+						"Bank_account": "123234-234-1235",
+						"Duty_paragraph": "3454341231363731",
+						"State": "启用"
+					},{
+						"id": 5418,
+						"Name": "北京上不去科技有限公司",
+						"province": "北京",
+						"Detailed_address": "玉环路大馕㕛街道对面1609",
+						"Tell": "苏三：18334223312",
+						"Opening_bank": "北京农村合作社王府井分理出",
+						"Bank_account": "123234-234-1235",
+						"Duty_paragraph": "3454341231363731",
+						"State": "启用"
+					},{
+						"id": 5418,
+						"Name": "北京上不去科技有限公司",
+						"province": "北京",
+						"Detailed_address": "玉环路大馕㕛街道对面1609",
+						"Tell": "苏三：18334223312",
+						"Opening_bank": "北京农村合作社王府井分理出",
+						"Bank_account": "123234-234-1235",
+						"Duty_paragraph": "3454341231363731",
+						"State": "启用"
+					},{
+						"id": 5418,
+						"Name": "北京上不去科技有限公司",
+						"province": "北京",
+						"Detailed_address": "玉环路大馕㕛街道对面1609",
+						"Tell": "苏三：18334223312",
+						"Opening_bank": "北京农村合作社王府井分理出",
+						"Bank_account": "123234-234-1235",
+						"Duty_paragraph": "3454341231363731",
+						"State": "启用"
+					},{
+						"id": 5418,
+						"Name": "北京上不去科技有限公司",
+						"province": "北京",
+						"Detailed_address": "玉环路大馕㕛街道对面1609",
+						"Tell": "苏三：18334223312",
+						"Opening_bank": "北京农村合作社王府井分理出",
+						"Bank_account": "123234-234-1235",
+						"Duty_paragraph": "3454341231363731",
+						"State": "启用"
+					},{
+						"id": 5418,
+						"Name": "北京上不去科技有限公司",
+						"province": "北京",
+						"Detailed_address": "玉环路大馕㕛街道对面1609",
+						"Tell": "苏三：18334223312",
+						"Opening_bank": "北京农村合作社王府井分理出",
+						"Bank_account": "123234-234-1235",
+						"Duty_paragraph": "3454341231363731",
+						"State": "启用"
+					},{
+						"id": 5418,
+						"Name": "北京上不去科技有限公司",
+						"province": "北京",
+						"Detailed_address": "玉环路大馕㕛街道对面1609",
+						"Tell": "苏三：18334223312",
+						"Opening_bank": "北京农村合作社王府井分理出",
+						"Bank_account": "123234-234-1235",
+						"Duty_paragraph": "3454341231363731",
+						"State": "启用"
+					},{
+						"id": 5418,
+						"Name": "北京上不去科技有限公司",
+						"province": "北京",
+						"Detailed_address": "玉环路大馕㕛街道对面1609",
+						"Tell": "苏三：18334223312",
+						"Opening_bank": "北京农村合作社王府井分理出",
+						"Bank_account": "123234-234-1235",
+						"Duty_paragraph": "3454341231363731",
+						"State": "启用"
+					},{
+						"id": 5418,
+						"Name": "北京上不去科技有限公司",
+						"province": "北京",
+						"Detailed_address": "玉环路大馕㕛街道对面1609",
+						"Tell": "苏三：18334223312",
+						"Opening_bank": "北京农村合作社王府井分理出",
+						"Bank_account": "123234-234-1235",
+						"Duty_paragraph": "3454341231363731",
+						"State": "启用"
+					}
+				]
+			}
+
+			function initComplete() {
+				grid = $("#dataBasic").quiGrid({
+					columns: [{
+							display: '编号',
+							name: 'id',
+							width: "10%",
+							cellClick: true
+						},
+						{
+							display: '供应商名称',
+							name: 'Name',
+							width: "15%"
+						},
+						{
+							display: '省',
+							name: 'province',
+							width: "10%"
+						},
+						{
+							display: '详细地址',
+							name: 'Detailed_address',
+							width: "15%"
+						},
+						{
+							display: '联系方式',
+							name: 'Tell',
+							width: "10%"
+						},
+						{
+							display: '开户行',
+							name: 'Opening_bank',
+							width: "15%"
+						},{
+							display: '银行账号',
+							name: 'Bank_account',
+							width: "10%"
+						},{
+							display: '税号',
+							name: 'Duty_paragraph',
+							width: "10%"
+						},
+						{
+							display: '状态',
+							name: 'State',
+							width: "5%",
+							render: function(rowdata, rowindex, value, column) {
+								return "启用" == value ? "<font color='#8EC165'>" + value + "</font>" : "<font color='#FB6B5B'>" + value + "</font>";
+							}
+						},
+						{
+							display: '操作',
+							name: 'name',
+							align: 'center',
+							width: 210,
+							render: function(rowdata, rowindex, value, column) {
+								var mainCon = $('<div></div>');
+								var con = $('<span class="operation_look" onclick="Return_view()">供应商资质</span><div class="popupMenu popupMenu2"><div class="popupMenu_link"><a href="javascript:;" class="themeBgColor">操作</a></div><div class="popupMenu_con white_con"><a href="javascript:;" onclick=""><span>操作1</span></a><a href="javascript:;" onclick=""><span>操作2</span></a><a href="javascript:;" onclick=""><span>操作3</span></a></div></div>');
+								mainCon.append(con);
+								return mainCon.html();
+							}
+						}
+					],
+					data: gridData,
+					sortName: 'id',
+					rownumbers: false,
+					checkbox: false,
+					height: '100%',
+					width: "100%",
+					pageSize: 10,
+					percentWidthMode: true,
+					onAfterShowData: onAfterShowData
+
+				});
+			}
+		
+			function onAfterShowData(data) {
+
+				$("#dataBasic").find(".popupMenu").each(function() {
+					$(this).hover(function() {
+						$(this).find(".popupMenu_con").show();
+					}, function() {
+						$(this).find(".popupMenu_con").hide();
+					});
+				})
+			}
+			function Return_view(){
+				window.location='oa_57.html';
+			}
+		</script>
+	</body>
+
+</html>

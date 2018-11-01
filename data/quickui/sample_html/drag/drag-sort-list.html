@@ -1,0 +1,99 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<!--框架必需start-->
+<script type="text/javascript" src="../../libs/js/jquery.js"></script>
+<script type="text/javascript" src="../../libs/js/language/cn.js"></script>
+<script type="text/javascript" src="../../libs/js/framework.js"></script>
+<link href="../../libs/css/import_basic.css" rel="stylesheet" type="text/css"/>
+<link rel="stylesheet" type="text/css" id="skin" prePath="../../"/>
+<link rel="stylesheet" type="text/css" id="customSkin"/>
+<!--框架必需end-->
+
+<!--拖拽排序start-->
+<script type="text/javascript" src="../../libs/js/drag/dragSort.js"></script>
+<!--拖拽排序end-->
+
+<style>
+	#list1 li {  
+		width:280px;
+	}
+	#list1 div { 
+		width:180px; 
+		height:40px; 
+		line-height:40px;
+		padding:0px 0 0 35px; 
+	}
+
+</style>
+
+<body>
+<div class="page_content">
+<ul id="list1">
+	
+</ul>
+<input name="list1SortOrder" type="hidden" />
+<br/>
+<input type="button" value="查看结果" onclick="viewResule()" class="default" />
+</div>
+<script type="text/javascript">
+	  var testData={"form.paginate.pageNo":1,"form.paginate.totalRows":13,"rows":[
+      {"deptName":"部门1","sex":"女","id":125,"degree":"硕士结业","age":20,"name":"员工1","deptId":12,"ability":1},
+      {"deptName":"部门1","sex":"男","id":124,"degree":"本科毕业","age":20,"name":"员工2","deptId":11,"ability":2},
+      {"deptName":"部门1","sex":"男","id":123,"degree":"本科毕业","age":20,"name":"员工3","deptId":9,"ability":2},
+      {"deptName":"部门1","sex":"女","id":121,"degree":"硕士肄业","age":20,"name":"员工4","deptId":8,"ability":3},
+      {"deptName":"部门1","sex":"男","id":120,"degree":"博士肄业","age":20,"name":"员工5","deptId":7,"ability":4},
+      {"deptName":"部门2","sex":"女","id":119,"degree":"博士肄业","age":20,"name":"员工6","deptId":6,"ability":5},
+      {"deptName":"部门2","sex":"女","id":118,"degree":"博士肄业","age":20,"name":"员工7","deptId":6,"ability":6},
+      {"deptName":"部门2","sex":"女","id":117,"degree":"博士肄业","age":20,"name":"员工8","deptId":6,"ability":5},
+      {"deptName":"部门2","sex":"女","id":116,"degree":"博士肄业","age":20,"name":"员工9","deptId":6,"ability":3},
+      {"deptName":"部门2","sex":"女","id":115,"degree":"博士肄业","age":20,"name":"员工10","deptId":6,"ability":1},
+      {"deptName":"部门2","sex":"女","id":114,"degree":"博士肄业","age":20,"name":"员工11","deptId":6,"ability":5},
+      {"deptName":"部门2","sex":"女","id":113,"degree":"博士肄业","age":20,"name":"员工12","deptId":6,"ability":5}
+      ]}
+       
+	$(function(){
+		$.each(testData["rows"],function(idx,item){
+			var $item=$('<li class="sort_item"><table cellspacing="0" cellpadding="0" border="0"><tr><td><div></div></td><td></td></tr></table></li>');
+			$item.data("data",item);
+			$item.find("div").text(item.name);
+			var switchBtn=$('<input type="button" value="" class="buttonswich toggle" toggle="true" useMinWidth="false" relValue="1"/>');
+			switchBtn.render();
+			$item.find("td").eq(1).append(switchBtn);
+			$("#list1").append($item)
+
+		})
+		$("#list1").dragSort({ dragSelector: "div", dragBetween: true, dragEnd: saveOrder, placeHolderTemplate: "<li class='placeHolder'><div></div></li>" });
+	})
+	function initComplete(){
+		
+	}
+	function saveOrder() {
+		var serialStr = "";
+		$("#list1 li").each(function(i, elm) { serialStr += (i > 0 ? "|" : "") + $(elm).children().html(); });
+		$("input[name=list1SortOrder]").val(serialStr);
+	};
+	function viewResule(){
+		var newData={};
+		newData["form.paginate.pageNo"]=testData["form.paginate.pageNo"];
+		newData["form.paginate.totalRows"]=testData["form.paginate.totalRows"];
+		var rows=[];
+		var rowsName=[];
+		$("#list1").find("li").each(function(index, el) {
+			var switchBtn=$(this).find("input[type='button']");
+			if(switchBtn.attr("relValue")=="1"){
+				rows.push($(this).data("data"));
+				rowsName.push($(this).data("data")["name"]);
+			}
+			
+		});
+		newData["rows"]=rows;
+		var str=rowsName.join(",");
+		top.Notice('showNotice', {
+				title	: "处理结果：",
+				text    : str
+			})
+	}
+</script>
+</body>
+</html>

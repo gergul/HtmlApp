@@ -1,0 +1,306 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+	<!-- Kenneth Kufluk 2008/09/10 -->
+	<title>js-mindmap demo - JavaScript Mindmap</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+	<!--框架必需start-->
+	<script type="text/javascript" src="../../libs/js/jquery.js"></script>
+	<script type="text/javascript" src="../../libs/js/language/cn.js"></script>
+	<script type="text/javascript" src="../../libs/js/framework.js"></script>
+	<link href="../../libs/css/import_basic.css" rel="stylesheet" type="text/css"/>
+	<link rel="stylesheet" type="text/css" id="skin" prePath="../../"/>
+	<link rel="stylesheet" type="text/css" id="customSkin"/>
+	<!--框架必需end-->
+	
+	<script type="text/javascript" src="../../libs/js/graphical/jquery-ui.js"></script>
+	<script src="../../libs/js/graphical/raphael.js" type="text/javascript" charset="utf-8"></script>
+	<script type="text/javascript" src="../../libs/js/graphical/mindmap.js"></script>
+	
+	
+	<style type="text/css">
+	body {
+	}
+	#debug1 {
+		display:block;
+	}
+	.js-mindmap-active h1 {
+	   display:none;
+	}
+	.js-mindmap-active section h1 {
+	   display:block;
+	}
+	.js-mindmap-active .node {
+		position:absolute;
+		top:0;
+		left:0;
+		font-family:verdana;
+		font-size:11px;
+		color:#003258;
+        opacity:1;
+		padding:0 7px;
+		cursor:pointer;
+		cursor:hand;
+		z-index:100;
+		list-style:none;
+	}
+	.js-mindmap-active span.node {
+        letter-spacing: 0;
+        display:block;
+        color:white;
+        text-align:center;
+        text-decoration:none;
+	}
+	.js-mindmap-active .node.active{
+	}
+	.js-mindmap-active .node.active  span{
+		color:#fff;
+	}
+	.js-mindmap-active .node.activeparent  span{
+		color:#fff;
+	}
+	.js-mindmap-active img.line {
+		position:absolute;
+		width:200px;
+		height:133px;
+		top:0;
+		left:0;
+		display:block;
+		z-index:0;
+	}
+    .ui-draggable {
+        position:absolute;
+    }
+	.js-mindmap-active .node .node-action {
+	  position:absolute;
+	  right:-2em;
+	  bottom:-1px;
+	  text-align:center;
+	  vertical-align:super;
+	}
+	.js-mindmap-active span.node {
+	    background-color:#39f;
+	    border-radius: 8px;
+	     
+	}
+	.js-mindmap-active span.node.active {
+	    padding:5px 10px !important;
+	    border-width:5px !important;
+	}
+	.js-mindmap-active span.node.activeparent {
+	    padding:5px 10px !important;
+	    border-width:5px !important;
+	    background-color:#1fc695;
+	}
+	.mulu{
+		background-image: url(../../libs/images/icons/mulu.png);
+		background-repeat: no-repeat;
+		background-position: 0% 50%;
+		padding:4px 5px 4px 20px;
+		color:#fff;
+	}
+	</style>
+</head>
+<body>
+  <ul>
+    <li><span href="http://www.google.com" parameter="liTest">王小虎</span>
+      <ul>
+        <li><span href="#" target="_blank" class="icon twitter" parameter="" id="liTest">职业</span></li>
+        <li><span href="http://www.linkedin.com/in/kennethkufluk" target="_blank" class="icon linkedin">房产</span></li>
+        <li><span href="http://www.facebook.com/kenneth.kufluk" target="_blank" class="icon facebook">教育背景</span></li>
+        <li><span href="http://feeds.feedburner.com/KennethKufluk" target="_blank" class="icon rss">车辆</span></li>
+    
+        <li><span href="http://www.baidu.com" parameter="liTest"><span class="mulu">出国记录</span></span>
+          <ul>
+          	<li><span href="http://kenneth.kufluk.com/blog/blog/general/" title="View all posts filed under General">美国</span></li> 
+          	<li><span href="http://kenneth.kufluk.com/blog/blog/personal/" title="View all posts filed under Personal">英国</span></li> 
+          	<li><span href="http://kenneth.kufluk.com/blog/blog/physics/" title="View all posts filed under Physics &amp; Astronomy">日本</span></li> 
+          	<li><span href="http://kenneth.kufluk.com/blog/blog/projects/" title="View all posts filed under Projects">韩国</span></li> 
+          	<li><span href="http://kenneth.kufluk.com/blog/blog/rant/" title="View all posts filed under Ranting">法国</span></li> 
+          	<li><span href="http://kenneth.kufluk.com/blog/blog/work/" title="View all posts filed under Work">澳大利亚</span></li> 
+          </ul>
+        </li>
+        <li><span href="#"><span class="mulu">前科记录</span></span>
+          <ul>
+      		<li><span href="http://kenneth.kufluk.com/blog/about/" title="About Kenneth">盗窃自行车</span></li> 
+            <li><span href="http://kenneth.kufluk.com/blog/work/" title="Employment">盗窃电动车</span></li> 
+            <li><span href="http://kenneth.kufluk.com/blog/experiments/" title="Experiments">盗窃摩托车</span></li> 
+          </ul>
+        </li>
+        <li><span href="http://kenneth.kufluk.com/blog/"><span class="mulu">家人</span></span>
+          <ul>
+            <li><span href="http://coderonfire.com/" title="Coder on Fire" rel="friend met co-worker colleague neighbor">父亲</span></li> 
+            <li><span href="http://www.wait-till-i.com" title="Wait till I come!" rel="met">母亲</span></li> 
+            <li><span href="http://www.danwebb.net" rel="friend met" title="Godlike JavaScript Guru">哥哥</span></li> 
+            <li><span href="http://www.sitedaniel.com" rel="friend met co-worker colleague neighbor" title="Flash Whizz"><span class="mulu">姐姐</span></span>
+				<ul>
+					<li><span href="http://www.sitedaniel.com" rel="friend met co-worker colleague neighbor" title="Flash Whizz">丈夫</span></li>
+					<li><span href="http://www.sitedaniel.com" rel="friend met co-worker colleague neighbor" title="Flash Whizz">儿子</span></li>
+					<li><span href="http://www.sitedaniel.com" rel="friend met co-worker colleague neighbor" title="Flash Whizz">女儿</span></li>
+				</ul>
+            </li> 
+            <li><span href="http://dean.edwards.name" rel="friend met" title="Godlike JavaScript Guru">妻子</span></li> 
+            <li><span href="http://www.dotsonline.co.uk" title="My auntie&#8217;s music shop.">岳父</span></li> 
+            <li><span href="http://simonwillison.net/" title="PHP, Python, CSS, XML and general web development.">岳母</span></li> 
+          </ul>
+        </li>
+  		</ul>
+    </li>
+  </ul>
+  <script type="text/javascript">
+  	// load the mindmap
+	$(document).ready(function() {
+		// enable the mindmap in the body
+		$('body').mindmap();
+		var CurrentMapHtml = $('body').html();
+		// add the data to the mindmap
+		var root = $('body>ul>li').get(0).mynode = $('body').addRootNode($('body>ul>li>span').html(), {
+			href: '/',
+			url: '/',
+			isLoadChild: true,
+			dblclick: function(node) {
+				//当前节点双击事件
+				CurrentNodeDblClick(node);
+			},
+			onclick: function(node) {
+				if(node.name != node.obj.activeNode.name) {
+					//当前节点单击事件
+					CurrentNodeClick(node);
+				} else {
+					//根节点单击事件
+					//RootNodeClick(node);
+				};
+			}
+		});
+		$('body>ul>li').hide();
+		//向当前节点追加子节点
+		var addLI = function() {
+			var parentnode = $(this).parents('li').get(0);
+			if(typeof(parentnode) == 'undefined') parentnode = root;
+			else parentnode = parentnode.mynode;
+			this.mynode = $('body').addNode(parentnode, $('span:eq(0)', this).html(), {
+				href: $('span:eq(0)', this).attr('href'),
+				parameters: $('span:eq(0)', this).attr('parameter'),
+				current: $('span:eq(0)', this),
+				isLoadChild: false,
+				dblclick: function(node) {
+					//当前节点双击事件
+					CurrentNodeDblClick(node);
+				},
+				onclick: function(node) {
+					//当前节点单击事件
+					CurrentNodeClick(node);
+				}
+			});
+			$(this).hide();
+			//$('>ul>li', this).each(addLI);
+		};
+		//初始化生成拓扑图
+		$('body>ul>li>ul').each(function() {
+			$('>li', this).each(addLI);
+		});
+		//异步获取当前节点的子节点HTML
+		var LoadChildNodeHtml = function(node) {
+			var childHtml = "";
+			//ajax method to do 
+			//test
+			if(node.el.html() == "Twitter") {
+				childHtml += "<ul>";
+				childHtml += "<li>";
+				childHtml += "<span href='http://kenneth.kufluk.com/blog/about/'  title='About Kenneth'>test1</span>";
+				childHtml += "</li>";
+				childHtml += "<li>";
+				childHtml += "<span href='http://kenneth.kufluk.com/blog/about/'  title='About Kenneth'>test2</span>";
+				childHtml += "</li>";
+				childHtml += "<li>";
+				childHtml += "<span href='http://kenneth.kufluk.com/blog/about/'  title='About Kenneth'>test3</span>";
+				childHtml += "</li>";
+				childHtml += "</ul>";
+			};
+			//alert(childHtml);
+			return childHtml;
+		};
+		//根节点单击事件
+		var RootNodeClick = function(node) {
+			//TODO ajax method 是否有父节点
+			// add the data to the mindmap
+			var roothtml = "<ul><li>";
+			roothtml += "<span href='http://kenneth.kufluk.com/blog/about/'  title='About Kenneth'>root</span>";
+			roothtml += CurrentMapHtml;
+			roothtml += "</li></ul>";
+			$('body').html("");
+			$('body').append(roothtml);
+			CurrentMapHtml = $('body').html();
+			$('body').mindmap();
+			var root = $('body>ul>li').get(0).mynode = $('body').addRootNode($('body>ul>li>span').text(), {
+				href: '/',
+				url: '/',
+				isLoadChild: true,
+				dblclick: function(node) {
+					//当前节点双击事件
+					CurrentNodeDblClick(node);
+				},
+				onclick: function(node) {
+					//根节点单击事件
+					RootNodeClick(node);
+				}
+			});
+			//初始化生成拓扑图
+			$('body>ul>li>ul').each(function() {
+				$('>li', this).each(addLI);
+			});
+			//隐藏跟节点
+			$('body>ul>li').hide();
+		};
+		//当前节点单击事件
+		var CurrentNodeClick = function(node) {
+			//alert(node.isLoadChild);
+			//异步ajax加载子节点HTML
+			if(!node.isLoadChild && GetChildCount(node) == 0) {
+				node.current.parent().append(LoadChildNodeHtml(node));
+				$('ul>li', node.current.parent()).each(addLI);
+				node.isLoadChild = true;
+			};
+			//判断子节点的个数
+			var intChildCount = 0;
+			intChildCount = GetChildCount(node);
+			if(intChildCount <= 0) {
+				//alert("弹出提示信息！");
+				//return;
+			}
+			if(node.obj.activeNode) {
+				node.obj.activeNode.el.removeClass('active');
+				if(node.obj.activeNode.parent) node.obj.activeNode.parent.el.removeClass('activeparent');
+			}
+			node.obj.activeNode = node;
+			node.obj.activeNode.el.addClass('active');
+			if(node.obj.activeNode.parent) node.obj.activeNode.parent.el.addClass('activeparent')
+			node.obj.root.animateToStatic();
+		};
+		//当前节点双击事件
+		var CurrentNodeDblClick = function(node) {
+			//跳转到详细页面
+			// var url = $(this).attr('href');
+			// window.open(url, '_blank');
+	
+			// $(node.obj.activeNode.content).each(function() {
+			// 	this.hide();
+			// });
+			// $(node.content).each(function() {
+			// 	this.show();
+			// });
+			top.Toast('showNoticeToast', '节点双击，显示详细信息');
+		};
+		//获取子节点的个数
+		var GetChildCount = function(node) {
+			var item = 0;
+			$.each(node.children, function(i, val) {
+				item++;
+			});
+			return item;
+		};
+	});
+  </script>
+</body>
+</html>

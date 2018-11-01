@@ -1,0 +1,217 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<title>无标题文档</title>
+		<!--框架必需start-->
+		<script type="text/javascript" src="../../libs/js/jquery.js"></script>
+		<script type="text/javascript" src="../../libs/js/language/cn.js"></script>
+		<script type="text/javascript" src="../../libs/js/framework.js"></script>
+		<link href="../../libs/css/import_basic.css" rel="stylesheet" type="text/css" />
+		<link rel="stylesheet" type="text/css" id="skin" prePath="../../" />
+		<link rel="stylesheet" type="text/css" id="customSkin" />
+		<!--框架必需end-->
+		<link rel="stylesheet" type="text/css" href="style/style.css" />
+
+		
+		<script src="../../libs/js/table/quiGrid.js" type="text/javascript"></script>
+		<!-- 日期选择框start -->
+		<script type="text/javascript" src="../../libs/js/form/datePicker/WdatePicker.js"></script>
+		<!-- 日期选择框end -->
+	</head>
+
+	<body>
+		<div class="page_content">
+			
+			<div class="infoCard" style="margin-top: 20px;">
+				<div class="title">
+					<span>搜索条件</span>
+				</div>
+				<div class="Purchase_content_win">
+					<table border="0" cellspacing="0" cellpadding="0" class="">
+						<tr>
+							<td style="width: 100px;padding-right: 20px;">
+								<p>类型</p>
+								<select data='{"list":[{"value":"1","key":"门店收款"},{"value":"2","key":"网络收款"}]}'></select>
+							</td>
+							<td style="width: 200px;padding-right: 20px;">
+								<p>选择门店</p>
+								<select data='{"list":[{"value":"1","key":"苏三"},{"value":"2","key":"张思"}]}' selWidth="300"></select>
+							</td>
+							<td style="width: 100px;padding-right: 20px;">
+								<p>开始日期</p>
+								<input type="text" name="" id="" placeholder="2017-09-04" class="data" disabled="disabled"/>
+							</td>
+							<td style="width: 100px;padding-right: 20px;">
+								<p>结束日期</p>
+								<input type="text" name="" id="" placeholder="2017-09-14" class="data" disabled="disabled"/>
+							</td>
+							<td style="width: 100px;padding-right: 20px;vertical-align: bottom;">
+								<input type="button" name="" id="" value="查询" class="primary"/>
+							</td>
+							<td style="width: 100px;padding-right: 20px;vertical-align: bottom;">
+								<input type="button" name="" id="" value="导出EXCEL" class="primary"/>
+							</td>
+						</tr>
+						<tr>
+							<td colspan="3">
+								<p>门店账户余额：0.00</p>
+							</td>
+						</tr>
+					</table>
+				</div>
+				
+			</div>
+			<div class="infoCard infoCard2" style="margin-top: 20px;">
+				<div class="title">
+					<span>产品资料</span>
+				</div>
+				<div class="attendance_list_operation">
+					<table border="0" cellspacing="0" cellpadding="0" class="search_content">
+						<tr>
+							<td>搜索：</td>
+							<td><input type="text" /></td>
+							<td><input type="button" value="搜索" class="" /></td>
+						</tr>
+					</table>
+					<div class="clear"></div>
+				</div>
+				<div id="dataBasic"></div>
+				
+				
+			</div>
+		</div>
+
+		<script type="text/javascript">
+			var grid = null;
+			//数据表格使用
+			var gridData = {
+				"form.paginate.pageNo": 1,
+				"form.paginate.totalRows": 13,
+				"rows": [{
+						"id": 5418,
+						"Time": "2017-09-19 12:00",
+						"Type": "",
+						"receivable_money": 100,
+						"received_money": 90,
+						"Uncalled": 10,
+						"User": "苏三",
+						"Remarks": "--"
+					},{
+						"id": 5418,
+						"Time": "2017-09-19 12:00",
+						"Type": "",
+						"receivable_money": 100,
+						"received_money": 90,
+						"Uncalled": 10,
+						"User": "苏三",
+						"Remarks": "--"
+					},{
+						"id": 5418,
+						"Time": "2017-09-19 12:00",
+						"Type": "",
+						"receivable_money": 100,
+						"received_money": 90,
+						"Uncalled": 10,
+						"User": "苏三",
+						"Remarks": "--"
+					},{
+						"id": 5418,
+						"Time": "2017-09-19 12:00",
+						"Type": "",
+						"receivable_money": 100,
+						"received_money": 90,
+						"Uncalled": 10,
+						"User": "苏三",
+						"Remarks": "--"
+					},{
+						"id": 5418,
+						"Time": "2017-09-19 12:00",
+						"Type": "",
+						"receivable_money": 100,
+						"received_money": 90,
+						"Uncalled": 10,
+						"User": "苏三",
+						"Remarks": "--"
+					}
+				]
+			}
+
+			function initComplete() {
+				grid = $("#dataBasic").quiGrid({
+					columns: [{
+							display: '编码',
+							name: 'id',
+							width: "10%"
+						},{
+							display: '受订/收款日期',
+							name: 'Time',
+							width: "15%"
+						},{
+							display: '单据类型',
+							name: 'Type',
+							width: "10%"
+						},{
+							display: '应收金额',
+							name: 'receivable_money',
+							width: "10%"
+						},{
+							display: '已收金额',
+							name: 'received_money',
+							width: "10%"
+						},{
+							display: '未收结余',
+							name: 'Uncalled ',
+							width: "10%"
+						},{
+							display: '录入人',
+							name: 'User',
+							width: "15%"
+						},{
+							display: '备注',
+							name: 'Remarks',
+							width: "20%"
+						},
+						{
+							display: '操作',
+							name: 'name',
+							align: 'center',
+							width: 120,
+							render: function(rowdata, rowindex, value, column) {
+								var mainCon = $('<div></div>');
+								var con = $('<span class="operation_delete">删除</span>');
+								mainCon.append(con);
+								return mainCon.html();
+							}
+						}
+					],
+					data: gridData,
+					sortName: 'id',
+					rownumbers: false,
+					checkbox: false,
+					height: "auto",
+					width: "100%",
+					pageSize: 10,
+					percentWidthMode: true,
+					onAfterShowData: onAfterShowData
+
+				});
+			}
+			function onAfterShowData(data) {
+				$("#dataBasic").find(".popupMenu").each(function() {
+					$(this).hover(function() {
+						$(this).find(".popupMenu_con").show();
+					}, function() {
+						$(this).find(".popupMenu_con").hide();
+					});
+				})
+			}
+			
+			function Purchase_back(){
+				window.location='';
+			}
+		</script>
+	</body>
+
+</html>

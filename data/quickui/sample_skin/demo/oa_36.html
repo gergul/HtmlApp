@@ -1,0 +1,204 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<title>无标题文档</title>
+		<!--框架必需start-->
+		<script type="text/javascript" src="../../libs/js/jquery.js"></script>
+		<script type="text/javascript" src="../../libs/js/language/cn.js"></script>
+		<script type="text/javascript" src="../../libs/js/framework.js"></script>
+		<link href="../../libs/css/import_basic.css" rel="stylesheet" type="text/css" />
+		<link rel="stylesheet" type="text/css" id="skin" prePath="../../" />
+		<link rel="stylesheet" type="text/css" id="customSkin" />
+		<!--框架必需end-->
+		<link rel="stylesheet" type="text/css" href="style/style.css" />
+
+		<script src="../../libs/js/table/quiGrid.js" type="text/javascript"></script>
+
+		<style type="text/css">
+			/*body {
+				background: #fff;
+			}*/
+		</style>
+	</head>
+
+	<body>
+		<div class="page_content">
+			
+			<div class="infoCard infoCard2">
+				<div class="title">
+					<span>入库管理</span>
+				</div>
+				<div class="attendance_list_operation">
+					<table border="0" cellspacing="0" cellpadding="0" class="search_content">
+						<tr>
+							<td>搜索：</td>
+							<td><input type="text" /></td>
+							<td><input type="button" value="搜索" class="" /></td>
+						</tr>
+					</table>
+					<div class="clear"></div>
+				</div>
+				<div id="dataBasic"></div>
+			</div>
+		</div>
+
+		<script type="text/javascript">
+			var grid = null;
+			//数据表格使用
+			var gridData = {
+				"form.paginate.pageNo": 1,
+				"form.paginate.totalRows": 13,
+				"rows": [{
+						"id": 5418,
+						"Audit_date": "2017-09-18 16:39:23",
+						"Name": "北京上不去科技有限方公司",
+						"Purchase_date": "2017-09-29 15:15:34",
+						"Receiving_information": "库房：北京仓库",
+						"State": "入库已完成"
+					},{
+						"id": 5418,
+						"Audit_date": "2017-09-18 16:39:23",
+						"Name": "北京上不去科技有限方公司",
+						"Purchase_date": "2017-09-29 15:15:34",
+						"Receiving_information": "库房：北京仓库",
+						"State": "入库已完成"
+					},{
+						"id": 5418,
+						"Audit_date": "2017-09-18 16:39:23",
+						"Name": "北京上不去科技有限方公司",
+						"Purchase_date": "2017-09-29 15:15:34",
+						"Receiving_information": "库房：北京仓库",
+						"State": "入库已完成"
+					},{
+						"id": 5418,
+						"Audit_date": "2017-09-18 16:39:23",
+						"Name": "北京上不去科技有限方公司",
+						"Purchase_date": "2017-09-29 15:15:34",
+						"Receiving_information": "库房：北京仓库",
+						"State": "入库已完成"
+					},{
+						"id": 5418,
+						"Audit_date": "2017-09-18 16:39:23",
+						"Name": "北京上不去科技有限方公司",
+						"Purchase_date": "2017-09-29 15:15:34",
+						"Receiving_information": "库房：北京仓库",
+						"State": "入库已完成"
+					},{
+						"id": 5418,
+						"Audit_date": "2017-09-18 16:39:23",
+						"Name": "北京上不去科技有限方公司",
+						"Purchase_date": "2017-09-29 15:15:34",
+						"Receiving_information": "库房：北京仓库",
+						"State": "入库已完成"
+					},{
+						"id": 5418,
+						"Audit_date": "2017-09-18 16:39:23",
+						"Name": "北京上不去科技有限方公司",
+						"Purchase_date": "2017-09-29 15:15:34",
+						"Receiving_information": "库房：北京仓库",
+						"State": "入库已完成"
+					},{
+						"id": 5418,
+						"Audit_date": "2017-09-18 16:39:23",
+						"Name": "北京上不去科技有限方公司",
+						"Purchase_date": "2017-09-29 15:15:34",
+						"Receiving_information": "库房：北京仓库",
+						"State": "入库已完成"
+					},{
+						"id": 5418,
+						"Audit_date": "2017-09-18 16:39:23",
+						"Name": "北京上不去科技有限方公司",
+						"Purchase_date": "2017-09-29 15:15:34",
+						"Receiving_information": "库房：北京仓库",
+						"State": "入库已完成"
+					},{
+						"id": 5418,
+						"Audit_date": "2017-09-18 16:39:23",
+						"Name": "北京上不去科技有限方公司",
+						"Purchase_date": "2017-09-29 15:15:34",
+						"Receiving_information": "库房：北京仓库",
+						"State": "入库已完成"
+					}
+				]
+			}
+
+			function initComplete() {
+				grid = $("#dataBasic").quiGrid({
+					columns: [{
+							display: '编号',
+							name: 'id',
+							width: "10%",
+							cellClick: true
+						},
+						{
+							display: '审核日期',
+							name: 'Audit_date',
+							width: "10%"
+						},
+						{
+							display: '供应商名称',
+							name: 'Name',
+							width: "40%"
+						},
+						{
+							display: '采购日期',
+							name: 'Purchase_date',
+							width: "10%"
+						},
+						{
+							display: '收货信息',
+							name: 'Receiving_information',
+							width: "20%"
+						},
+						{
+							display: '审批状态',
+							name: 'State',
+							width: "10%",
+							render: function(rowdata, rowindex, value, column) {
+								return "入库已完成" == value ? "<font color='#8EC165'>" + value + "</font>" : "<font color='#FB6B5B'>" + value + "</font>";
+							}
+						},
+						{
+							display: '操作',
+							name: 'name',
+							align: 'center',
+							width: 170,
+							render: function(rowdata, rowindex, value, column) {
+								var mainCon = $('<div></div>');
+								var con = $('<span class="operation_look" onclick="Purchase_content()">查看</span><div class="popupMenu popupMenu2"><div class="popupMenu_link"><a href="javascript:;" class="themeBgColor">操作</a></div><div class="popupMenu_con white_con"><a href="javascript:;" onclick=""><span>导出贴码</span></a><a href="javascript:;" onclick=""><span>打印</span></a></div></div>');
+								mainCon.append(con);
+								return mainCon.html();
+							}
+						}
+					],
+					data: gridData,
+					sortName: 'id',
+					rownumbers: false,
+					checkbox: false,
+					height: '100%',
+					width: "100%",
+					pageSize: 10,
+					percentWidthMode: true,
+					onAfterShowData: onAfterShowData
+
+				});
+			}
+			
+
+			function onAfterShowData(data) {
+
+				$("#dataBasic").find(".popupMenu").each(function() {
+					$(this).hover(function() {
+						$(this).find(".popupMenu_con").show();
+					}, function() {
+						$(this).find(".popupMenu_con").hide();
+					});
+				})
+			}
+			
+		</script>
+	</body>
+
+</html>

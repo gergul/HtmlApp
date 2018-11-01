@@ -1,0 +1,118 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+		<title></title>
+		<!--框架必需start-->
+		<script type="text/javascript" src="../../libs/js/jquery.js"></script>
+		<script type="text/javascript" src="../../libs/js/language/cn.js"></script>
+		<script type="text/javascript" src="../../libs/js/framework.js"></script>
+		<link href="../../libs/css/import_basic.css" rel="stylesheet" type="text/css" />
+		<link rel="stylesheet" type="text/css" id="skin" prePath="../../" />
+		<link rel="stylesheet" type="text/css" id="customSkin" />
+		<!--框架必需end-->
+	</head>
+	<body>
+		<div class="page_content">	
+			<div class="groupTitle"><span>示例说明</span></div>
+			在界面右上角显示可关闭的全局通知，常用于通知内容带有描述信息或者系统主动推送的通知
+			<div class="height_15"></div>
+
+			<div class="groupTitle"><span>1、基本使用</span></div>
+			<input type="button" value="普通提示" onclick="showNotice1()" class="default">
+			<input type="button" value="仅含标题" onclick="showNotice2()" class="default">
+			
+			<div class="groupTitle"><span>2、自定义持续时间</span></div>
+			
+			<input type="button" value="3秒关闭" onclick="showNotice3(3000)" class="default">
+			
+			<div class="groupTitle"><span>3、无关闭按钮</span></div>
+			<input type="button" value="点击打开" onclick="showNotice4()" class="default">
+			
+			<div class="groupTitle"><span>4、外部关闭</span></div>
+			<input type="button" value="点击打开" onclick="showNotice5()" class="default">
+			<input type="button" value="点击关闭" onclick="showNotice6()" class="default">
+			
+			<div class="groupTitle"><span>5、带有倾向性</span></div>
+			<input type="button" value="消息提示" onclick="showNotice7()" class="default">
+			<input type="button" value="成功提示" onclick="showNotice8()" class="default">
+			<input type="button" value="警告提示" onclick="showNotice9()" class="default">
+			<input type="button" value="错误提示" onclick="showNotice10()" class="default">
+
+
+
+			<!--<div class="groupTitle"><span>关闭事件</span></div>
+			<input type="button" value="点击打开" onclick="showNotice10()">-->
+	</div>
+	<script>
+		function showNotice1(){
+			top.Notice('showNotice', {
+				title	: "提示标题",
+				text    : '提示内容部分'
+			})
+		}
+		function showNotice2(){
+			top.Notice('showNotice', {
+				title	: "提示标题"
+			})
+		}
+		function showNotice3(time){
+			top.Notice('showNotice', {
+				title	: "提示标题",
+				text    : '提示内容部分',
+				stayTime : time
+			})
+		}
+		function showNotice4(){
+			top.Notice('showNotice', {
+				title	: "提示标题",
+				text    : '提示内容部分',
+				closeButton: false
+			})
+		}
+		
+		var msg;
+		function showNotice5(){
+			msg=top.Notice('showNotice', {
+				title	: "提示标题",
+				text    : '提示内容部分',
+				sticky  : true
+			})
+		}
+		function showNotice6(){
+			top.Notice('removeNotice', msg)
+		}
+		function showNotice7(){
+			top.Notice('showNotice', {
+				title : "提示标题",
+				text    : '普通提示内容部分',
+				type    : 'info'
+			})
+		}
+		
+		function showNotice8(){
+			top.Notice('showNotice', {
+				title	 : "提示标题",
+				text     : '成功提示内容部分',
+				type     : 'success'
+			})
+		}
+		function showNotice9(){
+			top.Notice('showNotice', {
+				title    : "提示标题",
+				text     : '警告提示内容部分',
+				type     : 'warning'
+			})
+		}
+		function showNotice10(){
+			top.Notice('showNotice', {
+				title	: "提示标题",
+				text     : '出错提示内容部分',
+				type     : 'error'
+			})
+		}
+	</script>
+	</body>
+
+</html>

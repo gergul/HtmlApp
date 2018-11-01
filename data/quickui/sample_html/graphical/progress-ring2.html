@@ -1,0 +1,93 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title></title>
+<!--框架必需start-->
+<script type="text/javascript" src="../../libs/js/jquery.js"></script>
+<script type="text/javascript" src="../../libs/js/language/cn.js"></script>
+<script type="text/javascript" src="../../libs/js/framework.js"></script>
+<link href="../../libs/css/import_basic.css" rel="stylesheet" type="text/css"/>
+<link rel="stylesheet" type="text/css" id="skin" prePath="../../"/>
+<link rel="stylesheet" type="text/css" id="customSkin"/>
+<!--框架必需end-->
+<script src="../../libs/js/graphical/raphael.js" type="text/javascript"></script>
+<script src="../../libs/js/graphical/progress.js" type="text/javascript"></script>
+<style>
+	 #holder {
+                position: relative;
+                width: 800px;
+                height: 380px;
+                margin: 10px auto;
+            }
+
+    .ring_text{
+        position: absolute;
+        top:110px;
+        left: 0px;
+        font-size: 14px;
+        width: 300px;
+        text-align: center;
+    }
+    #percent_text{
+        font-size: 40px;
+        padding-top: 10px;
+    }
+
+    .ring_button{
+        top: 300px;
+        left: 100px;
+        position: absolute;
+    }
+</style>
+</head>
+<body>
+<div class="page_content">
+	<div id="holder">
+
+            <div class="ring_text">
+                <div>完成度</div>
+                <div id="percent_text"></div>
+            </div>
+
+
+        <div class="ring_button">
+            <input type="button" value="-" class="default" onclick="ringChange(0)" />&nbsp;&nbsp;
+            <input type="button" value="+" class="default" onclick="ringChange(1)"/>
+        </div>
+    </div>
+    
+</div>
+<script>
+	var radius = 120;
+    var paper;     
+    var paramBg = {stroke: "#ebf1f7", "stroke-width": 14};
+    var paramBlue = {stroke: "#00aaef", "stroke-width": 18};
+    var val=25;
+    var ring;
+    $(function(){
+        paper=initPaper("holder", 800, 380);   
+        //paper,current,min,max,cx,cy,radius,param,paramBg
+        ring=drawRingProgress(paper,val,0,100,150,150,radius,paramBlue,paramBg);
+        $("#percent_text").text(val+"%");
+    })
+    function ringChange(state){
+
+        if(state==0){
+            val=val-5;
+            if(val<5){
+                val=5;
+            }
+        }
+        else if(state==1){
+            val=val+5;
+            if(val>100){
+                val=100;
+            }
+        }
+        $("#percent_text").text(val+"%");
+        ring.animate({arc: [val, 100,150,150,radius]}, 500, "<");
+    }
+</script>
+</body>
+</html>

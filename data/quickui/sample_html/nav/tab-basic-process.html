@@ -1,0 +1,397 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title></title>
+<!--框架必需start-->
+<script type="text/javascript" src="../../libs/js/jquery.js"></script>
+<script type="text/javascript" src="../../libs/js/language/cn.js"></script>
+<script type="text/javascript" src="../../libs/js/framework.js"></script>
+<link href="../../libs/css/import_basic.css" rel="stylesheet" type="text/css"/>
+<link rel="stylesheet" type="text/css" id="skin" prePath="../../"/>
+<link rel="stylesheet" type="text/css" id="customSkin"/>
+<!--框架必需end-->
+
+<!--流程选项卡start-->
+<script type="text/javascript" src="../../libs/js/nav/basicTabProcess.js"></script>
+<!--流程选项卡end-->
+</head>
+<body>
+
+ 	 
+ 	<div class="page_content">
+ 	
+
+
+			<div class="groupTitle"><span>1、非iframe模式-基本使用</span></div>
+     
+    <div class="basicTabProcess">
+		<div name="流程选项1" style="height:200px;">
+			内容1<br />内容1
+		</div>
+		<div name="流程选项2" style="height:200px;">
+			内容2<br />内容2
+		</div>
+		<div name="流程选项3" style="height:200px;">
+			内容3<br />内容3
+		</div>
+		<div name="流程选项4" style="height:200px;">
+			内容4<br />内容4
+		</div>
+		<div name="流程选项5" style="height:200px;">
+			内容5<br />内容5
+		</div>
+	</div>
+
+	  <div class="height_15"></div>
+	  
+
+
+			<div class="groupTitle"><span>2、非iframe模式-设定初始选中索引</span></div>
+     
+     <div class="basicTabProcess" selectedIdx="1">
+		<div name="流程选项1" style="height:200px;">
+			内容1<br />内容1
+		</div>
+		<div name="流程选项2" style="height:200px;">
+			内容2<br />内容2
+		</div>
+		<div name="流程选项3" style="height:200px;">
+			内容3<br />内容3
+		</div>
+		<div name="流程选项4" style="height:200px;">
+			内容4<br />内容4
+		</div>
+	</div>
+
+	  <div class="height_15"></div>
+	  
+	  
+
+
+			<div class="groupTitle"><span>3、非iframe模式-禁止点击并由外部控制索引</span></div>
+     
+    禁用全部选项卡：
+    <div class="basicTabProcess" allItemDisabled="true" id="basicTab-3-1">
+		<div name="流程选项1" style="height:200px;">
+			内容1<br />内容1
+		</div>
+		<div name="流程选项2" style="height:200px;">
+			内容2<br />内容2
+		</div>
+		<div name="流程选项3" style="height:200px;">
+			内容3<br />内容3
+		</div>
+		<div name="流程选项4" style="height:200px;">
+			内容4<br />内容4
+		</div>
+	</div>
+	<input type="button" value="改变索引" onclick="changeIdxHandler()" class="default"/>
+	<br/><br/>
+	禁用部分选项卡：
+    <div class="basicTabProcess" id="basicTab-3-2">
+		<div name="流程选项1" style="height:200px;">
+			内容1<br />内容1
+		</div>
+		<div name="流程选项2" style="height:200px;">
+			内容2<br />内容2
+		</div>
+		<div name="流程选项3" style="height:200px;" itemDisabled="true">
+			内容3<br />内容3
+		</div>
+		<div name="流程选项4" style="height:200px;" itemDisabled="true">
+			内容4<br />内容4
+		</div>
+	</div>
+	<input type="button" value="启用“步骤3”" onclick="enableTabHandler()" class="default"/>
+	<input type="button" value="禁用“步骤3”" onclick="disableTabHandler()" class="default"/>
+
+	  <div class="height_15"></div>
+	  
+
+
+			<div class="groupTitle"><span>4、iframe模式-基本使用</span></div>
+     
+<div class="basicTabProcess" iframeMode="true" data='{"list":[{"name":"流程选项1","url":"../../sample_html/content/content1.html"},{"name":"流程选项2","url":"../../sample_html/content/content2.html"}]}'>
+	<div style="height:240px;">
+		<IFRAME width="100%" height="100%" frameBorder=0 allowTransparency="true" name="iframeChild1" id="iframeChild1"></IFRAME>
+	</div>
+</div> 
+
+	  <div class="height_15"></div>
+	  
+
+
+
+
+			<div class="groupTitle"><span>5、iframe模式-设定初始选中索引</span></div>
+     
+		<div class="basicTabProcess" iframeMode="true" selectedIdx="1" data='{"list":[{"name":"选项1","url":"../../sample_html/content/content1.html"},{"name":"选项2","url":"../../sample_html/content/content2.html"}]}'>
+			<div style=";height:240px;">
+				<IFRAME width="100%" height="100%" frameBorder=0 allowTransparency="true" name="iframeChild2" id="iframeChild2"></IFRAME>
+			</div>
+		</div> 
+
+	  <div class="height_15"></div>
+	  
+	  
+
+
+			<div class="groupTitle"><span>6、iframe模式-禁止点击并由外部控制索引</span></div>
+     
+   禁用全部选项卡：
+		<div class="basicTabProcess" iframeMode="true" id="basicTab-6-1" allItemDisabled="true" data='{"list":[{"name":"步骤1","url":"../../sample_html/content/content1.html"},{"name":"步骤2","url":"../../sample_html/content/content2.html"},{"name":"步骤3","url":"../../sample_html/content/content3.html"}]}'>
+			<div style=";height:240px;">
+				<IFRAME width="100%" height="100%" frameBorder=0 allowTransparency="true" name="iframeChild3" id="iframeChild3"></IFRAME>
+			</div>
+		</div> 
+		<input type="button" value="改变索引" onclick="changeIdxHandler2()" class="default"/>
+	<br/><br/>
+	  禁用部分选项卡：
+		<div class="basicTabProcess" iframeMode="true"  id="basicTab-6-2" data='{"list":[{"name":"步骤1","url":"../../sample_html/content/content1.html"},{"name":"步骤2","url":"../../sample_html/content/content2.html"},{"name":"步骤3","url":"../../sample_html/content/content3.html","itemDisabled":"true"}]}'>
+			<div style=";height:240px;">
+				<IFRAME width="100%" height="100%" frameBorder=0 allowTransparency="true" name="iframeChild4" id="iframeChild4"></IFRAME>
+			</div>
+		</div> 
+		<input type="button" value="启用“步骤3”" onclick="enableTabHandler2()" class="default"/>
+		<input type="button" value="禁用“步骤3”" onclick="disableTabHandler2()" class="default"/>
+
+	  <div class="height_15"></div>
+	  
+
+
+			<div class="groupTitle"><span>7、iframe模式-切换标签式出现进度条</span></div>
+     
+		<div class="basicTabProcess" iframeMode="true" showProgress="true" data='{"list":[{"name":"选项1","url":"../../sample_html/content/content1.html"},{"name":"选项2","url":"../../sample_html/content/content2.html"}]}'>
+			<div style=";height:240px;">
+				<IFRAME width="100%" height="100%" frameBorder=0 allowTransparency="true" name="iframeChild5" id="iframeChild5"></IFRAME>
+			</div>
+		</div> 
+
+	  <div class="height_15"></div>
+	  
+	  
+	  
+
+
+			<div class="groupTitle"><span>8、选项卡点击事件</span></div>
+     
+   	<div class="basicTabProcess" id="tab-9">
+		<div name="选项1" style="height:200px;">
+			内容1<br />内容1
+		</div>
+		<div name="选项2" style="height:200px;">
+			内容2<br />内容2
+		</div>
+	</div>
+
+	  <div class="height_15"></div>
+	  
+	  
+
+
+			<div class="groupTitle"><span>9、获取当前选中索引</span></div>
+     
+   	<div class="basicTabProcess" id="tab-10">
+		<div name="选项1" style="height:200px;">
+			内容1<br />内容1
+		</div>
+		<div name="选项2" style="height:200px;">
+			内容2<br />内容2
+		</div>
+	</div>
+	<input type="button" value="获取当前索引" onclick="getTabValue()" class="default"/>
+
+	  <div class="height_15"></div>
+	  
+	  
+	  
+
+
+
+			<div class="groupTitle"><span>10、鼠标移入切换标签</span></div>
+     
+    <div class="basicTabProcess" hoverMode="true">
+		<div name="选项1" style="height:200px;">
+			内容1<br />内容1
+		</div>
+		<div name="选项2" style="height:200px;">
+			内容2<br />内容2
+		</div>
+		<div name="选项3" style="height:200px;">
+			内容3<br />内容3
+		</div>
+		<div name="选项4" style="height:200px;">
+			内容4<br />内容4
+		</div>
+	</div>
+
+	  <div class="height_15"></div>
+	 
+
+
+			<div class="groupTitle"><span>11、单内容区域模式</span></div>
+     
+    <div class="basicTabProcess" id="tab-12" singleContentMode="true" data='{"list":[{"name":"选项1"},{"name":"选项2"},{"name":"选项3"}]}'>
+		<div style="height:200px;" id="tab-12-content">
+			内容1：这里只有一个容器
+		</div>
+	</div>
+
+	  <div class="height_15"></div>
+	  
+	  
+
+
+			<div class="groupTitle"><span>12、含有标题</span></div>
+     
+    <div class="basicTabProcess" tabTitle="信息录入">
+		<div name="基础信息" style="height:200px;">
+			内容1<br />内容1
+		</div>
+		<div name="体貌特征" style="height:200px;">
+			内容2<br />内容2
+		</div>
+		<div name="交通工具" style="height:200px;">
+			内容3<br />内容3
+		</div>
+	</div>
+
+	  <div class="height_15"></div>
+	  
+
+
+			<div class="groupTitle"><span>13、标题含有图标</span></div>
+     
+    使用iconClass:
+    <div class="basicTabProcess" tabTitle="信息录入" iconClass="icon_edit">
+		<div name="基础信息" style="height:200px;">
+			内容1<br />内容1
+		</div>
+		<div name="体貌特征" style="height:200px;">
+			内容2<br />内容2
+		</div>
+		<div name="交通工具" style="height:200px;">
+			内容3<br />内容3
+		</div>
+	</div>
+	 使用iconSrc:
+    <div class="basicTabProcess" tabTitle="信息录入" iconSrc="../../libs/images/icons/icon_edit.png">
+		<div name="基础信息" style="height:200px;">
+			内容1<br />内容1
+		</div>
+		<div name="体貌特征" style="height:200px;">
+			内容2<br />内容2
+		</div>
+		<div name="交通工具" style="height:200px;">
+			内容3<br />内容3
+		</div>
+	</div>
+
+	    <div class="height_15"></div>
+	   
+	<div class="groupTitle"><span>14、tab过多左右滚动</span></div>
+     <div style="width: 600px;overflow-x:hidden; ">
+     非iframe模式
+    <div class="basicTabProcess" tabScroll="true">
+		<div name="标题文字1" style="height:200px;">
+			内容1<br />内容1
+		</div>
+		<div name="标题文字2" style="height:200px;">
+			内容2<br />内容2
+		</div>
+		<div name="标题文字3" style="height:200px;">
+			内容3<br />内容3
+		</div>
+		<div name="标题文字4" style="height:200px;">
+			内容4<br />内容4
+		</div>
+		<div name="标题文字5" style="height:200px;">
+			内容5<br />内容5
+		</div>
+		<div name="标题文字6" style="height:200px;">
+			内容6<br />内容6
+		</div>
+		<div name="标题文字7" style="height:200px;">
+			内容7<br />内容7
+		</div>
+		<div name="标题文字8" style="height:200px;">
+			内容8<br />内容8
+		</div>
+		<div name="标题文字9" style="height:200px;">
+			内容9<br />内容9
+		</div>
+	</div>
+	<br/><br/>
+	iframe模式
+    <div class="basicTabProcess" iframeMode="true" tabScroll="true" data='{"list":[{"name":"标题文字1","url":"../../sample_html/content/content1.html"},{"name":"标题文字2","url":"../../sample_html/content/content2.html"},{"name":"标题文字3","url":"../../sample_html/content/content3.html"},{"name":"标题文字4","url":"../../sample_html/content/content4.html"},{"name":"标题文字5","url":"../../sample_html/content/content1.html"},{"name":"标题文字6","url":"../../sample_html/content/content2.html"},{"name":"标题文字7","url":"../../sample_html/content/content3.html"},{"name":"标题文字8","url":"../../sample_html/content/content4.html"},{"name":"标题文字9","url":"../../sample_html/content/content1.html"}]}'>
+		<div style=";height:240px;">
+			<IFRAME width="100%" height="100%" frameBorder=0 allowTransparency="true" name="iframeChild6" id="iframeChild6"></IFRAME>
+		</div>
+	</div>
+	</div>
+
+	 
+
+</div>
+			
+</body>
+<script>
+	function initComplete(){
+		$("#tab-9").bind("actived",function(e,i){
+			top.Toast("showNoticeToast", i);
+		})
+		
+		$("#tab-12").bind("actived",function(e,i){
+			if(i==0){
+				$("#tab-12-content").html('内容1：这里只有一个容器');
+			}
+			else if(i==1){
+				$("#tab-12-content").html('内容2：此处的内容是动态生成的');
+			}
+			else if(i==2){
+				$("#tab-12-content").html('内容3：此处的内容是动态生成的');
+			}
+		})
+	}
+	
+	//外部控制索引
+	var idx=0;
+	function changeIdxHandler(){
+		idx++
+		if(idx>3){
+			idx=0;
+		}
+		$("#basicTab-3-1").basicTabProcessSetIdx(idx);
+	}
+	
+	//启用
+	function enableTabHandler(){
+		$("#basicTab-3-2").basicTabProcessSetEnable(2,true);
+	}
+	//禁用
+	function disableTabHandler(){
+		$("#basicTab-3-2").basicTabProcessSetEnable(2,false);
+	}
+	
+	var idx2=0;
+	function changeIdxHandler2(){
+		idx2++
+		if(idx2>2){
+			idx2=0;
+		}
+		$("#basicTab-6-1").basicTabProcessSetIdx(idx2);
+	}
+	//动态禁用或启用
+	function enableTabHandler2(){
+		$("#basicTab-6-2").basicTabProcessSetEnable(2,true);
+	}
+	function disableTabHandler2(){
+		$("#basicTab-6-2").basicTabProcessSetEnable(2,false);
+	}
+	//获得选中索引
+	function getTabValue(){
+		top.Toast("showNoticeToast", $("#tab-10").attr("selectedIdx"));
+	}
+	</script>
+</html>

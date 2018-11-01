@@ -1,0 +1,88 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<!--框架必需start-->
+<script type="text/javascript" src="../../libs/js/jquery.js"></script>
+<script type="text/javascript" src="../../libs/js/language/cn.js"></script>
+<script type="text/javascript" src="../../libs/js/framework.js"></script>
+<link href="../../libs/css/import_basic.css" rel="stylesheet" type="text/css"/>
+<link rel="stylesheet" type="text/css" id="skin" prePath="../../"/>
+<link rel="stylesheet" type="text/css" id="customSkin"/>
+<!--框架必需end-->
+
+<!--拖拽排序start-->
+<script type="text/javascript" src="../../libs/js/drag/dragSort.js"></script>
+<!--拖拽排序end-->
+<style>
+	#list1 li {  
+		width:360px;
+	}
+	#list1 div { 
+		width:260px; 
+		height:40px; 
+		line-height:40px;
+		padding:0px 0 0 35px; 
+	}
+
+</style>
+
+<body>
+<div class="page_content">
+<ul id="list1">
+	
+</ul>
+<input name="list1SortOrder" type="hidden" />
+</div>
+<script type="text/javascript">
+	  var columnsData={columns:[ 
+	                { display: '姓名', name: 'name', align: 'center',  width: 200},
+	                { display: '性别', name: 'sex', align: 'center' , width: 200},
+	                { display: '部门', name: 'deptName',  align: 'center' , width: 200},
+	                { display: '学历', name: 'degree',  align: 'center', width: 200},
+                  { display: '年龄', name: 'age',  align: 'center', width: 200},
+                  { display: '爱好', name: 'hobby',  align: 'center', width: 200},
+                  { display: '工作时间', name: 'beginworkDate',  align: 'center', width: 200},
+                  { display: '备注', name: 'remark',  align: 'center', width: 200}]}
+       
+	$(function(){
+		$.each(columnsData.columns,function(idx,item){
+			var $item=$('<li class="sort_item"><table cellspacing="0" cellpadding="0" border="0"><tr><td><div></div></td><td></td></tr></table></li>');
+			$item.data("data",item);
+			$item.find("div").text(item.display);
+			var switchBtn=$('<input type="button" value="" class="buttonswich toggle" toggle="true" useMinWidth="false" relValue="1"/>');
+			switchBtn.render();
+			$item.find("td").eq(1).append(switchBtn);
+			$("#list1").append($item)
+
+		})
+		$("#list1").dragSort({ dragSelector: "div", dragBetween: true, dragEnd: saveOrder, placeHolderTemplate: "<li class='placeHolder'><div></div></li>" });
+	})
+	function initComplete(){
+		
+	}
+	function saveOrder() {
+		var serialStr = "";
+		$("#list1 li").each(function(i, elm) { serialStr += (i > 0 ? "|" : "") + $(elm).children().html(); });
+		$("input[name=list1SortOrder]").val(serialStr);
+	};
+	function viewResule(){
+		var newData={};
+		var list=[];
+		$("#list1").find("li").each(function(index, el) {
+			var switchBtn=$(this).find("input[type='button']");
+			if(switchBtn.attr("relValue")=="1"){
+				list.push($(this).data("data"));
+			}
+			
+		});
+		newData.columns=list;
+		top.frmright.resetGrid(newData);
+		top.Dialog.close();
+
+	}
+	function cancelHandler(){
+		//top.Dialog.close();
+	}
+</script>
+</body>
+</html>

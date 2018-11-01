@@ -1,0 +1,119 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>锁定列</title>
+<!--框架必需start-->
+<script type="text/javascript" src="../../libs/js/jquery.js"></script>
+<script type="text/javascript" src="../../libs/js/language/cn.js"></script>
+<script type="text/javascript" src="../../libs/js/framework.js"></script>
+<link href="../../libs/css/import_basic.css" rel="stylesheet" type="text/css"/>
+<link rel="stylesheet" type="text/css" id="skin" prePath="../../" scrollerY="false"/>
+<link rel="stylesheet" type="text/css" id="customSkin"/>
+<!--框架必需end-->
+
+<!--数据表格start-->
+<script src="../../libs/js/table/quiGrid.js" type="text/javascript"></script>
+<!--数据表格end-->
+<!-- 日期选择框start -->
+<script type="text/javascript" src="../../libs/js/form/datePicker/WdatePicker.js"></script>
+<!-- 日期选择框end -->
+
+<!-- 树组件start -->
+<script type="text/javascript" src="../../libs/js/tree/ztree/ztree.js"></script>
+<link type="text/css" rel="stylesheet" href="../../libs/js/tree/ztree/ztree.css"></link>
+<!-- 树组件end -->
+
+<!-- 树形下拉框start -->
+<script type="text/javascript" src="../../libs/js/form/selectTree.js"></script>
+<!-- 树形下拉框end -->
+
+</head>
+<body>
+	<div class="page_content">
+  <div class="groupTitle"><span>示例说明</span></div>
+    本示例只演示界面操作效果，没有与后台真正交互。
+		<div id="maingrid"></div>
+    </div>
+	<script type="text/javascript">
+        var testData={"form.paginate.pageNo":1,"form.paginate.totalRows":13,"rows":[
+      {"deptName":"部门1","sex":"女","remark":"好啊","hobby":["唱歌"],"beginworkDate":"2012-06-13 00:00:00.0","photo":null,"version":null,"id":125,"degree":"硕士结业","age":20,"name":"员工1","deptId":12,"ability":1},
+      {"deptName":"部门1","sex":"男","remark":"备注啊","hobby":["唱歌"],"beginworkDate":"2012-06-13 00:00:00.0","photo":null,"version":null,"id":124,"degree":"本科毕业","age":20,"name":"员工2","deptId":11,"ability":2},
+      {"deptName":"部门1","sex":"男","remark":null,"hobby":["唱歌","跳舞"],"beginworkDate":"2012-06-12 00:00:00.0","photo":null,"version":null,"id":123,"degree":"本科毕业","age":20,"name":"员工3","deptId":9,"ability":2},
+      {"deptName":"部门1","sex":"女","remark":"不错啊","hobby":["唱歌","跳舞"],"beginworkDate":"2012-06-12 00:00:00.0","photo":null,"version":null,"id":121,"degree":"硕士肄业","age":20,"name":"员工4","deptId":8,"ability":3},
+      {"deptName":"部门1","sex":"男","remark":null,"hobby":["唱歌","跳舞"],"beginworkDate":"2012-06-12 00:00:00.0","photo":null,"version":null,"id":120,"degree":"博士肄业","age":20,"name":"员工5","deptId":7,"ability":4},
+      {"deptName":"部门2","sex":"女","remark":null,"hobby":["唱歌","跳舞"],"beginworkDate":"2012-06-05 00:00:00.0","photo":null,"version":null,"id":119,"degree":"博士肄业","age":20,"name":"员工6","deptId":6,"ability":5},
+      {"deptName":"部门2","sex":"女","remark":null,"hobby":["唱歌","跳舞"],"beginworkDate":"2012-06-05 00:00:00.0","photo":null,"version":null,"id":118,"degree":"博士肄业","age":20,"name":"员工7","deptId":6,"ability":6},
+      {"deptName":"部门2","sex":"女","remark":null,"hobby":["唱歌","跳舞"],"beginworkDate":"2012-06-05 00:00:00.0","photo":null,"version":null,"id":117,"degree":"博士肄业","age":20,"name":"员工8","deptId":6,"ability":5},
+      {"deptName":"部门2","sex":"女","remark":null,"hobby":["唱歌","跳舞"],"beginworkDate":"2012-06-05 00:00:00.0","photo":null,"version":null,"id":116,"degree":"博士肄业","age":20,"name":"员工9","deptId":6,"ability":3},
+      {"deptName":"部门2","sex":"女","remark":null,"hobby":["唱歌","跳舞"],"beginworkDate":"2012-06-05 00:00:00.0","photo":null,"version":null,"id":115,"degree":"博士肄业","age":20,"name":"员工10","deptId":6,"ability":1},
+      {"deptName":"部门2","sex":"女","remark":null,"hobby":["唱歌","跳舞"],"beginworkDate":"2012-06-05 00:00:00.0","photo":null,"version":null,"id":114,"degree":"博士肄业","age":20,"name":"员工11","deptId":6,"ability":5},
+      {"deptName":"部门2","sex":"女","remark":null,"hobby":["唱歌","跳舞"],"beginworkDate":"2012-06-05 00:00:00.0","photo":null,"version":null,"id":113,"degree":"博士肄业","age":20,"name":"员工12","deptId":6,"ability":5},
+
+      {"deptName":"部门1","sex":"男","remark":null,"hobby":["唱歌","跳舞"],"beginworkDate":"2012-06-12 00:00:00.0","photo":null,"version":null,"id":123,"degree":"本科毕业","age":20,"name":"员工13","deptId":9,"ability":2},
+      {"deptName":"部门1","sex":"女","remark":"不错啊","hobby":["唱歌","跳舞"],"beginworkDate":"2012-06-12 00:00:00.0","photo":null,"version":null,"id":121,"degree":"硕士肄业","age":20,"name":"员工14","deptId":8,"ability":3},
+      {"deptName":"部门1","sex":"男","remark":null,"hobby":["唱歌","跳舞"],"beginworkDate":"2012-06-12 00:00:00.0","photo":null,"version":null,"id":120,"degree":"博士肄业","age":20,"name":"员工15","deptId":7,"ability":4},
+      {"deptName":"部门2","sex":"女","remark":null,"hobby":["唱歌","跳舞"],"beginworkDate":"2012-06-05 00:00:00.0","photo":null,"version":null,"id":119,"degree":"博士肄业","age":20,"name":"员工16","deptId":6,"ability":5},
+      {"deptName":"部门2","sex":"女","remark":null,"hobby":["唱歌","跳舞"],"beginworkDate":"2012-06-05 00:00:00.0","photo":null,"version":null,"id":118,"degree":"博士肄业","age":20,"name":"员工17","deptId":6,"ability":6},
+      {"deptName":"部门2","sex":"女","remark":null,"hobby":["唱歌","跳舞"],"beginworkDate":"2012-06-05 00:00:00.0","photo":null,"version":null,"id":117,"degree":"博士肄业","age":20,"name":"员工18","deptId":6,"ability":5},
+      {"deptName":"部门2","sex":"女","remark":null,"hobby":["唱歌","跳舞"],"beginworkDate":"2012-06-05 00:00:00.0","photo":null,"version":null,"id":116,"degree":"博士肄业","age":20,"name":"员工19","deptId":6,"ability":3},
+      {"deptName":"部门2","sex":"女","remark":null,"hobby":["唱歌","跳舞"],"beginworkDate":"2012-06-05 00:00:00.0","photo":null,"version":null,"id":115,"degree":"博士肄业","age":20,"name":"员工20","deptId":6,"ability":1},
+           {"deptName":"部门21","sex":"女","remark":"好啊","hobby":["唱歌"],"beginworkDate":"2012-06-13 00:00:00.0","photo":null,"version":null,"id":125,"degree":"硕士结业","age":20,"name":"员工1","deptId":12,"ability":1},
+      {"deptName":"部门1","sex":"男","remark":"备注啊","hobby":["唱歌"],"beginworkDate":"2012-06-13 00:00:00.0","photo":null,"version":null,"id":124,"degree":"本科毕业","age":20,"name":"员工22","deptId":11,"ability":2},
+      {"deptName":"部门1","sex":"男","remark":null,"hobby":["唱歌","跳舞"],"beginworkDate":"2012-06-12 00:00:00.0","photo":null,"version":null,"id":123,"degree":"本科毕业","age":20,"name":"员工23","deptId":9,"ability":2},
+      {"deptName":"部门1","sex":"女","remark":"不错啊","hobby":["唱歌","跳舞"],"beginworkDate":"2012-06-12 00:00:00.0","photo":null,"version":null,"id":121,"degree":"硕士肄业","age":20,"name":"员工24","deptId":8,"ability":3},
+      {"deptName":"部门1","sex":"男","remark":null,"hobby":["唱歌","跳舞"],"beginworkDate":"2012-06-12 00:00:00.0","photo":null,"version":null,"id":120,"degree":"博士肄业","age":20,"name":"员工25","deptId":7,"ability":4},
+      {"deptName":"部门2","sex":"女","remark":null,"hobby":["唱歌","跳舞"],"beginworkDate":"2012-06-05 00:00:00.0","photo":null,"version":null,"id":119,"degree":"博士肄业","age":20,"name":"员工26","deptId":6,"ability":5},
+      {"deptName":"部门2","sex":"女","remark":null,"hobby":["唱歌","跳舞"],"beginworkDate":"2012-06-05 00:00:00.0","photo":null,"version":null,"id":118,"degree":"博士肄业","age":20,"name":"员工27","deptId":6,"ability":6},
+      {"deptName":"部门2","sex":"女","remark":null,"hobby":["唱歌","跳舞"],"beginworkDate":"2012-06-05 00:00:00.0","photo":null,"version":null,"id":117,"degree":"博士肄业","age":20,"name":"员工28","deptId":6,"ability":5},
+      {"deptName":"部门2","sex":"女","remark":null,"hobby":["唱歌","跳舞"],"beginworkDate":"2012-06-05 00:00:00.0","photo":null,"version":null,"id":116,"degree":"博士肄业","age":20,"name":"员工29","deptId":6,"ability":3},
+      {"deptName":"部门2","sex":"女","remark":null,"hobby":["唱歌","跳舞"],"beginworkDate":"2012-06-05 00:00:00.0","photo":null,"version":null,"id":115,"degree":"博士肄业","age":20,"name":"员工30","deptId":6,"ability":1},
+      {"deptName":"部门2","sex":"女","remark":null,"hobby":["唱歌","跳舞"],"beginworkDate":"2012-06-05 00:00:00.0","photo":null,"version":null,"id":114,"degree":"博士肄业","age":20,"name":"员工31","deptId":6,"ability":5},
+      {"deptName":"部门2","sex":"女","remark":null,"hobby":["唱歌","跳舞"],"beginworkDate":"2012-06-05 00:00:00.0","photo":null,"version":null,"id":113,"degree":"博士肄业","age":20,"name":"员工32","deptId":6,"ability":5}
+      ]}
+       
+       //数据表格使用
+        var g;
+		function initComplete(){
+      var sexData={"list":[{"value":"1","key":"男"},{"value":"2","key":"女"}]};
+  var eduNode = {"treeNodes":[
+            { id:1, parentId:0, name:"大专"},
+            { id:2, parentId:0, name:"本科"},
+            { id:3, parentId:0, name:"硕士"},
+            { id:4, parentId:0, name:"博士"}
+        ]};
+   var orgNode={"treeNodes":[{"id":"1","name":"南京分公司","icon":"../../libs/icons/user_group.png","open":"true","parentId":"0"},{"id":"2","name":"市场部","icon":"../../libs/icons/user_group.png","open":"true","parentId":"1"},{"id":"3","name":"市场1组","icon":"../../libs/icons/user_group.png","open":"true","parentId":"2"},{"id":"7","name":"杭州办事处","icon":"../../libs/icons/user_group.png","open":"true","parentId":"0"},{"id":"8","name":"接待处","icon":"../../libs/icons/user_group.png","open":"true","parentId":"7"},{"id":"9","name":"洽谈处","icon":"../../libs/icons/user_group.png","open":"true","parentId":"7"},{"id":"11","name":"市场2组","icon":"../../libs/icons/user_group.png","open":"true","parentId":"2"},{"id":"12","name":"市场3组","icon":"../../libs/icons/user_group.png","open":"true","parentId":"2"},{"id":"13","name":"财务部","icon":"../../libs/icons/user_group.png","open":"true","parentId":"1"},{"id":"14","name":"行政部","icon":"../../libs/icons/user_group.png","open":"true","parentId":"1"},{"id":"15","name":"工程部","icon":"../../libs/icons/user_group.png","open":"true","parentId":"1"},{"id":"16","name":"技术部","icon":"../../libs/icons/user_group.png","open":"true","parentId":"1"},{"id":"17","name":"生产部","icon":"../../libs/icons/user_group.png","open":"true","parentId":"1"}]}
+
+			 g = $("#maingrid").quiGrid({
+                columns: [ 
+	                { display: '姓名', name: 'name', align: 'left', width: "15%",filterable:true,filterkey:"name"},
+        { display: '性别', name: 'sex', align: 'left', width: "15%",filter:{type:"select",data:sexData,width:100,tipWidth:215},filterkey:"sex"},
+        { display: '年龄', name: 'age', align: 'left', width: "20%",filter:{type:"numberRange",tipWidth:220},filterkey:"age"},
+        { display: '入职时间', name: 'beginworkDate',   align: 'left',  width:"15%",filter:{type:"dateRange",tipWidth:220 },filterkey:"beginworkDate"} ,
+        { display: '所属部门', name: 'deptName',    align: 'left', width: "20%",filter:{type:"selectTree", width:100,data:orgNode,tipWidth:205},filterkey:"deptName"},
+        { display: '学历', name: 'degree',    align: 'left',  width:"15%",filter:{type:"selectTree" ,width:100,tipWidth:205,data:eduNode,multiMode:true,noGroup:true,tipDistanceX:-200,tipArrowDistanceX:200},filterkey:"degree"} 
+                ], data:testData, pageSize: 20, rownumbers:true, checkbox:true,percentWidthMode:true,
+                height: '100%', width:"100%", toolbar:{
+       items:[
+          {text: '清空所有过滤条件',iconClass: 'icon_clear',click:clearAllFilter}
+        ]
+      }
+            });
+
+
+		}
+  function clearAllFilter(){
+  g.options.filterParams=[];
+  g.setOptions({params: []});
+  g.setNewPage(1);
+  g.loadData();
+  $(".l-grid-hd-row").find(".grid_filter_empty").each(function(){
+    $(this).hideTip();
+    $(this).removeClass("grid_filter_full");
+  })
+  
+  
+}
+    </script>	
+</body>
+</html>

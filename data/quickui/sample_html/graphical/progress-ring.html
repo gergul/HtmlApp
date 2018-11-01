@@ -1,0 +1,135 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title></title>
+<!--框架必需start-->
+<script type="text/javascript" src="../../libs/js/jquery.js"></script>
+<script type="text/javascript" src="../../libs/js/language/cn.js"></script>
+<script type="text/javascript" src="../../libs/js/framework.js"></script>
+<link href="../../libs/css/import_basic.css" rel="stylesheet" type="text/css"/>
+<link rel="stylesheet" type="text/css" id="skin" prePath="../../"/>
+<link rel="stylesheet" type="text/css" id="customSkin"/>
+<!--框架必需end-->
+<script src="../../libs/js/graphical/raphael.js" type="text/javascript"></script>
+<script src="../../libs/js/graphical/progress.js" type="text/javascript"></script>
+<style>
+	 #holder {
+                position: relative;
+                width: 800px;
+                height: 380px;
+                margin: 10px auto;
+            }
+    .ring_text1{
+        position: absolute;
+        top:0px;
+        left: 0px;
+        font-size: 16px;
+        width: 160px;
+        text-align: center;
+    }
+    .ring_text2{
+        position: absolute;
+        top:120px;
+        left: 0px;
+        font-size: 14px;
+        width: 160px;
+        text-align: center;
+    }
+    .ring_text3{
+        position: absolute;
+        top:280px;
+        left: 10px;
+        font-size: 14px;
+        width: 160px;
+        text-align: left;
+    }
+
+      .ring_text4{
+        position: absolute;
+        top:0px;
+        left: 320px;
+        font-size: 16px;
+        width: 160px;
+        text-align: center;
+    }
+    .ring_text5{
+        position: absolute;
+        top:120px;
+        left: 320px;
+        font-size: 14px;
+        width: 160px;
+        text-align: center;
+    }
+    .ring_text6{
+        position: absolute;
+        top:280px;
+        left: 330px;
+        font-size: 14px;
+        width: 160px;
+        text-align: left;
+    }
+
+      .ring_text7{
+        position: absolute;
+        top:0px;
+        left: 640px;
+        font-size: 16px;
+        width: 160px;
+        text-align: center;
+    }
+    .ring_text8{
+        position: absolute;
+        top:120px;
+        left: 640px;
+        font-size: 14px;
+        width: 160px;
+        text-align: center;
+    }
+    .ring_text9{
+        position: absolute;
+        top:280px;
+        left: 650px;
+        font-size: 14px;
+        width: 160px;
+        text-align: left;
+    }
+</style>
+</head>
+<body>
+<div class="page_content">
+	<div id="holder">
+            <div class="ring_text1">租户到期日期</div>
+            <div class="ring_text2">剩余天数</br>7天</div>
+            <div class="ring_text3">开始时间：2017-02-27</br>结束时间：2017-03-29</div>
+
+            <div class="ring_text4">账号使用情况</div>
+            <div class="ring_text5">剩余可用</br>2个</div>
+            <div class="ring_text6">购买用户数：10个</br>已授权用户数：2个</div>
+
+            <div class="ring_text7">空间使用情况</div>
+            <div class="ring_text8">剩余空间</br>5GB</div>
+            <div class="ring_text9">总存储空间：10GB</br>已使用：5GB</div>
+    </div>
+</div>
+<script>
+	var radius = 70;
+          
+    var paramBg = {stroke: "#ebf1f7", "stroke-width": 10};
+    var paramBlue = {stroke: "#00aaef", "stroke-width": 10,"stroke-linecap":"round"};
+    var paramGreen = {stroke: "#1fc695", "stroke-width": 10,"stroke-linecap":"round"};
+    var paramYellow = {stroke: "#ff9900", "stroke-width": 10,"stroke-linecap":"round"};
+    $(function(){
+       
+       	var paper =initPaper("holder", 800, 380);   
+        //paper,current,min,max,cx,cy,radius,param,paramBg
+        drawRingProgress(paper,23,0,30,80,150,radius,paramBlue,paramBg);
+        drawRingProgress(paper,2,0,10,400,150,radius,paramGreen,paramBg);
+        drawRingProgress(paper,50,0,100,720,150,radius,paramYellow,paramBg);
+
+
+
+    })
+</script>
+</body>
+</html>

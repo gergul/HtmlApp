@@ -1,0 +1,198 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title></title>
+<!--框架必需start-->
+<script type="text/javascript" src="../../libs/js/jquery.js"></script>
+<script type="text/javascript" src="../../libs/js/language/cn.js"></script>
+<script type="text/javascript" src="../../libs/js/framework.js"></script>
+<link href="../../libs/css/import_basic.css" rel="stylesheet" type="text/css"/>
+<link rel="stylesheet" type="text/css" id="skin" prePath="../../"/>
+<link rel="stylesheet" type="text/css" id="customSkin"/>
+<!--框架必需end-->
+
+<!-- 条件过滤器 start -->
+<script type="text/javascript" src="../../libs/js/form/filter.js"></script>
+<!-- 条件过滤器 end -->
+
+<!-- 日期选择框start -->
+<script type="text/javascript" src="../../libs/js/form/datePicker/WdatePicker.js"></script>
+<!-- 日期选择框end -->
+</head>
+<body>
+	<div class="page_content">
+
+
+			<div class="groupTitle"><span>示例说明:</span></div>
+      	
+		这是仿支付宝用户中心的条件筛选示例
+
+      <div class="height_15"></div>
+	  <div class="filterDemo_main">
+			<div class="filterDemo_searchTitle">交易记录</div>
+			<div class="filterDemo_content">
+				<table class="filterDemo_searchTable">
+					<tr>
+						<td width="80" class="left">起止日期：</td>
+						<td class="right">
+							<table cellpadding="0" cellspacing="0">
+								<tr>
+									<td><input type="text" id="beginTime" class="dateIcon"/></td>
+									<td>-</td>
+									<td><input type="text" id="endTime" class="dateIcon"/></td>
+									<td style="padding-left:5px;">
+										<input type="button" value="确 定" id="dateRange"/>
+									</td>
+								</tr>
+							</table>
+						</td>
+					</tr>
+					<tr>
+						<td  class="left">交易分类：</td>
+						<td class="right"><div class="filter" id="filter1-1" selectionStay="true" itemWidth="auto" data='{"list":[{"value":"1","key":"全部"},{"value":"2","key":"淘宝购物"},{"value":"3","key":"付款"},{"value":"4","key":"收款"},{"value":"5","key":"缴水电煤"},{"value":"6","key":"信用卡还款"},{"value":"7","key":"转账到银行卡"},{"value":"8","key":"理财"}]}'></div></td>
+					</tr>
+					<tr>
+						<td class="left">交易状态：</td>
+						<td class="right"><div class="filter" id="filter1-2" selectionStay="true" itemWidth="auto" data='{"list":[{"value":"1","key":"全部"},{"value":"2","key":"进行中"},{"value":"3","key":"未付款"},{"value":"4","key":"等待发货"},{"value":"5","key":"未确认收货"},{"value":"6","key":"退款"},{"value":"7","key":"成功"},{"value":"8","key":"失败"}]}'></div></td>
+					</tr>
+				</table>
+			</div>
+			<div class="filterDemo_content" style="display:none" id="filterDemo_more">
+				<table class="filterDemo_searchTable">
+					<tr>
+						<td  width="80" class="left">时间类型：</td>
+						<td class="right"><div class="filter" id="filter1-3" selectionStay="true" itemWidth="auto" data='{"list":[{"value":"1","key":"创建时间"},{"value":"2","key":"付款时间"},{"value":"3","key":"收款时间"}]}'></div></td>
+					</tr>
+					<tr>
+						<td class="left">资金流向：</td>
+						<td class="right"><div class="filter" id="filter1-4" selectionStay="true" itemWidth="auto" data='{"list":[{"value":"1","key":"全部"},{"value":"2","key":"收入"},{"value":"3","key":"支出"}]}'></div></td>
+					</tr>
+					<tr>
+						<td class="left">金额范围：</td>
+						<td class="right">
+							<table cellpadding="0" cellspacing="0">
+								<tr>
+									<td><input type="text"  style="width:96px;" id="beginMoney"/></td>
+									<td>-</td>
+									<td><input type="text"  style="width:96px;" id="endMoney"/></td>
+									<td style="padding-left:5px;">
+										<input type="button" value="确 定" id="moneyRange"/>
+									</td>
+								</tr>
+							</table>
+						</td>
+					</tr>
+					<tr>
+						<td class="left">关键词：</td>
+						<td class="right">
+							<table cellpadding="0" cellspacing="0">
+								<tr>
+									<td><input type="text"  id="keywords" style="width:200px;" /></td>
+									<td style="padding-left:5px;">
+										<input type="button" value="确 定" id="keywordsBtn"/>
+									</td>
+								</tr>
+							</table>
+						</td>
+					</tr>
+				</table>
+			</div>
+			<a class="filterDemo_down">高级筛选</a>
+	   </div>
+	   <br/>
+		选中项：<br/>
+		<textarea id="filterDemo-value" style="width:90%;height:200px"></textarea>
+</div>		
+<script>
+	var value1="";
+	var value2="";
+	var value3="";
+	var value4="";
+	var value5="";
+	var str="";
+	var dateSkin="blue";
+	$(function(){
+		dateSkin=themeColor;
+		//自定义点击触发日期控件
+	    document.getElementById('beginTime').onfocus=function(){
+	        var endtimeTf=$dp.$('endTime');
+	        WdatePicker({
+	            skin:themeColor,onpicked:function(){endtimeTf.focus();},maxDate:'#F{$dp.$D(\'endTime\')}'
+	        });
+	    }
+	    document.getElementById('endTime').onfocus=function(){
+	    	WdatePicker({skin:themeColor,minDate:'#F{$dp.$D(\'beginTime\')}'});
+	    }
+		
+		$(".filterDemo_down").click(function(event) {
+			if($(this).hasClass('filterDemo_up')){
+				$(this).removeClass("filterDemo_up");
+				$(this).text("高级筛选");
+				$("#filterDemo_more").stop().slideUp();
+			}
+			else{
+				$(this).addClass("filterDemo_up");
+				$(this).text("返回基本筛选");
+				$("#filterDemo_more").stop().slideDown();
+			}
+		});
+		
+		
+		
+		
+		$("#dateRange").click(function(){
+			value1=$("#beginTime").val();
+			value2=$("#endTime").val();
+			if(value1==""||value2==""){
+				top.Toast("showNoticeToast", "时间段不完整！");
+				return;
+			}
+			resteValues()
+		})
+		$("#filter1-1").bind("change",function(e,values){
+			resteValues()
+		})
+		$("#filter1-2").bind("change",function(e,values){
+			resteValues()
+		})
+		$("#filter1-3").bind("change",function(e,values){
+			resteValues()
+		})
+		$("#filter1-4").bind("change",function(e,values){
+			resteValues()
+		})
+		
+		$("#moneyRange").click(function(){
+			value3=$("#beginMoney").val();
+			value4=$("#endMoney").val();
+			if(value3==""||value4==""){
+				top.Toast("showNoticeToast", "金额范围不完整！");
+				return;
+			}
+			resteValues()
+		})
+		
+		$("#keywordsBtn").click(function(){
+			value5=$("#keywords").val();
+			if(value5==""){
+				top.Toast("showNoticeToast", "关键字为空！");
+				return;
+			}
+			resteValues()
+		})
+	})
+	function resteValues(){
+		str="";
+		str=str+"起止日期："+value1+" - "+value2+"，";
+		str=str+"交易分类："+$("#filter1-1").attr("relValue")+"，";
+		str=str+"交易状态："+$("#filter1-2").attr("relValue")+"，";
+		str=str+"时间类型："+$("#filter1-3").attr("relValue")+"，";
+		str=str+"资金流向："+$("#filter1-4").attr("relValue")+"，";
+		str=str+"金额范围："+value3+" - "+value4+"，";
+		str=str+"关键字："+value5;
+		$("#filterDemo-value").val(str);
+	}
+</script>
+</body>
+</html>

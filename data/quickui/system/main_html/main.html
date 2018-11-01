@@ -1,0 +1,187 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Frameset//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-frameset.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=11" />
+		<title></title>
+		<!--框架必需start-->
+		<link href="../../libs/css/import_main.css" rel="stylesheet" type="text/css" />
+		<link href="../../libs/skins/blue/style.css" rel="stylesheet" type="text/css" id="theme" themeColor="blue" positionTarget="positionContent"  ie6detect="../../sample_html/templete/detect.html"/>
+		<link href="skin/style.css" rel="stylesheet" type="text/css" id="skin" skinPath="system/main_html/skin/" />
+		<script type="text/javascript" src="../../libs/js/jquery.js"></script>
+		<script type="text/javascript" src="../../libs/js/language/cn.js"></script>
+		<script type="text/javascript" src="../../libs/js/main.js"></script>
+		<!--框架必需end-->
+
+		<!--引入弹窗组件start-->
+		<script type="text/javascript" src="../../libs/js/popup/drag.js"></script>
+		<script type="text/javascript" src="../../libs/js/popup/dialog.js"></script>
+		<!--引入弹窗组件end-->
+
+		<!--引入提示组件start-->
+		<script type="text/javascript" src="../../libs/js/popup/toast.js"></script>
+		<script type="text/javascript" src="../../libs/js/popup/notice.js"></script>
+		<!--引入提示组件end-->
+
+		<!--引入小铃铛start-->
+		<link rel="stylesheet" type="text/css" href="../../libs/skins/blue/msgbox.css" />
+		<script src="../../libs/js/popup/msgbox.js" type="text/javascript" charset="utf-8"></script>
+		<!--引入小铃铛end-->
+
+		<!--引入导航处理start-->
+		<script src="js/nav.js" type="text/javascript" charset="utf-8"></script>
+		<!--引入导航处理end-->
+
+		
+		<style>
+		body{
+			width: 100%!important;
+			margin: 0;
+			padding:0;
+
+		}	
+		.hbox_content_right_colorbox span.blue_box{
+			background-color: #2DA9FA;
+		}
+		.hbox_content_right_colorbox span.green_box{
+			background-color: #1fc695;
+		}
+		.hbox_content_right_colorbox span.red_box{
+			background-color: #74D6DD;
+		}
+		</style>
+	</head>
+
+	<body>
+		<div id="mainFrame">
+			<!--头部与导航start-->
+			<div id="hbox">
+				<div class="Title hbox_content_win">
+					<div class="hbox_content clearfloat">
+						<div class="hbox_content_left clearfloat">
+							<a href="http://www.uileader.com" target="_blank"></a>
+							<span>
+								QUICK UI
+								<b>v4.0.4（试用）</b>
+							</span>
+						</div>
+						<div class="hbox_content_right clearfloat">
+							<ul class="clearfloat hbox_content_right_menu">
+								<li><i></i>表单</li>
+								<li><i></i>表格</li>
+								<li><i></i>导航于布局</li>
+								<li><i></i>特效</li>
+								<li><i></i>资源</li>
+							</ul>
+							<a href="javascript:;" class="right_tip clearfloat"></a>
+							<div class="hbox_content_right_colorbox clearfloat">
+								换肤：
+								<span class="blue_box" onclick="changeSkin()"></span>
+								<span class="green_box" onclick="changeSkin()"></span>
+								<span class="red_box" onclick="changeSkin()"></span>
+							</div>
+							<a href="javascript:;" class="right_toggle">
+								<span></span>
+								<ul class="right_toggle_content">
+									<li class="clearfloat right_toggle_fullscreen"><i></i><div>全屏</div></li>
+									<li class="clearfloat right_toggle_lock_screen" onclick="lockScreen()"><i></i>锁屏</li>
+									<li class="clearfloat right_toggle_sign_out" onclick="exitHandler()"><i></i>退出</li>
+								</ul>
+							</a>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="table_win">
+				<table width="100%" cellpadding="0" cellspacing="0" class="table_border0">
+					<tr>
+						<!--左侧区域start-->
+						<td id="hideCon" class="ver01 ali01">
+							<div id="lbox">
+								<div id="lbox_topcenter">
+									<div class="bs_left_shrink clearfloat">
+										<i class="active"></i>
+									</div>
+								</div>
+								<div id="lbox_middlecenter" class="">
+									<div id="bs_left" class="lbox_middlecenter_content">
+										<!--左侧导航内容-->
+										<!--收缩导航-->
+										
+									</div>
+								</div>
+								<div id="lbox_bottomcenter">
+
+								</div>
+							</div>
+						</td>
+						<!--左侧区域end-->
+
+						<!--右侧区域start-->
+						<td class="ali01 ver01" width="100%">
+							<div id="rbox">
+								<div id="rbox_topcenter">
+									<div class="rbox_topcenter">
+										<span>表单</span>
+									</div>
+								</div>
+								<div id="rbox_middlecenter">
+									<div id="bs_right">
+										<IFRAME style="box-sizing: border-box; background: white;" height="100%" width="100%" frameBorder=0 id=frmright name=frmright src="guide1.html" allowTransparency="true"></IFRAME>
+									</div>
+								</div>
+								<div id="rbox_bottomcenter">
+
+								</div>
+							</div>
+							<!--<div class="tip_allcontent_win">
+								<div class="tip_allcontent">
+									<div class="all_title clearfloat">
+										<span>消息</span>
+										<em class="all_close"></em>
+									</div>
+									<div class="all_content">
+										<ul>
+											<li><a href="javascript:;">待办</a></li>
+											<li><a href="javascript:;">通知</a></li>
+											<li><a href="javascript:;">部门</a></li>
+										</ul>
+									</div>
+								</div>
+							</div>-->
+						</td>
+						<!--右侧区域end-->
+					</tr>
+				</table>
+			</div>
+			<div id="fbox"></div>
+			
+		</div>
+		<script type="text/javascript">
+			var data = [
+				{ "news": "请假正在审批中" },
+				{ "news": "请各位周五前提交周报" },
+				{ "news": "QUICKUI新版本上线啦" }
+			];
+			tip_construction(data, ".right_tip", 10000); //数据，div的class或者id，定时器时间
+			function exitHandler(){
+
+				top.Dialog.confirm("确定要退出系统吗",function(){window.external.call('onClickClose', '');});
+			}
+			function changeSkin(){
+				top.Toast('showWarningToast', '正式版支持换肤功能，请访问在线示例查看');
+			}
+			function lockScreen(){
+				top.Toast('showWarningToast', '正式版支持锁屏功能，请访问在线示例查看');
+			}
+		</script>
+		
+		<script src="../../../Caption.js"></script>
+		
+	</body>
+<!--窗口任务栏区域start-->
+<div id="dialogTask" class="dialogTaskBg" style="display:none;"></div>
+<!--窗口任务栏区域end-->
+
+</html>

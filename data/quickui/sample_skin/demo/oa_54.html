@@ -1,0 +1,196 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<title>无标题文档</title>
+		<!--框架必需start-->
+		<script type="text/javascript" src="../../libs/js/jquery.js"></script>
+		<script type="text/javascript" src="../../libs/js/language/cn.js"></script>
+		<script type="text/javascript" src="../../libs/js/framework.js"></script>
+		<link href="../../libs/css/import_basic.css" rel="stylesheet" type="text/css" />
+		<link rel="stylesheet" type="text/css" id="skin" prePath="../../" />
+		<link rel="stylesheet" type="text/css" id="customSkin" />
+		<!--框架必需end-->
+		<link rel="stylesheet" type="text/css" href="style/style.css" />
+
+		<script src="../../libs/js/table/quiGrid.js" type="text/javascript"></script>
+
+		<style type="text/css">
+			/*body {
+				background: #fff;
+			}*/
+		</style>
+	</head>
+
+	<body>
+		<div class="page_content">
+			<div class="demo_operation">
+				<input type="button" value="返回至库存列表" class="primary" onclick="window.location=''" />
+			</div>
+			<div class="infoCard infoCard2">
+				<div class="title">
+					<span>库存预警列表</span>
+				</div>
+				<div class="attendance_list_operation">
+					<table border="0" cellspacing="0" cellpadding="0" class="search_content">
+						<tr>
+							<td>搜索：</td>
+							<td><input type="text" /></td>
+							<td><input type="button" value="搜索" class="" /></td>
+						</tr>
+					</table>
+					<div class="clear"></div>
+				</div>
+				<div id="dataBasic"></div>
+			</div>
+		</div>
+
+		<script type="text/javascript">
+			var grid = null;
+			//数据表格使用
+			var gridData = {
+				"form.paginate.pageNo": 1,
+				"form.paginate.totalRows": 13,
+				"rows": [{
+						"id": 5418,
+						"Max": 10,
+						"Min": 0,
+						"Number": 123,
+						"Time": "2012-08-30 13:34:00",
+						"Name": "苏三",
+						"Explain": "发生错误"
+					},{
+						"id": 5418,
+						"Max": 10,
+						"Min": 0,
+						"Number": 123,
+						"Time": "2012-08-30 13:34:00",
+						"Name": "苏三",
+						"Explain": "发生错误"
+					},{
+						"id": 5418,
+						"Max": 10,
+						"Min": 0,
+						"Number": 123,
+						"Time": "2012-08-30 13:34:00",
+						"Name": "苏三",
+						"Explain": "发生错误"
+					},{
+						"id": 5418,
+						"Max": 10,
+						"Min": 0,
+						"Number": 123,
+						"Time": "2012-08-30 13:34:00",
+						"Name": "苏三",
+						"Explain": "发生错误"
+					},{
+						"id": 5418,
+						"Max": 10,
+						"Min": 0,
+						"Number": 123,
+						"Time": "2012-08-30 13:34:00",
+						"Name": "苏三",
+						"Explain": "发生错误"
+					},{
+						"id": 5418,
+						"Max": 10,
+						"Min": 0,
+						"Number": 123,
+						"Time": "2012-08-30 13:34:00",
+						"Name": "苏三",
+						"Explain": "发生错误"
+					},{
+						"id": 5418,
+						"Max": 10,
+						"Min": 0,
+						"Number": 123,
+						"Time": "2012-08-30 13:34:00",
+						"Name": "苏三",
+						"Explain": "发生错误"
+					},{
+						"id": 5418,
+						"Max": 10,
+						"Min": 0,
+						"Number": 123,
+						"Time": "2012-08-30 13:34:00",
+						"Name": "苏三",
+						"Explain": "发生错误"
+					},{
+						"id": 5418,
+						"Max": 10,
+						"Min": 0,
+						"Number": 123,
+						"Time": "2012-08-30 13:34:00",
+						"Name": "苏三",
+						"Explain": "发生错误"
+					}
+				]
+			}
+
+			function initComplete() {
+				grid = $("#dataBasic").quiGrid({
+					columns: [{
+							display: '编号',
+							name: 'id',
+							width: "10%"
+						},
+						{
+							display: '最大值',
+							name: 'Max',
+							width: "20%"
+						},
+						{
+							display: '最小值',
+							name: 'Min',
+							width: "10%"
+						},
+						{
+							display: '报警时库存数量',
+							name: 'Number',
+							width: "20%"
+						},
+						{
+							display: '报警时间',
+							name: 'Time',
+							width: "20%"
+						},
+						{
+							display: '处理人',
+							name: 'Name',
+							width: "10%"
+						},
+						{
+							display: '处理说明',
+							name: 'Explain',
+							width: "10%"
+						}
+					],
+					data: gridData,
+					sortName: 'id',
+					rownumbers: false,
+					checkbox: false,
+					height: '100%',
+					width: "100%",
+					pageSize: 10,
+					percentWidthMode: true,
+					onAfterShowData: onAfterShowData
+
+				});
+			}
+		
+			function onAfterShowData(data) {
+
+				$("#dataBasic").find(".popupMenu").each(function() {
+					$(this).hover(function() {
+						$(this).find(".popupMenu_con").show();
+					}, function() {
+						$(this).find(".popupMenu_con").hide();
+					});
+				})
+			}
+			
+		</script>
+	</body>
+
+</html>
