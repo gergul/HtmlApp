@@ -4,6 +4,7 @@
 #include "HtmlCtrl.h"
 #include "HtmlHelper.h"
 #include "DialogResizeBorder.h"
+#include <vector>
 
 #define TIMER_WIN_POS WM_USER + 10000
 #define WM_SYNCBORDER WM_USER + 2000
@@ -23,12 +24,18 @@ public:
 	void InitJsEvents();
 	void RemoveBorder();
 
+	//设置透明颜色
+	void SetTransparentColor(COLORREF color);
+
 	CHtmlCtrl* GetHtmlCtrl() { return &m_html; }
 	CHtmlHelper* GetHtmlHelper() { return &m_htmlHelper; }
 
 	virtual CString GetDefaultUrl() { return _T(""); }
 
 	void SyncBorder(bool bCheckShowed = true);
+
+public:
+	static std::vector<CString> SplitCString(const CString& strSource, TCHAR* ch);
 
 protected:
 	void js_onClickedClose(LPCTSTR str);
@@ -43,6 +50,8 @@ protected:
 	void js_showWindow(LPCTSTR str);
 
 	void js_enableResize(LPCTSTR str);
+
+	void js_setTransparentColor(LPCTSTR str);
 
 protected:
 	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV 支持
@@ -63,6 +72,7 @@ protected:
 	CHtmlHelper m_htmlHelper;	
 	POINT m_ptLast;
 	//CBrush m_bkBrush;
+	
 	bool m_bEnableResize;
 
 	bool m_bWinChangeByBorder;

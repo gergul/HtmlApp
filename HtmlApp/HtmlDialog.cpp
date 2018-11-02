@@ -5,8 +5,6 @@
 #include "HtmlDialog.h"
 #include "afxdialogex.h"
 
-#define TRANS_COLOR RGB(255, 255, 255)
-
 // HtmlDialog 对话框
 
 IMPLEMENT_DYNAMIC(CHtmlDialog, CDialogEx)
@@ -45,6 +43,8 @@ void CHtmlDialog::InitJsEvents()
 	ADD_EXTERNAL_CALL(&m_html, _T("setWindowSize"), &CHtmlDialog::js_setWindowSize, this);
 	ADD_EXTERNAL_CALL(&m_html, _T("showWindow"), &CHtmlDialog::js_showWindow, this);
 	ADD_EXTERNAL_CALL(&m_html, _T("enableResize"), &CHtmlDialog::js_enableResize, this);
+
+	ADD_EXTERNAL_CALL(&m_html, _T("setTransparentColor"), &CHtmlDialog::js_setTransparentColor, this);
 }
 
 void CHtmlDialog::RemoveBorder()
@@ -59,6 +59,13 @@ void CHtmlDialog::RemoveBorder()
 	::SetWindowLong(m_hWnd, GWL_EXSTYLE, dwNewExStyle);//设置新的扩展样式
 	//告诉windows：我的样式改变了，窗口位置和大小保持原来不变！
 	::SetWindowPos(m_hWnd, NULL, 0, 0, 0, 0, SWP_NOZORDER | SWP_NOMOVE | SWP_NOSIZE | SWP_FRAMECHANGED);
+}
+
+void CHtmlDialog::SetTransparentColor(COLORREF color)
+{
+	//窗口透明
+	ModifyStyleEx(0, WS_EX_LAYERED);
+	SetLayeredWindowAttributes(color, 0, LWA_COLORKEY);//
 }
 
 void CHtmlDialog::SyncBorder(bool bCheckShowed/* = true*/)
@@ -116,6 +123,26 @@ void CHtmlDialog::SyncBorder(bool bCheckShowed/* = true*/)
 			::ShowWindow(pBorder->m_hWnd, SW_HIDE);
 		}
 	}
+}
+
+std::vector<CString> CHtmlDialog::SplitCString(const CString& strSource, TCHAR* ch)
+{
+	std::vector<CString> vecString;
+
+	CString strTmp = _tcstok((LPTSTR)(LPCTSTR)strSource, ch);
+	if (strTmp == _T(""))
+		return vecString;
+	vecString.push_back(strTmp);
+
+	while (1)
+	{
+		strTmp = _tcstok(NULL, ch);
+		if (strTmp == _T(""))
+			break;
+		vecString.push_back(strTmp);
+	}
+
+	return vecString;
 }
 
 void CHtmlDialog::js_onClickedClose(LPCTSTR str)
@@ -238,6 +265,21 @@ void CHtmlDialog::js_enableResize(LPCTSTR str)
 		m_bEnableResize = false;
 
 	::PostMessage(m_hWnd, WM_SYNCBORDER, true, 0);
+}
+
+void CHtmlDialog::js_setTransparentColor(LPCTSTR str)
+{
+	CString sVal = str;
+	sVal.Trim();
+	std::vector<CString> vctRGB = SplitCString(sVal, _T(", "));
+	if (vctRGB.size() != 3)
+		return;
+
+	WORD r = _ttoi(vctRGB[0].GetString());
+	WORD g = _ttoi(vctRGB[1].GetString());
+	WORD b = _ttoi(vctRGB[2].GetString());
+
+	SetTransparentColor(RGB(r, g, b));
 }
 
 void CHtmlDialog::DoDataExchange(CDataExchange* pDX)
@@ -403,10 +445,6 @@ BOOL CHtmlDialog::OnInitDialog()
 	RemoveBorder();
 	
 	//m_bkBrush.CreateSolidBrush(TRANS_COLOR);
-
-	////窗口透明
-	//ModifyStyleEx(0, WS_EX_LAYERED);
-	//SetLayeredWindowAttributes(TRANS_COLOR, 0, LWA_COLORKEY);//
 
 	CString sDefaultUrl = GetDefaultUrl();
 	if (!sDefaultUrl.IsEmpty())

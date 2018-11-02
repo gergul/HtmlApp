@@ -27,14 +27,11 @@ CHtmlAppDlg::~CHtmlAppDlg()
 void CHtmlAppDlg::DoDataExchange(CDataExchange* pDX)
 {
 	__super::DoDataExchange(pDX);
-	DDX_Control(pDX, IDC_EDIT1, m_ctrlEditUrl);
 }
 
 BEGIN_MESSAGE_MAP(CHtmlAppDlg, CHtmlDialog)
 	ON_WM_PAINT()
 	ON_WM_QUERYDRAGICON()
-	ON_BN_CLICKED(IDC_BUTTON1, &CHtmlAppDlg::OnBnClickedButton1)
-	ON_BN_CLICKED(IDC_BUTTON2, &CHtmlAppDlg::OnBnClickedButton2)
 END_MESSAGE_MAP()
 
 
@@ -48,19 +45,19 @@ BOOL CHtmlAppDlg::OnInitDialog()
 	//  执行此操作
 	SetIcon(m_hIcon, TRUE);			// 设置大图标
 	SetIcon(m_hIcon, FALSE);		// 设置小图标
-		
-	ADD_EXTERNAL_CALL(&m_html, _T("onClickButton"), &CHtmlAppDlg::onClickedHtmlButton, this);
-	ADD_ON_CLICK_LINK(&m_html, _T("toolbar"), _T("console"), &CHtmlAppDlg::onClickLink, this);
-	ADD_ON_CLICK_LINK(&m_html, _T(""), _T("Gergul"), &CHtmlAppDlg::onClickLink, this);
-
-	CHtmlCtrl::AppendFunction(_T("foo"), (AFX_PMSG)&CHtmlAppDlg::foo, VT_EMPTY, VTS_I4 VTS_I4);
-	CHtmlCtrl::AppendFunction(_T("foo1"), (AFX_PMSG)&CHtmlAppDlg::foo1, VT_EMPTY, VTS_BSTR VTS_BSTR);
 	
-	TCHAR szBasePath[MAX_PATH];
-	GetCurrentDirectory(MAX_PATH, szBasePath);
-	m_ctrlEditUrl.SetWindowText(CString(szBasePath) + _T("\\data\\layui-v2.4.3\\dlg.html"));
-
-	OnBnClickedButton1();
+	//注册异步回调函数
+	ADD_EXTERNAL_CALL(&m_html, _T("asyncFoo"), &CHtmlAppDlg::js_asyncFoo, this);
+	//注册链接回调
+	ADD_ON_CLICK_LINK(&m_html, _T("toolbar"), _T("console"), &CHtmlAppDlg::onClickLink, this);
+	ADD_ON_CLICK_LINK(&m_html, _T("app"), _T("Gergul"), &CHtmlAppDlg::onClickLink, this);
+	ADD_ON_CLICK_LINK(&m_html, _T(""), _T("Gergul"), &CHtmlAppDlg::onClickLink, this);
+	//注册链接回调
+	ADD_ON_CLICK_LINK_SYNC(&m_html, _T("https"), _T("//www.baidu.com/"), &CHtmlAppDlg::onClickLink_SYNC, this);
+	ADD_ON_CLICK_LINK_SYNC(&m_html, _T("https"), _T("//www.google.com/"), &CHtmlAppDlg::onClickLink_SYNC, this);
+	//注册同步回调函数
+	CHtmlCtrl::AppendFunction_SYNC(_T("js_syncFoo"), (AFX_PMSG)&CHtmlAppDlg::js_syncFoo, VT_EMPTY, VTS_I4 VTS_I4);
+	CHtmlCtrl::AppendFunction_SYNC(_T("js_syncFoo2"), (AFX_PMSG)&CHtmlAppDlg::js_syncFoo2, VT_EMPTY, VTS_BSTR VTS_BSTR);
 		
 	m_pDlgDropFilePriview = new CDlgDropFilePriview(this);
 	m_pDlgDropFilePriview->Create(CDlgDropFilePriview::IDD, this);
@@ -98,11 +95,6 @@ void CHtmlAppDlg::OnPaint()
 	}
 	else
 	{
-		//CRect rect;
-		//CPaintDC dc(this);
-		//GetClientRect(rect);
-		//dc.FillSolidRect(rect, RGB(255, 0, 0));
-
 		__super::OnPaint();
 	}
 }
@@ -114,84 +106,92 @@ HCURSOR CHtmlAppDlg::OnQueryDragIcon()
 	return static_cast<HCURSOR>(m_hIcon);
 }
 
-void CHtmlAppDlg::OnBnClickedButton1()
-{	
-#if 1
-	if (g_sHtmlFile.IsEmpty())
-		return;
-	m_ctrlEditUrl.SetWindowText(g_sHtmlFile);
-
-	CString sUrl;
-	m_ctrlEditUrl.GetWindowText(sUrl);
-	m_html.Navigate2(sUrl);
-#else
- 	CString m_Text = _T("<html>")
- 		_T("<body>")
-		_T("<a href=\"Gergul\">哈哈</a>")
- 		_T("</body>")
- 		_T("</html>");
-  	m_html.SetHtml(m_Text );
-#endif
-}
 
 BOOL CHtmlAppDlg::PreTranslateMessage(MSG* pMsg)
 {
-	if (pMsg->message == WM_KEYDOWN &&
-		pMsg->wParam == VK_RETURN)
-	{
-		if (pMsg->hwnd == m_ctrlEditUrl.GetSafeHwnd())
-		{
-			OnBnClickedButton1();
-			return TRUE;
-		}
-	}
-
 	return __super::PreTranslateMessage(pMsg);
 }
 
-BOOL CHtmlAppDlg::foo(int n1, int n2)
+BOOL CHtmlAppDlg::js_syncFoo(int n1, int n2)
 {
+	//这里不能进行dom操作
+
+
 	CString s;
-	s.Format(_T("foo(%d, %d)"), n1, n2);
+	s.Format(_T("js_syncFoo(%d, %d)"), n1, n2);
 	AfxMessageBox(s);
 	return TRUE;
 }
 
-BOOL CHtmlAppDlg::foo1(const TCHAR* str1, LPCTSTR str2)
+BOOL CHtmlAppDlg::js_syncFoo2(const TCHAR* str1, LPCTSTR str2)
 {
+	//这里不能进行dom操作
+
+
 	CString s;
-	s.Format(_T("foo1(%s, %s)"), str1, str2);
+	s.Format(_T("js_syncFoo2(%s, %s)"), str1, str2);
 	AfxMessageBox(s);
 	return TRUE;
 }
 
-void CHtmlAppDlg::OnBnClickedButton2()
+void CHtmlAppDlg::js_asyncFoo(LPCTSTR str)
 {
+	CString s;
+	s.Format(_T("js_asyncFoo(%s)"), str);
+	AfxMessageBox(s);
+
+	//顶层frame执行
 	CComVariant res;
-	m_html.ExecuteScript(res, _T("function itemclick(item)        {            alert(item.text);        }        $(function ()        {            window['g'] =            $(\"#maingrid\").ligerGrid({                height:'100%',                columns: [                { display: '顾客', name: 'CustomerID', align: 'left', width: 100, minWidth: 60 },                { display: '公司名', name: 'CompanyName', minWidth: 120 },                { display: '联系名', name: 'ContactName', minWidth: 140 },                { display: '城市', name: 'City' }                ], data:CustomersData,  pageSize:30 ,rownumbers:true,                toolbar: { items: [                { text: '增加', click: itemclick, icon: 'add' },                { line: true },                { text: '修改', click: itemclick, icon: 'modify' },                { line: true },                { text: '删除', click: itemclick, img: '../../../lib/ligerUI/skins/icons/delete.gif' }                ]                }            });                         $(\"#pageloading\").hide();        });        function deleteRow()        {            g.deleteSelectedRow();        }"));
+	m_html.ExecuteScript(res, _T("(function(){return 123;})();"));
+	int i = res.intVal;
 
+	//所有frame都执行
 	std::vector<std::pair<CString, CComVariant> > vctRes;
 	m_html.ExecuteScriptInAllFrames(vctRes, _T("document.getElementById('text123').value"));
-	
-	CString sText = GetHtmlHelper()->GetElementValue(_T("text123"));
-	AfxMessageBox(sText);
-	GetHtmlHelper()->SetElementValue(_T("text123"), _T("gergul123123123"));
 
+	//将导致一个js错误
 	m_html.ExecuteScript(_T("willError()"));
 
+	//设置所有的元素的value值
 	m_html.ErgodicElementsInAllFrames([&](CComDispatchDriver& element) {
 		CComVariant vValue = _T("我爱你");
 		element.PutPropertyByName(L"value", &vValue);
 	});
-}
 
-void CHtmlAppDlg::onClickedHtmlButton(LPCTSTR pJsonStr)
-{
-	GetHtmlHelper()->SetElementValue(_T("text123"), pJsonStr);
-	m_html.ExecuteScript(_T("document.getElementById('tianqi').src = 'https://www.baidu.com';"));
+	//HtmlHelper的应用
+	CString sText = GetHtmlHelper()->GetElementValue(_T("text123"));
+	AfxMessageBox(sText);
+	GetHtmlHelper()->SetElementValue(_T("text123"), _T("gergul"));
 }
 
 void CHtmlAppDlg::onClickLink(const CString& sProtocols, const CString& sCmd)
 {
-	GetHtmlHelper()->SetElementValue(_T("text123"), sProtocols + _T("-") + sCmd);
+	if (sProtocols == _T("toolbar") && sCmd == _T("console"))
+	{
+		GetHtmlHelper()->SetElementValue(_T("text123"), sProtocols + _T("-") + sCmd);
+	}
+	else if (sProtocols == _T("app") && sCmd == _T("Gergul"))
+	{
+		GetHtmlHelper()->SetElementValue(_T("text123"), _T("Hello Gergul"));
+	}
+	else if (sProtocols == _T("") && sCmd == _T("Gergul"))
+	{
+		AfxMessageBox(_T("Hello Gergul"));
+	}
+}
+
+BOOL CHtmlAppDlg::onClickLink_SYNC(const CString& sProtocols, const CString& sCmd)
+{
+	if (sProtocols == _T("https") && sCmd == _T("//www.baidu.com/"))
+	{
+		AfxMessageBox(_T("准备打开！"));
+		return FALSE;
+	}
+	if (sProtocols == _T("https") && sCmd == _T("//www.google.com/"))
+	{
+		AfxMessageBox(_T("阻止打开！"));
+		return TRUE;
+	}
+
+	return FALSE;
 }

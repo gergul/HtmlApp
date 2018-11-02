@@ -27,6 +27,7 @@ void CDlgSample::DoDataExchange(CDataExchange* pDX)
 
 CString CDlgSample::GetDefaultUrl()
 {
+	//ÉèÖÃÖ÷Ò³
 	return _T("file:///C:/Users/Administrator/Desktop/HtmlBrower/data/À¶É«cms/index.html");
 }
 

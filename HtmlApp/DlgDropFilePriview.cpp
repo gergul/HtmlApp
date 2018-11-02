@@ -7,7 +7,6 @@
 #include "afxdialogex.h"
 #include "HtmlAppDlg.h"
 
-
 // CDlgDropFilePriview ¶Ô»°¿ò
 
 IMPLEMENT_DYNAMIC(CDlgDropFilePriview, CDialogEx)
@@ -22,21 +21,37 @@ CDlgDropFilePriview::~CDlgDropFilePriview()
 {
 }
 
+CHtmlAppDlg* CDlgDropFilePriview::GetAppDlg()
+{
+	return dynamic_cast<CHtmlAppDlg*>(this->GetParent());
+}
+
 void CDlgDropFilePriview::DoDataExchange(CDataExchange* pDX)
 {
 	CDialogEx::DoDataExchange(pDX);
+	DDX_Control(pDX, IDC_EDIT_HTML, m_ctrlHtmlText);
 }
 
 
 BOOL CDlgDropFilePriview::OnInitDialog()
 {
 	BOOL bRet = CDialogEx::OnInitDialog();
-		
+	
+	CString sText =
+		_T("<html>\r\n")
+		_T("  <body>\r\n")
+		_T("    <a href=\"Gergul\">µã»÷</a>\r\n")
+		_T("  </body>\r\n")
+		_T("</html>");
+
+	m_ctrlHtmlText.SetWindowText(sText);
+
 	return bRet;
 }
 
 BEGIN_MESSAGE_MAP(CDlgDropFilePriview, CDialogEx)
 	ON_WM_DROPFILES()
+	ON_BN_CLICKED(IDC_BUTTON1, &CDlgDropFilePriview::OnBnClickedButton1)
 END_MESSAGE_MAP()
 
 
@@ -60,8 +75,20 @@ void CDlgDropFilePriview::OnDropFiles(HDROP hDropInfo)
 	if (sDropFile.IsEmpty())
 		return;
 
-	CHtmlAppDlg* pHtmlDlg = dynamic_cast<CHtmlAppDlg*>(this->GetParent());
+	CHtmlAppDlg* pHtmlDlg = GetAppDlg();
 	if (pHtmlDlg == NULL)
 		return;
 	pHtmlDlg->GetHtmlCtrl()->Navigate2(sDropFile);
+}
+
+
+void CDlgDropFilePriview::OnBnClickedButton1()
+{
+	CHtmlAppDlg* pHtmlDlg = GetAppDlg();
+	if (pHtmlDlg == NULL)
+		return;
+	
+	CString sHtml;
+	m_ctrlHtmlText.GetWindowText(sHtml);
+	pHtmlDlg->GetHtmlCtrl()->SetHtml(sHtml);
 }

@@ -14,12 +14,40 @@
 DECLARE_SMARTPTR(IHTMLDocument2)
 
 typedef std::function<void(LPCTSTR pJsonStr)> FN_ON_EXTERNAL_CALL;
-#define ADD_EXTERNAL_CALL(pHtmlCtrl, jsFuncName, memberFun, memberFunClassObj) \
-	(pHtmlCtrl)->AppendFunction((jsFuncName), std::bind(memberFun, (memberFunClassObj), std::placeholders::_1));
+//ADD_EXTERNAL_CALL 注册在js中调用的C++函数(异步)
+//  pHtmlCtrl - Html控件指针
+//  jsFuncName - 在js中调用的名称
+//  memberFun - 回调函数
+//  memberFunClassObjPtr - 回调函数所在类的对象指针
+//js调用c++的方法见AppendFunction的说明
+#define ADD_EXTERNAL_CALL(pHtmlCtrl, jsFuncName, memberFun, memberFunClassObjPtr) \
+	(pHtmlCtrl)->AppendFunction((jsFuncName), \
+	(FN_ON_EXTERNAL_CALL)std::bind(memberFun, (memberFunClassObjPtr), std::placeholders::_1));
+
 
 typedef std::function<void(const CString& sProtocol, const CString& sCmd)> FN_ON_CLICK_LINK;
-#define ADD_ON_CLICK_LINK(pHtmlCtrl, protocol, cmd, memberFun, memberFunClassObj) \
-	(pHtmlCtrl)->AppendOnClickLink((protocol), (cmd), std::bind(memberFun, (memberFunClassObj), std::placeholders::_1, std::placeholders::_2));
+//ADD_ON_CLICK_LINK 注册点击链接的回调(异步)
+//  pHtmlCtrl - Html控件指针
+//  protocol - 链接协议，如“http”,“app”等，命名要求见AppendOnClickLink的说明
+//  cmd - 命令
+//  memberFun - 回调函数
+//  memberFunClassObjPtr - 回调函数所在类的对象指针
+#define ADD_ON_CLICK_LINK(pHtmlCtrl, protocol, cmd, memberFun, memberFunClassObjPtr) \
+	(pHtmlCtrl)->AppendOnClickLink((protocol), (cmd), \
+	(FN_ON_CLICK_LINK)std::bind(memberFun, (memberFunClassObjPtr), std::placeholders::_1, std::placeholders::_2));
+
+//注册点击链接的回调原型
+//  返回：TRUE - 只点击不进行打开网页；FALSE - 打开网页，如果一个命令没有在这个注册，则默认是打开网页的。
+typedef std::function<BOOL(const CString& sProtocol, const CString& sCmd)> FN_ON_CLICK_LINK_SYNC;
+//ADD_ON_CLICK_LINK_SYNC 注册点击链接的回调(同步)
+//  pHtmlCtrl - Html控件指针
+//  protocol - 链接协议，如“http”,“app”等，命名要求见AppendOnClickLink的说明
+//  cmd - 命令
+//  memberFun - 回调函数
+//  memberFunClassObjPtr - 回调函数所在类的对象指针
+#define ADD_ON_CLICK_LINK_SYNC(pHtmlCtrl, protocol, cmd, memberFun, memberFunClassObjPtr) \
+	(pHtmlCtrl)->AppendOnClickLink_SYNC((protocol), (cmd), \
+	(FN_ON_CLICK_LINK_SYNC)std::bind(memberFun, (memberFunClassObjPtr), std::placeholders::_1, std::placeholders::_2));
 
 //这个类将 CHtmlView 转换为普通的能在对话框和框架中使用的控制
 class CHtmlCtrl
@@ -46,19 +74,23 @@ public:
 
 	//脚本交互
 public:
-	//绑定c++函数到脚本
+	//绑定c++函数到脚本（同步，不能在这种回调中进行DOM操作）
 	//脚本中调用window.external.pszFuncName(...)即可调用相应的C++函数
 	//  pFuncAddr必须是CCmdTarget类或其继承类的成员函数
 	//  wRetType 见VARENUM
 	//  pszParamType 见 afxdisp.h VTS_XXX 每个参数类型使用空格分开
-	static BOOL AppendFunction(LPCTSTR pszFuncName, AFX_PMSG pFuncAddr, WORD wRetType, LPCSTR pszParamType);
+	static BOOL AppendFunction_SYNC(LPCTSTR pszFuncName, AFX_PMSG pFuncAddr, WORD wRetType, LPCSTR pszParamType);
+	//绑定C++函数到超链接（同步，不能在这种回调中进行DOM操作）
+	//  sProtocol - 协议。必需为以下字符“0~9 a~z + - .”才合法（不含引号），并且字母不能是大写
+	//  sCmd - 命令
+	BOOL AppendOnClickLink_SYNC(const CString& sProtocol, const CString& sCmd, FN_ON_CLICK_LINK_SYNC fn);
 
 public:
-	//绑定C++函数到脚本（异步调用）
+	//绑定C++函数到脚本（异步）
 	//脚本中调用window.external.call('pszFuncName', 'json string')即可调用相应的C++函数
-	void AppendFunction(LPCTSTR pszFuncName, FN_ON_EXTERNAL_CALL pfn);
-	//绑定C++函数到超链接（异步调用）
-	//  sProtocol - 协议。 0~9 a~z + - . 才合法（大写也不行）
+	BOOL AppendFunction(LPCTSTR pszFuncName, FN_ON_EXTERNAL_CALL pfn);
+	//绑定C++函数到超链接（异步）
+	//  sProtocol - 协议。必需为以下字符“0~9 a~z + - .”才合法（不含引号），并且字母不能是大写
 	//  sCmd - 命令
 	BOOL AppendOnClickLink(const CString& sProtocol, const CString& sCmd, FN_ON_CLICK_LINK fn);
 
@@ -142,6 +174,7 @@ private:
 	BOOL m_bHideMenu;// hide context menu
 	std::map<CString, FN_ON_EXTERNAL_CALL> m_mpExternalCall;
 	std::map<CString, std::map<CString, FN_ON_CLICK_LINK> > m_mpOnClickLink;//<protocol, <cmd, function>>
+	std::map<CString, std::map<CString, FN_ON_CLICK_LINK_SYNC> > m_mpOnClickLink_SYNC;//<protocol, <cmd, function>>
 };
 
 

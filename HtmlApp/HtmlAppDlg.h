@@ -35,16 +35,20 @@ protected:
 	virtual BOOL PreTranslateMessage(MSG* pMsg);
 	DECLARE_MESSAGE_MAP()
 
-	BOOL foo(int, int);
-	BOOL foo1(const TCHAR* str1, LPCTSTR str2);
+	//绑定的同步回调，在这种回调中不支持dom操作
+	BOOL js_syncFoo(int, int);
+	BOOL js_syncFoo2(const TCHAR* str1, LPCTSTR str2);
 
-	void onClickedHtmlButton(LPCTSTR pJsonStr);
+	//绑定的异步回调，在这种回调中支持dom操作
+	void js_asyncFoo(LPCTSTR str);
+
+	//绑定的链接回调，在这种回调中支持dom操作
 	void onClickLink(const CString& sProtocols, const CString& sCmd);
 
+	//绑定的链接回调，在这种回调中不支持dom操作
+	//  返回：TRUE - 取消打开；FALSE - 打开网页
+	BOOL onClickLink_SYNC(const CString& sProtocols, const CString& sCmd);
+
 public:
-	//HtmlDialogHelper* m_pDlgHelper;
-	CEdit m_ctrlEditUrl;
 	CDlgDropFilePriview* m_pDlgDropFilePriview;
-	afx_msg void OnBnClickedButton1();
-	afx_msg void OnBnClickedButton2();
 };

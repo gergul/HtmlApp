@@ -30,7 +30,7 @@ CHtmlCtrl::CHtmlCtrl()
 	:m_bHideMenu(FALSE)
 {
 	EnableAutomation();
-	AppendFunction(_T("call"), (AFX_PMSG)&CHtmlCtrl::OnScriptExternalCall, VT_EMPTY, VTS_BSTR VTS_BSTR);
+	AppendFunction_SYNC(_T("call"), (AFX_PMSG)&CHtmlCtrl::OnScriptExternalCall, VT_EMPTY, VTS_BSTR VTS_BSTR);
 }
 
 const AFX_DISPMAP* PASCAL CHtmlCtrl::GetThisDispatchMap()
@@ -202,16 +202,32 @@ void CHtmlCtrl::OnBeforeNavigate2(LPCTSTR lpszURL,
 		SplitProtocol(lpszURL, sProtocol, sCmd);
 	}
 
+	BOOL bCancel = FALSE;
+	std::map<CString, std::map<CString, FN_ON_CLICK_LINK_SYNC> >::iterator itProtocol_SYNC =
+		m_mpOnClickLink_SYNC.find(sProtocol);
+	if (itProtocol_SYNC != m_mpOnClickLink_SYNC.end())
+	{
+		std::map<CString, FN_ON_CLICK_LINK_SYNC>::iterator itCmd = itProtocol_SYNC->second.find(sCmd);
+		if (itCmd != itProtocol_SYNC->second.end())
+		{
+			if (itCmd->second)
+				bCancel = itCmd->second(sProtocol, sCmd);
+		}
+	}
+
 	std::map<CString, std::map<CString, FN_ON_CLICK_LINK> >::iterator itProtocol =
 		m_mpOnClickLink.find(sProtocol);
-	if (itProtocol == m_mpOnClickLink.end())
-		return ;
-	std::map<CString, FN_ON_CLICK_LINK>::iterator itCmd = itProtocol->second.find(sCmd);
-	if (itCmd == itProtocol->second.end())
-		return ;
-
-	PostMessage(WM_ON_CLICK_LINK, WPARAM(new CString(sProtocol)), LPARAM(new CString(sCmd)));
-	*pbCancel = TRUE;
+	if (itProtocol != m_mpOnClickLink.end())
+	{
+		std::map<CString, FN_ON_CLICK_LINK>::iterator itCmd = itProtocol->second.find(sCmd);
+		if (itCmd != itProtocol->second.end())
+		{
+			PostMessage(WM_ON_CLICK_LINK, WPARAM(new CString(sProtocol)), LPARAM(new CString(sCmd)));
+			bCancel = TRUE;//如果有需要异步的，则都取消打开链接
+		}
+	}
+	
+	*pbCancel = bCancel;
 }
 
 //////////////////
@@ -290,7 +306,7 @@ HRESULT CHtmlCtrl::OnGetExternal(LPDISPATCH *lppDispatch)
 	return S_OK;
 }
 
-BOOL CHtmlCtrl::AppendFunction(LPCTSTR pszFuncName, AFX_PMSG pFuncAddr, WORD wRetType, LPCSTR pszParamType)
+BOOL CHtmlCtrl::AppendFunction_SYNC(LPCTSTR pszFuncName, AFX_PMSG pFuncAddr, WORD wRetType, LPCSTR pszParamType)
 {
 	if (_dispatchEntryCount >= MAX_FUNCS)
 		return FALSE;
@@ -308,14 +324,30 @@ BOOL CHtmlCtrl::AppendFunction(LPCTSTR pszFuncName, AFX_PMSG pFuncAddr, WORD wRe
 	return TRUE;
 }
 
-void CHtmlCtrl::AppendFunction(LPCTSTR pszFuncName, FN_ON_EXTERNAL_CALL pfn)
+BOOL CHtmlCtrl::AppendOnClickLink_SYNC(const CString& sProtocol, const CString& sCmd, FN_ON_CLICK_LINK_SYNC fn)
 {
+	if (sProtocol != _T("") && !IsProtocolLegal(sProtocol))
+		return FALSE;
+
+	CString s = sProtocol;
+	s.MakeLower();
+	m_mpOnClickLink_SYNC[s][sCmd] = fn;
+
+	return TRUE;
+}
+
+BOOL CHtmlCtrl::AppendFunction(LPCTSTR pszFuncName, FN_ON_EXTERNAL_CALL pfn)
+{
+	if (pszFuncName == NULL || pszFuncName[0] == '\0')
+		return FALSE;
+
 	m_mpExternalCall[pszFuncName] = pfn;
+	return TRUE;
 }
 
 BOOL CHtmlCtrl::AppendOnClickLink(const CString& sProtocol, const CString& sCmd, FN_ON_CLICK_LINK fn)
 {
-	if (!IsProtocolLegal(sProtocol))
+	if (sProtocol != _T("") && !IsProtocolLegal(sProtocol))
 		return FALSE;
 
 	CString s = sProtocol;
