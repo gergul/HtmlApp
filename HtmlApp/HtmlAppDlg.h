@@ -49,6 +49,8 @@ protected:
 	//  返回：TRUE - 取消打开；FALSE - 打开网页
 	BOOL onClickLink_SYNC(const CString& sProtocols, const CString& sCmd);
 
+	virtual CString GetDefaultUrl() override;
+
 public:
 	CDlgDropFilePriview* m_pDlgDropFilePriview;
 };

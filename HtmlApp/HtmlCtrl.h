@@ -150,7 +150,9 @@ protected:
 	// 需要打开窗口时触发
 	virtual void OnNewWindow2(LPDISPATCH* ppDisp, BOOL* Cancel);
 
-	afx_msg void OnMouseMove(UINT nFlags, CPoint point);
+	//右键菜单相关
+	// return HRESULT(S_OK);则不弹出系统默认菜单；return HRESULT(S_FALSE);则弹出系统默认菜单
+	virtual HRESULT OnShowContextMenu(DWORD dwID, LPPOINT ppt, LPUNKNOWN pcmdtReserved, LPDISPATCH pdispReserved) override;
 
 	DECLARE_MESSAGE_MAP();
 
@@ -169,7 +171,7 @@ protected:
 	afx_msg LRESULT OnClickLink(WPARAM pProtocol, LPARAM pCmd);
 	afx_msg LRESULT OnExternalCall(WPARAM pFuncName, LPARAM pJsonStr);
 	void OnScriptExternalCall(LPCTSTR pFunName, LPCTSTR pJsonStr);
-
+		
 private:
 	BOOL m_bHideMenu;// hide context menu
 	std::map<CString, FN_ON_EXTERNAL_CALL> m_mpExternalCall;

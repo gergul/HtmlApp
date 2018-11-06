@@ -95,6 +95,20 @@ void CHtmlCtrl::OnScriptExternalCall(LPCTSTR pFunName, LPCTSTR pJsonStr)
 	PostMessage(WM_ON_EXTERNAL_CALL, WPARAM(new CString(pFunName)), LPARAM(new CString(pJsonStr)));
 }
 
+
+HRESULT CHtmlCtrl::OnShowContextMenu(DWORD dwID, LPPOINT ppt, LPUNKNOWN pcmdtReserved, LPDISPATCH pdispReserved)
+{
+	// Do not show context menus by default with S_OK.
+	HRESULT hr(S_OK);
+
+	// If text select or control menu, then return S_FALSE to show menu.
+	if (dwID == CONTEXT_MENU_TEXTSELECT ||
+		dwID == CONTEXT_MENU_CONTROL)
+		hr = S_FALSE;
+
+	return hr;
+}
+
 BEGIN_MESSAGE_MAP(CHtmlCtrl, CHtmlView)
 	ON_WM_DESTROY()
 	ON_WM_MOUSEACTIVATE()
@@ -154,23 +168,23 @@ inline BOOL IsIEWindow(HWND hwnd)
 //
 BOOL CHtmlCtrl::PreTranslateMessage(MSG* pMsg)
 {
-	if (m_bHideMenu)
-	{//屏蔽右键
-		switch (pMsg->message)
-		{
-		case WM_CONTEXTMENU:
-		case WM_RBUTTONUP:
-		case WM_RBUTTONDOWN:
-		case WM_RBUTTONDBLCLK:
-			if (IsIEWindow(pMsg->hwnd))
-			{
-				if (pMsg->message == WM_RBUTTONUP)
-					// let parent handle context menu
-					GetParent()->SendMessage(WM_CONTEXTMENU, pMsg->wParam, pMsg->lParam);
-				return TRUE; // eat it
-			}
-		}
-	}
+	//if (m_bHideMenu)
+	//{//屏蔽右键
+	//	switch (pMsg->message)
+	//	{
+	//	case WM_CONTEXTMENU:
+	//	case WM_RBUTTONUP:
+	//	case WM_RBUTTONDOWN:
+	//	case WM_RBUTTONDBLCLK:
+	//		if (IsIEWindow(pMsg->hwnd))
+	//		{
+	//			if (pMsg->message == WM_RBUTTONUP)
+	//				// let parent handle context menu
+	//				GetParent()->SendMessage(WM_CONTEXTMENU, pMsg->wParam, pMsg->lParam);
+	//			return TRUE; // eat it
+	//		}
+	//	}
+	//}
 	
 	return CHtmlView::PreTranslateMessage(pMsg);
 }
@@ -428,13 +442,6 @@ void CHtmlCtrl::OnNewWindow2(LPDISPATCH* ppDisp, BOOL* Cancel)
 		}
 	}
 	*Cancel = TRUE;
-}
-
-
-void CHtmlCtrl::OnMouseMove(UINT nFlags, CPoint point)
-{
-	AfxMessageBox(_T("ok"));
-	CHtmlView::OnMouseMove(nFlags, point);
 }
 
 BOOL CHtmlCtrl::ExecuteScript(const CString &sScript, const CString &sLanguage/*=_T("JavaScript")*/)

@@ -43,7 +43,6 @@ void CHtmlDialog::InitJsEvents()
 	ADD_EXTERNAL_CALL(&m_html, _T("setWindowSize"), &CHtmlDialog::js_setWindowSize, this);
 	ADD_EXTERNAL_CALL(&m_html, _T("showWindow"), &CHtmlDialog::js_showWindow, this);
 	ADD_EXTERNAL_CALL(&m_html, _T("enableResize"), &CHtmlDialog::js_enableResize, this);
-
 	ADD_EXTERNAL_CALL(&m_html, _T("setTransparentColor"), &CHtmlDialog::js_setTransparentColor, this);
 }
 
@@ -294,7 +293,7 @@ BOOL CHtmlDialog::PreTranslateMessage(MSG* pMsg)
 	if (pMsg->message == WM_LBUTTONUP)
 	{
 		KillTimer(TIMER_WIN_POS);
-		::PostMessage(m_hWnd, WM_SYNCBORDER, true, 0);
+		//::PostMessage(m_hWnd, WM_SYNCBORDER, true, 0);
 	}
 
 	return __super::PreTranslateMessage(pMsg);
@@ -418,14 +417,6 @@ LRESULT CHtmlDialog::OnSyncBorder(WPARAM wParam, LPARAM lParam)
 	return 0;
 }
 
-//HBRUSH CHtmlDialog::OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor)
-//{
-//	if (nCtlColor == CTLCOLOR_DLG)
-//		return m_bkBrush;
-//
-//	return __super::OnCtlColor(pDC, pWnd, nCtlColor);
-//}
-
 BOOL CHtmlDialog::OnInitDialog()
 {
 	BOOL bRet = __super::OnInitDialog();
@@ -444,8 +435,6 @@ BOOL CHtmlDialog::OnInitDialog()
 	InitJsEvents();
 	RemoveBorder();
 	
-	//m_bkBrush.CreateSolidBrush(TRANS_COLOR);
-
 	CString sDefaultUrl = GetDefaultUrl();
 	if (!sDefaultUrl.IsEmpty())
 		m_html.Navigate2(sDefaultUrl);
@@ -475,7 +464,6 @@ BOOL CHtmlDialog::OnInitDialog()
 BEGIN_MESSAGE_MAP(CHtmlDialog, CDialogEx)
 	ON_WM_TIMER()
 	ON_WM_SIZE()
-	//ON_WM_CTLCOLOR()
 	ON_WM_GETMINMAXINFO()
 	ON_MESSAGE(WM_BORDER_RESIZE_START, &CHtmlDialog::OnBorderResizeStart)
 	ON_MESSAGE(WM_BORDER_RESIZE_END, &CHtmlDialog::OnBorderResizeEnd)

@@ -59,7 +59,6 @@ protected:
 	virtual BOOL OnInitDialog();
 	afx_msg void OnTimer(UINT_PTR nIDEvent);
 	afx_msg void OnSize(UINT nType, int cx, int cy);
-	//afx_msg HBRUSH OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor);
 	afx_msg void OnGetMinMaxInfo(MINMAXINFO* lpMMI);
 	afx_msg LRESULT OnBorderResizeStart(WPARAM wParam, LPARAM lParam);
 	afx_msg LRESULT OnBorderResizeEnd(WPARAM wParam, LPARAM lParam);
@@ -70,11 +69,8 @@ protected:
 protected:
 	CHtmlCtrl m_html;
 	CHtmlHelper m_htmlHelper;	
-	POINT m_ptLast;
-	//CBrush m_bkBrush;
-	
+	POINT m_ptLast;	
 	bool m_bEnableResize;
-
 	bool m_bWinChangeByBorder;
 	std::map<int, CDialogResizeBorder*> m_mpBorders;
 };

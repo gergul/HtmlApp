@@ -63,9 +63,9 @@ BOOL CHtmlAppDlg::OnInitDialog()
 	m_pDlgDropFilePriview->Create(CDlgDropFilePriview::IDD, this);
 	m_pDlgDropFilePriview->ShowWindow(SW_SHOW);
 	
-	//CDlgSample* dlg = new CDlgSample(this);
-	//dlg->Create(CDlgSample::IDD, this);
-	//dlg->ShowWindow(SW_SHOW);
+	CDlgSample* dlg = new CDlgSample(this);
+	dlg->Create(CDlgSample::IDD, this);
+	dlg->ShowWindow(SW_SHOW);
 
 	return TRUE;  // 除非将焦点设置到控件，否则返回 TRUE
 }
@@ -144,14 +144,7 @@ void CHtmlAppDlg::js_asyncFoo(LPCTSTR str)
 	CComVariant res;
 	m_html.ExecuteScript(res, _T("(function(){return 123;})();"));
 	int i = res.intVal;
-
-	//所有frame都执行
-	std::vector<std::pair<CString, CComVariant> > vctRes;
-	m_html.ExecuteScriptInAllFrames(vctRes, _T("document.getElementById('text123').value"));
-
-	//将导致一个js错误
-	m_html.ExecuteScript(_T("willError()"));
-
+		
 	//设置所有的元素的value值
 	m_html.ErgodicElementsInAllFrames([&](CComDispatchDriver& element) {
 		CComVariant vValue = _T("我爱你");
@@ -162,6 +155,17 @@ void CHtmlAppDlg::js_asyncFoo(LPCTSTR str)
 	CString sText = GetHtmlHelper()->GetElementValue(_T("text123"));
 	AfxMessageBox(sText);
 	GetHtmlHelper()->SetElementValue(_T("text123"), _T("gergul"));
+
+	//所有frame都执行
+	std::vector<std::pair<CString, CComVariant> > vctRes;
+	m_html.ExecuteScriptInAllFrames(vctRes, _T("document.getElementById('text123').value"));
+	if (vctRes.size() > 0)
+	{
+		CString sVal = vctRes[0].second.bstrVal;
+	}
+
+	//将导致一个js错误
+	m_html.ExecuteScript(_T("willError()"));
 }
 
 void CHtmlAppDlg::onClickLink(const CString& sProtocols, const CString& sCmd)
@@ -194,4 +198,9 @@ BOOL CHtmlAppDlg::onClickLink_SYNC(const CString& sProtocols, const CString& sCm
 	}
 
 	return FALSE;
+}
+
+CString CHtmlAppDlg::GetDefaultUrl()
+{
+	return g_sHtmlFile;
 }

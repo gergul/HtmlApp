@@ -90,5 +90,11 @@ void CDlgDropFilePriview::OnBnClickedButton1()
 	
 	CString sHtml;
 	m_ctrlHtmlText.GetWindowText(sHtml);
-	pHtmlDlg->GetHtmlCtrl()->SetHtml(sHtml);
+
+	CString sText = sHtml;
+	sText.Trim();
+	if (sText.Left(4).MakeUpper() == _T("HTTP") || sText.Left(4).MakeUpper() == _T("FILE") || sText.GetAt(1) == ':')
+		pHtmlDlg->GetHtmlCtrl()->Navigate2(sText);
+	else
+		pHtmlDlg->GetHtmlCtrl()->SetHtml(sHtml);
 }
