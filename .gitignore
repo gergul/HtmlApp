@@ -1,1 +1,4 @@
 /.vs/HtmlBrower/v14/*.suo
+/HtmlApp.VC.db
+/HtmlApp/Debug/*.log
+/ipch/HTMLAPP-a5286f77/*.ipch
