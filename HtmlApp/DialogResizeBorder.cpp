@@ -67,19 +67,6 @@ INT_PTR CALLBACK CDialogResizeBorder::DialogProc(HWND hDlg, UINT uMsg, WPARAM wP
 		}
 	}
 	break;
-	case WM_LBUTTONUP:
-	{
-		g_bNoticingParentResize = false;
-
-		//结束拖动窗口
-		HWND hParent = ::GetParent(hDlg);
-		if (NULL != hParent)
-		{
-			::SendMessage(hParent, WM_BORDER_RESIZE_END, 0, 0);
-			return TRUE;
-		}
-	}
-	break;
 	case WM_MOVE:
 	{
 		//拖动的过程
@@ -90,6 +77,19 @@ INT_PTR CALLBACK CDialogResizeBorder::DialogProc(HWND hDlg, UINT uMsg, WPARAM wP
 			{
 				::SendMessage(hParent, WM_BORDER_RESIZE, (WPARAM)hDlg, (LPARAM)ms_mpHitTestType[hDlg]);
 			}
+		}
+	}
+	break;
+	case WM_LBUTTONUP:
+	{
+		g_bNoticingParentResize = false;
+
+		//结束拖动窗口
+		HWND hParent = ::GetParent(hDlg);
+		if (NULL != hParent)
+		{
+			::SendMessage(hParent, WM_BORDER_RESIZE_END, 0, 0);
+			return TRUE;
 		}
 	}
 	break;
@@ -147,7 +147,7 @@ BOOL CDialogResizeBorder::DoModeless()
 	*lpw++ = 0;   // predefined dialog box class (by default)
 
 	lpwsz = (LPWSTR)lpw;
-	nchar = 1 + MultiByteToWideChar(CP_ACP, 0, "内存对话框", -1,
+	nchar = 1 + MultiByteToWideChar(CP_ACP, 0, "BORDER", -1,
 		lpwsz, 50);
 	lpw += nchar;
 	
