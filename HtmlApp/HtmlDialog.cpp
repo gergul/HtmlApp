@@ -40,6 +40,7 @@ void CHtmlDialog::InitJsEvents()
 	ADD_EXTERNAL_CALL(&m_html, _T("onClickMin"), &CHtmlDialog::js_onClickedMin, this);
 
 	ADD_EXTERNAL_CALL(&m_html, _T("moveTo"), &CHtmlDialog::js_moveTo, this);
+	ADD_EXTERNAL_CALL(&m_html, _T("moveToCenter"), &CHtmlDialog::js_moveToCenter, this);
 	ADD_EXTERNAL_CALL(&m_html, _T("setWindowSize"), &CHtmlDialog::js_setWindowSize, this);
 	ADD_EXTERNAL_CALL(&m_html, _T("showWindow"), &CHtmlDialog::js_showWindow, this);
 	ADD_EXTERNAL_CALL(&m_html, _T("enableResize"), &CHtmlDialog::js_enableResize, this);
@@ -215,6 +216,22 @@ void CHtmlDialog::js_moveTo(LPCTSTR str)
 	int nHeight = rectWin.Height();
 	rectWin.left = nX;
 	rectWin.top = nY;
+	rectWin.right = rectWin.left + nWidth;
+	rectWin.bottom = rectWin.top + nHeight;
+	MoveWindow(&rectWin);
+}
+
+void CHtmlDialog::js_moveToCenter(LPCTSTR str)
+{
+	int nScreenWidth = GetSystemMetrics(SM_CXFULLSCREEN);
+	int nScreenHeight = GetSystemMetrics(SM_CYFULLSCREEN);
+
+	CRect rectWin;
+	GetWindowRect(&rectWin);
+	int nWidth = rectWin.Width();
+	int nHeight = rectWin.Height();
+	rectWin.left = (nScreenWidth - nWidth) / 2;
+	rectWin.top = (nScreenHeight- nHeight) / 2;
 	rectWin.right = rectWin.left + nWidth;
 	rectWin.bottom = rectWin.top + nHeight;
 	MoveWindow(&rectWin);

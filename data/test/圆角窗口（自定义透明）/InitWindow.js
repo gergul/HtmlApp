@@ -4,6 +4,8 @@ window.external.call('setWindowSize', '647,400');
 window.external.call('enableResize', 'false');
 //设置透明颜色
 window.external.call('setTransparentColor', '8,8,8');
+//设置窗口居中
+window.external.call('moveToCenter', '');
 
 //使能标题栏的功能
 Enable_MoveWindow = true;

@@ -48,6 +48,7 @@ protected:
 	void js_onDbClickCaption(LPCTSTR str);
 
 	void js_moveTo(LPCTSTR str);
+	void js_moveToCenter(LPCTSTR str);
 	void js_setWindowSize(LPCTSTR str);
 	void js_showWindow(LPCTSTR str);
 
