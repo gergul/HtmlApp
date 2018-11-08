@@ -26,6 +26,8 @@ public:
 
 	//设置透明颜色
 	void SetTransparentColor(COLORREF color);
+	//设置是否可Resize
+	void SetEnableResize(bool bEnable);
 
 	CHtmlCtrl* GetHtmlCtrl() { return &m_html; }
 	CHtmlHelper* GetHtmlHelper() { return &m_htmlHelper; }

@@ -161,7 +161,7 @@ void CHtmlAppDlg::js_asyncFoo(LPCTSTR str)
 	m_html.ExecuteScriptInAllFrames(vctRes, _T("document.getElementById('text123').value"));
 	if (vctRes.size() > 0)
 	{
-		CString sVal = vctRes[0].second.bstrVal;
+		CString sVal = (LPTSTR)vctRes[0].second.bstrVal;
 	}
 
 	//将导致一个js错误

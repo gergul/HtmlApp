@@ -67,6 +67,12 @@ void CHtmlDialog::SetTransparentColor(COLORREF color)
 	SetLayeredWindowAttributes(color, 0, LWA_COLORKEY);//
 }
 
+void CHtmlDialog::SetEnableResize(bool bEnable)
+{
+	m_bEnableResize = bEnable;
+	::PostMessage(m_hWnd, WM_SYNCBORDER, true, 0);
+}
+
 void CHtmlDialog::SyncBorder(bool bCheckShowed/* = true*/)
 {
 	for (std::map<int, CDialogResizeBorder*>::iterator it = m_mpBorders.begin();
@@ -259,11 +265,9 @@ void CHtmlDialog::js_enableResize(LPCTSTR str)
 	CString sVal = str;
 	sVal.MakeUpper();
 	if (sVal == _T("TRUE") || sVal == _T("1"))
-		m_bEnableResize = true;
+		SetEnableResize(true);
 	else if (sVal == _T("FALSE") || sVal == _T("0"))
-		m_bEnableResize = false;
-
-	::PostMessage(m_hWnd, WM_SYNCBORDER, true, 0);
+		SetEnableResize(false);
 }
 
 void CHtmlDialog::js_setTransparentColor(LPCTSTR str)
