@@ -13,6 +13,9 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="HtmlDialog">
+      <UniqueIdentifier>{adae7f9f-06be-40d7-9ecb-c8d2fdeca7f3}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="ReadMe.txt" />
@@ -39,23 +42,23 @@
     <ClInclude Include="Resource.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="HtmlCtrl.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
     <ClInclude Include="DlgDropFilePriview.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="HtmlDialog.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="HtmlHelper.h">
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="DlgSample.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="DialogResizeBorder.h">
-      <Filter>头文件</Filter>
+    <ClInclude Include="HtmlDialog\DialogResizeBorder.h">
+      <Filter>HtmlDialog</Filter>
+    </ClInclude>
+    <ClInclude Include="HtmlDialog\HtmlCtrl.h">
+      <Filter>HtmlDialog</Filter>
+    </ClInclude>
+    <ClInclude Include="HtmlDialog\HtmlDialog.h">
+      <Filter>HtmlDialog</Filter>
+    </ClInclude>
+    <ClInclude Include="HtmlDialog\HtmlHelper.h">
+      <Filter>HtmlDialog</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -68,23 +71,23 @@
     <ClCompile Include="stdafx.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="HtmlCtrl.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
     <ClCompile Include="DlgDropFilePriview.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="HtmlDialog.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="HtmlHelper.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="DlgSample.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="DialogResizeBorder.cpp">
-      <Filter>源文件</Filter>
+    <ClCompile Include="HtmlDialog\DialogResizeBorder.cpp">
+      <Filter>HtmlDialog</Filter>
+    </ClCompile>
+    <ClCompile Include="HtmlDialog\HtmlCtrl.cpp">
+      <Filter>HtmlDialog</Filter>
+    </ClCompile>
+    <ClCompile Include="HtmlDialog\HtmlDialog.cpp">
+      <Filter>HtmlDialog</Filter>
+    </ClCompile>
+    <ClCompile Include="HtmlDialog\HtmlHelper.cpp">
+      <Filter>HtmlDialog</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

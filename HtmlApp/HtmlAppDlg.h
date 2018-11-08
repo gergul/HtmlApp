@@ -3,11 +3,11 @@
 //
 
 #pragma once
-#include "HtmlCtrl.h"
 #include "afxwin.h"
-#include "HtmlHelper.h"
+#include "HtmlDialog/HtmlCtrl.h"
+#include "HtmlDialog/HtmlHelper.h"
+#include "HtmlDialog/HtmlDialog.h"
 #include "DlgDropFilePriview.h"
-#include "HtmlDialog.h"
 
 // CHtmlAppDlg ¶Ô»°¿ò
 class CHtmlAppDlg : public CHtmlDialog

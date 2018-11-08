@@ -1,5 +1,5 @@
 #pragma once
-#include "HtmlDialog.h"
+#include "HtmlDialog/HtmlDialog.h"
 
 
 // CDlgSample ¶Ô»°¿ò

@@ -183,27 +183,27 @@
     <None Include="res\HtmlApp.rc2" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="DialogResizeBorder.h" />
     <ClInclude Include="DlgDropFilePriview.h" />
     <ClInclude Include="DlgSample.h" />
     <ClInclude Include="HtmlApp.h" />
     <ClInclude Include="HtmlAppDlg.h" />
-    <ClInclude Include="HtmlCtrl.h" />
-    <ClInclude Include="HtmlDialog.h" />
-    <ClInclude Include="HtmlHelper.h" />
+    <ClInclude Include="HtmlDialog\DialogResizeBorder.h" />
+    <ClInclude Include="HtmlDialog\HtmlCtrl.h" />
+    <ClInclude Include="HtmlDialog\HtmlDialog.h" />
+    <ClInclude Include="HtmlDialog\HtmlHelper.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="DialogResizeBorder.cpp" />
     <ClCompile Include="DlgDropFilePriview.cpp" />
     <ClCompile Include="DlgSample.cpp" />
     <ClCompile Include="HtmlApp.cpp" />
     <ClCompile Include="HtmlAppDlg.cpp" />
-    <ClCompile Include="HtmlCtrl.cpp" />
-    <ClCompile Include="HtmlDialog.cpp" />
-    <ClCompile Include="HtmlHelper.cpp" />
+    <ClCompile Include="HtmlDialog\DialogResizeBorder.cpp" />
+    <ClCompile Include="HtmlDialog\HtmlCtrl.cpp" />
+    <ClCompile Include="HtmlDialog\HtmlDialog.cpp" />
+    <ClCompile Include="HtmlDialog\HtmlHelper.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
