@@ -10,7 +10,7 @@
 
 #define WM_SYNCBORDER WM_USER + 2000//同步拖拉区域消息
 
-#define GAP 10//拖拉区域大小
+#define GAP 6//拖拉区域大小
 
 class CDialogResizeBorder
 {
@@ -33,6 +33,8 @@ public:
 
 	virtual void SyncBorder(bool bCheckShowed = true);
 
+	inline LONG GetGap();
+
 	HWND m_hWnd;
 
 protected:
@@ -43,13 +45,12 @@ protected:
 	static BOOL _ModifyStyle(HWND hWnd, int nStyleOffset,
 		DWORD dwRemove, DWORD dwAdd, UINT nFlags);
 
-	static BOOL ModifyStyleEx(HWND hWnd, DWORD dwRemove, DWORD dwAdd, UINT nFlags = 0);
-	
+	static BOOL ModifyStyleEx(HWND hWnd, DWORD dwRemove, DWORD dwAdd, UINT nFlags = 0);	
 
 protected:
 	void syncBorder(bool bCheckShowed = true);
 	void resizeWindow();
-
+		
 private:
 	HWND  m_hOwnerWnd;
 	HINSTANCE m_hInst;

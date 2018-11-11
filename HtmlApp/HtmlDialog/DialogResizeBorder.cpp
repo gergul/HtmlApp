@@ -142,9 +142,6 @@ BOOL CDialogResizeBorder::ModifyStyleEx(HWND hWnd, DWORD dwRemove, DWORD dwAdd, 
 
 void CDialogResizeBorder::syncBorder(bool bCheckShowed /*= true*/)
 {
-	if (g_bNoticingOwerResize)
-		return;
-
 	if (!::IsZoomed(m_hWnd) && !::IsIconic(m_hWnd) &&
 		(!bCheckShowed || (bCheckShowed && TRUE == ::IsWindowVisible(m_hWnd)))
 		)
@@ -160,28 +157,28 @@ void CDialogResizeBorder::syncBorder(bool bCheckShowed /*= true*/)
 		switch (m_nHitTestType)
 		{
 		case HTLEFT:
-			::MoveWindow(hBorderWnd, rectWin.left - GAP, rectWin.top + GAP, GAP, height - GAP * 2, TRUE);
+			::MoveWindow(hBorderWnd, rectWin.left - GetGap(), rectWin.top + GetGap(), GetGap(), height - GetGap() * 2, TRUE);
 			break;
 		case HTRIGHT:
-			::MoveWindow(hBorderWnd, rectWin.right, rectWin.top + GAP, GAP, height - GAP * 2, TRUE);
+			::MoveWindow(hBorderWnd, rectWin.right, rectWin.top + GetGap(), GetGap(), height - GetGap() * 2, TRUE);
 			break;
 		case HTTOP:
-			::MoveWindow(hBorderWnd, rectWin.left + GAP, rectWin.top - GAP, width - GAP * 2, GAP, TRUE);
+			::MoveWindow(hBorderWnd, rectWin.left + GetGap(), rectWin.top - GetGap(), width - GetGap() * 2, GetGap(), TRUE);
 			break;
 		case HTBOTTOM:
-			::MoveWindow(hBorderWnd, rectWin.left + GAP, rectWin.bottom, width - GAP * 2, GAP, TRUE);
+			::MoveWindow(hBorderWnd, rectWin.left + GetGap(), rectWin.bottom, width - GetGap() * 2, GetGap(), TRUE);
 			break;
 		case HTTOPLEFT:
-			::MoveWindow(hBorderWnd, rectWin.left - GAP / 2, rectWin.top - GAP / 2, GAP, GAP, TRUE);
+			::MoveWindow(hBorderWnd, rectWin.left - GetGap() / 2, rectWin.top - GetGap() / 2, GetGap(), GetGap(), TRUE);
 			break;
 		case HTTOPRIGHT:
-			::MoveWindow(hBorderWnd, rectWin.right - GAP / 2, rectWin.top - GAP / 2, GAP, GAP, TRUE);
+			::MoveWindow(hBorderWnd, rectWin.right - GetGap() / 2, rectWin.top - GetGap() / 2, GetGap(), GetGap(), TRUE);
 			break;
 		case HTBOTTOMLEFT:
-			::MoveWindow(hBorderWnd, rectWin.left - GAP / 2, rectWin.bottom - GAP / 2, GAP, GAP, TRUE);
+			::MoveWindow(hBorderWnd, rectWin.left - GetGap() / 2, rectWin.bottom - GetGap() / 2, GetGap(), GetGap(), TRUE);
 			break;
 		case HTBOTTOMRIGHT:
-			::MoveWindow(hBorderWnd, rectWin.right - GAP / 2, rectWin.bottom - GAP / 2, GAP, GAP, TRUE);
+			::MoveWindow(hBorderWnd, rectWin.right - GetGap() / 2, rectWin.bottom - GetGap() / 2, GetGap(), GetGap(), TRUE);
 			break;
 		default:
 			break;
@@ -218,20 +215,20 @@ void CDialogResizeBorder::resizeWindow()
 		rectWin.bottom = rectBorder.top;
 		break;
 	case HTTOPLEFT:
-		rectWin.left = rectBorder.right - GAP / 2;
-		rectWin.top = rectBorder.bottom - GAP / 2;
+		rectWin.left = rectBorder.right - GetGap() / 2;
+		rectWin.top = rectBorder.bottom - GetGap() / 2;
 		break;
 	case HTTOPRIGHT:
-		rectWin.right = rectBorder.left + GAP / 2;
-		rectWin.top = rectBorder.bottom - GAP / 2;
+		rectWin.right = rectBorder.left + GetGap() / 2;
+		rectWin.top = rectBorder.bottom - GetGap() / 2;
 		break;
 	case HTBOTTOMLEFT:
-		rectWin.left = rectBorder.right - GAP / 2;
-		rectWin.bottom = rectBorder.top + GAP / 2;
+		rectWin.left = rectBorder.right - GetGap() / 2;
+		rectWin.bottom = rectBorder.top + GetGap() / 2;
 		break;
 	case HTBOTTOMRIGHT:
-		rectWin.right = rectBorder.left + GAP / 2;
-		rectWin.bottom = rectBorder.top + GAP / 2;
+		rectWin.right = rectBorder.left + GetGap() / 2;
+		rectWin.bottom = rectBorder.top + GetGap() / 2;
 		break;
 	default:
 		break;
@@ -239,6 +236,11 @@ void CDialogResizeBorder::resizeWindow()
 	LONG width = rectWin.right - rectWin.left;
 	LONG height = rectWin.bottom - rectWin.top;
 	::MoveWindow(m_hOwnerWnd, rectWin.left, rectWin.top, width, height, TRUE);
+}
+
+LONG CDialogResizeBorder::GetGap()
+{
+	return ((LONG)GAP / 2) * 2;
 }
 
 BOOL CDialogResizeBorder::DoModeless()
