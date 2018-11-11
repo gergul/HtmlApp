@@ -45,17 +45,6 @@ BOOL CHtmlDialog::OnInitDialog()
 	if (!sDefaultUrl.IsEmpty())
 		m_html.Navigate2(sDefaultUrl);
 
-	//新建Resize Border Dialog
-	(m_mpBorders[HTLEFT] = new CDialogResizeBorder(NULL, m_hWnd, HTLEFT))->DoModeless();
-	(m_mpBorders[HTRIGHT] = new CDialogResizeBorder(NULL, m_hWnd, HTRIGHT))->DoModeless();
-	(m_mpBorders[HTTOP] = new CDialogResizeBorder(NULL, m_hWnd, HTTOP))->DoModeless();
-	(m_mpBorders[HTBOTTOM] = new CDialogResizeBorder(NULL, m_hWnd, HTBOTTOM))->DoModeless();
-	(m_mpBorders[HTTOPLEFT] = new CDialogResizeBorder(NULL, m_hWnd, HTTOPLEFT))->DoModeless();
-	(m_mpBorders[HTTOPRIGHT] = new CDialogResizeBorder(NULL, m_hWnd, HTTOPRIGHT))->DoModeless();
-	(m_mpBorders[HTBOTTOMLEFT] = new CDialogResizeBorder(NULL, m_hWnd, HTBOTTOMLEFT))->DoModeless();
-	(m_mpBorders[HTBOTTOMRIGHT] = new CDialogResizeBorder(NULL, m_hWnd, HTBOTTOMRIGHT))->DoModeless();
-	SyncBorder(false);
-
 	return TRUE;
 }
 
@@ -91,7 +80,7 @@ void CHtmlDialog::InitJsEvents()
 	ADD_EXTERNAL_CALL(&m_html, _T("onClickMin"), &CHtmlDialog::js_onClickedMin, this);
 
 	ADD_EXTERNAL_CALL(&m_html, _T("moveTo"), &CHtmlDialog::js_moveTo, this);
-	ADD_EXTERNAL_CALL(&m_html, _T("moveToCenter"), &CHtmlDialog::js_moveToCenter, this);
+	ADD_EXTERNAL_CALL0(&m_html, _T("moveToCenter"), &CHtmlDialog::js_moveToCenter, this);
 	ADD_EXTERNAL_CALL(&m_html, _T("setWindowSize"), &CHtmlDialog::js_setWindowSize, this);
 	ADD_EXTERNAL_CALL(&m_html, _T("showWindow"), &CHtmlDialog::js_showWindow, this);
 	ADD_EXTERNAL_CALL(&m_html, _T("enableResize"), &CHtmlDialog::js_enableResize, this);
@@ -119,10 +108,30 @@ void CHtmlDialog::SetTransparentColor(COLORREF color)
 	SetLayeredWindowAttributes(color, 0, LWA_COLORKEY);//
 }
 
-void CHtmlDialog::SetEnableResize(bool bEnable)
+void CHtmlDialog::SetEnableResize(bool bLeft, bool bTop, bool bRight, bool bBottom,
+	bool bLeftTop, bool bLeftBottom, bool bRightTop, bool bRightBottom)
 {
-	m_bEnableResize = bEnable;
-	SyncBorder(true);
+	//新建Resize Border Dialog
+#define _CREATE_RESIZE_BORDER(b, t)	\
+	if (b && m_mpBorders.find(t) == m_mpBorders.end()) { \
+		(m_mpBorders[t] = new CDialogResizeBorder(NULL, m_hWnd, t))->DoModeless(); \
+	} \
+	else if (!b && m_mpBorders.find(t) != m_mpBorders.end()) { \
+		::DestroyWindow(m_mpBorders[t]->m_hWnd); \
+		delete m_mpBorders[t]; \
+		m_mpBorders.erase(t); \
+	}
+
+	_CREATE_RESIZE_BORDER(bLeft, HTLEFT);
+	_CREATE_RESIZE_BORDER(bTop, HTTOP);
+	_CREATE_RESIZE_BORDER(bRight, HTRIGHT);
+	_CREATE_RESIZE_BORDER(bBottom, HTBOTTOM);
+	_CREATE_RESIZE_BORDER(bLeftTop, HTTOPLEFT);
+	_CREATE_RESIZE_BORDER(bLeftBottom, HTBOTTOMLEFT);
+	_CREATE_RESIZE_BORDER(bRightTop, HTTOPRIGHT);
+	_CREATE_RESIZE_BORDER(bRightBottom, HTBOTTOMRIGHT);
+
+	SyncBorder(false);
 }
 
 void CHtmlDialog::SyncBorder(bool bCheckShowed/* = true*/)
@@ -241,7 +250,7 @@ void CHtmlDialog::js_moveTo(LPCTSTR str)
 	MoveWindow(&rectWin);
 }
 
-void CHtmlDialog::js_moveToCenter(LPCTSTR str)
+void CHtmlDialog::js_moveToCenter()
 {
 	int nScreenWidth = GetSystemMetrics(SM_CXFULLSCREEN);
 	int nScreenHeight = GetSystemMetrics(SM_CYFULLSCREEN);
@@ -300,11 +309,27 @@ void CHtmlDialog::js_showWindow(LPCTSTR str)
 void CHtmlDialog::js_enableResize(LPCTSTR str)
 {
 	CString sVal = str;
+	sVal.Trim();
 	sVal.MakeUpper();
 	if (sVal == _T("TRUE") || sVal == _T("1"))
-		SetEnableResize(true);
+		SetEnableResize(true, true, true, true, true, true, true, true);
 	else if (sVal == _T("FALSE") || sVal == _T("0"))
-		SetEnableResize(false);
+		SetEnableResize(false, false, false, false, false, false, false, false);
+	else
+	{		
+		std::vector<CString> vctConfig = SplitCString(sVal, _T(", "));
+		if (vctConfig.size() != 8)
+			return;
+		SetEnableResize(
+			vctConfig[0] == _T("TRUE") || vctConfig[0] == _T("1"),
+			vctConfig[1] == _T("TRUE") || vctConfig[1] == _T("1"),
+			vctConfig[2] == _T("TRUE") || vctConfig[2] == _T("1"),
+			vctConfig[3] == _T("TRUE") || vctConfig[3] == _T("1"),
+			vctConfig[4] == _T("TRUE") || vctConfig[4] == _T("1"),
+			vctConfig[5] == _T("TRUE") || vctConfig[5] == _T("1"),
+			vctConfig[6] == _T("TRUE") || vctConfig[6] == _T("1"),
+			vctConfig[7] == _T("TRUE") || vctConfig[7] == _T("1"));
+	}
 }
 
 void CHtmlDialog::js_setTransparentColor(LPCTSTR str)

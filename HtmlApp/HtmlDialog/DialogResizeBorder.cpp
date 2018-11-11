@@ -6,7 +6,7 @@ std::map<HWND, HCURSOR> CDialogResizeBorder::ms_mpCursors;
 std::map<HWND, int> CDialogResizeBorder::ms_mpHitTestType;
 std::map<HWND, CDialogResizeBorder*> CDialogResizeBorder::ms_wndClass;
 
-int CDialogResizeBorder::ms_opaque = 100;
+int CDialogResizeBorder::ms_opaque = 1;
 
 CDialogResizeBorder::CDialogResizeBorder(HINSTANCE hinst, HWND hwndOwner, int nHitTestType)
 {
@@ -147,7 +147,10 @@ void CDialogResizeBorder::syncBorder(bool bCheckShowed /*= true*/)
 		)
 	{
 		HWND hBorderWnd = m_hWnd;
-		::ShowWindow(hBorderWnd, SW_SHOW);
+		if (::IsWindowVisible(m_hWnd) == TRUE)
+			::ShowWindow(hBorderWnd, SW_SHOW);
+		else
+			::ShowWindow(hBorderWnd, SW_HIDE);
 
 		RECT rectWin = { 0 };
 		::GetWindowRect(m_hOwnerWnd, &rectWin);

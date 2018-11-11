@@ -12,6 +12,7 @@ static char THIS_FILE[] = __FILE__;
 
 #define WM_ON_CLICK_LINK WM_USER + 10000
 #define WM_ON_EXTERNAL_CALL WM_USER + 10001
+#define WM_ON_EXTERNAL_CALL0 WM_USER + 10002
 
 // useful macro for checking HRESULTs
 #define HRCHECK(x) \
@@ -31,6 +32,7 @@ CHtmlCtrl::CHtmlCtrl()
 {
 	EnableAutomation();
 	AppendFunction_SYNC(_T("call"), (AFX_PMSG)&CHtmlCtrl::OnScriptExternalCall, VT_EMPTY, VTS_BSTR VTS_BSTR);
+	AppendFunction_SYNC(_T("call0"), (AFX_PMSG)&CHtmlCtrl::OnScriptExternalCall0, VT_EMPTY, VTS_BSTR);
 }
 
 const AFX_DISPMAP* PASCAL CHtmlCtrl::GetThisDispatchMap()
@@ -76,25 +78,42 @@ LRESULT CHtmlCtrl::OnClickLink(WPARAM pProtocol, LPARAM pCmd)
 	return 0;
 }
 
-LRESULT CHtmlCtrl::OnExternalCall(WPARAM pFuncName, LPARAM pJsonStr)
+LRESULT CHtmlCtrl::OnExternalCall(WPARAM pFuncName, LPARAM paramStr)
 {
 	CString* pszFuncName = (CString*)pFuncName;
-	CString* pszJsonStr = (CString*)pJsonStr;
+	CString* pszParamStr = (CString*)paramStr;
 
 	std::map<CString, FN_ON_EXTERNAL_CALL>::iterator itFinder = m_mpExternalCall.find(*pszFuncName);
 	if (itFinder != m_mpExternalCall.end() && itFinder->second)
-		itFinder->second(*pszJsonStr);
+		itFinder->second(*pszParamStr);
 
 	delete pszFuncName;
-	delete pszJsonStr;
+	delete pszParamStr;
 	return 0;
 }
 
-void CHtmlCtrl::OnScriptExternalCall(LPCTSTR pFunName, LPCTSTR pJsonStr)
+LRESULT CHtmlCtrl::OnExternalCall0(WPARAM pFuncName, LPARAM lparam)
 {
-	PostMessage(WM_ON_EXTERNAL_CALL, WPARAM(new CString(pFunName)), LPARAM(new CString(pJsonStr)));
+	CString* pszFuncName = (CString*)pFuncName;
+
+	std::map<CString, FN_ON_EXTERNAL_CALL0>::iterator itFinder = m_mpExternalCall0.find(*pszFuncName);
+	if (itFinder != m_mpExternalCall0.end() && itFinder->second)
+		itFinder->second();
+
+	delete pszFuncName;
+	return 0;
 }
 
+void CHtmlCtrl::OnScriptExternalCall(LPCTSTR pFunName, LPCTSTR paramStr)
+{
+	PostMessage(WM_ON_EXTERNAL_CALL, WPARAM(new CString(pFunName)), LPARAM(new CString(paramStr)));
+}
+
+
+void CHtmlCtrl::OnScriptExternalCall0(LPCTSTR pFunName)
+{
+	PostMessage(WM_ON_EXTERNAL_CALL0, WPARAM(new CString(pFunName)), 0);
+}
 
 HRESULT CHtmlCtrl::OnShowContextMenu(DWORD dwID, LPPOINT ppt, LPUNKNOWN pcmdtReserved, LPDISPATCH pdispReserved)
 {
@@ -114,6 +133,7 @@ BEGIN_MESSAGE_MAP(CHtmlCtrl, CHtmlView)
 	ON_WM_MOUSEACTIVATE()
 	ON_MESSAGE(WM_ON_CLICK_LINK, &CHtmlCtrl::OnClickLink)
 	ON_MESSAGE(WM_ON_EXTERNAL_CALL, &CHtmlCtrl::OnExternalCall)
+	ON_MESSAGE(WM_ON_EXTERNAL_CALL0, &CHtmlCtrl::OnExternalCall0)
 END_MESSAGE_MAP()
 
 //////////////////
@@ -356,6 +376,15 @@ BOOL CHtmlCtrl::AppendFunction(LPCTSTR pszFuncName, FN_ON_EXTERNAL_CALL pfn)
 		return FALSE;
 
 	m_mpExternalCall[pszFuncName] = pfn;
+	return TRUE;
+}
+
+BOOL CHtmlCtrl::AppendFunction0(LPCTSTR pszFuncName, FN_ON_EXTERNAL_CALL0 pfn)
+{
+	if (pszFuncName == NULL || pszFuncName[0] == '\0')
+		return FALSE;
+
+	m_mpExternalCall0[pszFuncName] = pfn;
 	return TRUE;
 }
 

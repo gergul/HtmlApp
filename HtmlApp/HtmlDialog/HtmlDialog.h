@@ -26,7 +26,8 @@ public:
 	//设置透明颜色
 	void SetTransparentColor(COLORREF color);
 	//设置是否可Resize
-	void SetEnableResize(bool bEnable);
+	void SetEnableResize(bool bLeft, bool bTop, bool bRight, bool bBottom,
+		bool bLeftTop, bool bLeftBottom, bool bRightTop, bool bRightBottom);
 
 	CHtmlCtrl* GetHtmlCtrl() { return &m_html; }
 	CHtmlHelper* GetHtmlHelper() { return &m_htmlHelper; }
@@ -49,7 +50,7 @@ protected:
 	void js_onDbClickCaption(LPCTSTR str);
 
 	void js_moveTo(LPCTSTR str);
-	void js_moveToCenter(LPCTSTR str);
+	void js_moveToCenter();
 	void js_setWindowSize(LPCTSTR str);
 	void js_showWindow(LPCTSTR str);
 

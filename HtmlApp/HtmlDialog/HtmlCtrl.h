@@ -13,7 +13,7 @@
 // smart pointer to IHTMLDocument2
 DECLARE_SMARTPTR(IHTMLDocument2)
 
-typedef std::function<void(LPCTSTR pJsonStr)> FN_ON_EXTERNAL_CALL;
+typedef std::function<void(LPCTSTR paramStr)> FN_ON_EXTERNAL_CALL;
 //ADD_EXTERNAL_CALL 注册在js中调用的C++函数(异步)
 //  pHtmlCtrl - Html控件指针
 //  jsFuncName - 在js中调用的名称
@@ -22,7 +22,18 @@ typedef std::function<void(LPCTSTR pJsonStr)> FN_ON_EXTERNAL_CALL;
 //js调用c++的方法见AppendFunction的说明
 #define ADD_EXTERNAL_CALL(pHtmlCtrl, jsFuncName, memberFun, memberFunClassObjPtr) \
 	(pHtmlCtrl)->AppendFunction((jsFuncName), \
-	(FN_ON_EXTERNAL_CALL)std::bind(memberFun, (memberFunClassObjPtr), std::placeholders::_1));
+	(FN_ON_EXTERNAL_CALL)std::bind((memberFun), (memberFunClassObjPtr), std::placeholders::_1));
+
+typedef std::function<void(void)> FN_ON_EXTERNAL_CALL0;
+//ADD_EXTERNAL_CALL0 注册在js中调用的C++函数(异步)，不带参数
+//  pHtmlCtrl - Html控件指针
+//  jsFuncName - 在js中调用的名称
+//  memberFun - 回调函数
+//  memberFunClassObjPtr - 回调函数所在类的对象指针
+//js调用c++的方法见AppendFunction0的说明
+#define ADD_EXTERNAL_CALL0(pHtmlCtrl, jsFuncName, memberFun, memberFunClassObjPtr) \
+	(pHtmlCtrl)->AppendFunction0((jsFuncName), \
+	(FN_ON_EXTERNAL_CALL0)std::bind((memberFun), (memberFunClassObjPtr)));
 
 
 typedef std::function<void(const CString& sProtocol, const CString& sCmd)> FN_ON_CLICK_LINK;
@@ -34,7 +45,7 @@ typedef std::function<void(const CString& sProtocol, const CString& sCmd)> FN_ON
 //  memberFunClassObjPtr - 回调函数所在类的对象指针
 #define ADD_ON_CLICK_LINK(pHtmlCtrl, protocol, cmd, memberFun, memberFunClassObjPtr) \
 	(pHtmlCtrl)->AppendOnClickLink((protocol), (cmd), \
-	(FN_ON_CLICK_LINK)std::bind(memberFun, (memberFunClassObjPtr), std::placeholders::_1, std::placeholders::_2));
+	(FN_ON_CLICK_LINK)std::bind((memberFun), (memberFunClassObjPtr), std::placeholders::_1, std::placeholders::_2));
 
 //注册点击链接的回调原型
 //  返回：TRUE - 只点击不进行打开网页；FALSE - 打开网页，如果一个命令没有在这个注册，则默认是打开网页的。
@@ -47,7 +58,7 @@ typedef std::function<BOOL(const CString& sProtocol, const CString& sCmd)> FN_ON
 //  memberFunClassObjPtr - 回调函数所在类的对象指针
 #define ADD_ON_CLICK_LINK_SYNC(pHtmlCtrl, protocol, cmd, memberFun, memberFunClassObjPtr) \
 	(pHtmlCtrl)->AppendOnClickLink_SYNC((protocol), (cmd), \
-	(FN_ON_CLICK_LINK_SYNC)std::bind(memberFun, (memberFunClassObjPtr), std::placeholders::_1, std::placeholders::_2));
+	(FN_ON_CLICK_LINK_SYNC)std::bind((memberFun), (memberFunClassObjPtr), std::placeholders::_1, std::placeholders::_2));
 
 //这个类将 CHtmlView 转换为普通的能在对话框和框架中使用的控制
 class CHtmlCtrl
@@ -89,6 +100,9 @@ public:
 	//绑定C++函数到脚本（异步）
 	//脚本中调用window.external.call('pszFuncName', 'json string')即可调用相应的C++函数
 	BOOL AppendFunction(LPCTSTR pszFuncName, FN_ON_EXTERNAL_CALL pfn);
+	//绑定C++函数到脚本（异步）
+	//脚本中调用window.external.call0('pszFuncName')即可调用相应的C++函数
+	BOOL AppendFunction0(LPCTSTR pszFuncName, FN_ON_EXTERNAL_CALL0 pfn);
 	//绑定C++函数到超链接（异步）
 	//  sProtocol - 协议。必需为以下字符“0~9 a~z + - .”才合法（不含引号），并且字母不能是大写
 	//  sCmd - 命令
@@ -169,12 +183,15 @@ private:
 protected:
 	//点击链接与js运行c++方法的消息转接
 	afx_msg LRESULT OnClickLink(WPARAM pProtocol, LPARAM pCmd);
-	afx_msg LRESULT OnExternalCall(WPARAM pFuncName, LPARAM pJsonStr);
-	void OnScriptExternalCall(LPCTSTR pFunName, LPCTSTR pJsonStr);
+	afx_msg LRESULT OnExternalCall(WPARAM pFuncName, LPARAM paramStr);
+	afx_msg LRESULT OnExternalCall0(WPARAM pFuncName, LPARAM lparam);
+	void OnScriptExternalCall(LPCTSTR pFunName, LPCTSTR paramStr);
+	void OnScriptExternalCall0(LPCTSTR pFunName);
 		
 private:
 	BOOL m_bHideMenu;// hide context menu
 	std::map<CString, FN_ON_EXTERNAL_CALL> m_mpExternalCall;
+	std::map<CString, FN_ON_EXTERNAL_CALL0> m_mpExternalCall0;
 	std::map<CString, std::map<CString, FN_ON_CLICK_LINK> > m_mpOnClickLink;//<protocol, <cmd, function>>
 	std::map<CString, std::map<CString, FN_ON_CLICK_LINK_SYNC> > m_mpOnClickLink_SYNC;//<protocol, <cmd, function>>
 };
