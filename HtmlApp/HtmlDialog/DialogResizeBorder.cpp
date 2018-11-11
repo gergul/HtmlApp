@@ -6,7 +6,7 @@ std::map<HWND, HCURSOR> CDialogResizeBorder::ms_mpCursors;
 std::map<HWND, int> CDialogResizeBorder::ms_mpHitTestType;
 std::map<HWND, CDialogResizeBorder*> CDialogResizeBorder::ms_wndClass;
 
-int CDialogResizeBorder::ms_opaque = 100;
+int CDialogResizeBorder::ms_opaque = 1;
 
 CDialogResizeBorder::CDialogResizeBorder(HINSTANCE hinst, HWND hwndOwner, int nHitTestType)
 {

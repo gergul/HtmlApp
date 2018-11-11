@@ -23,6 +23,72 @@ CHtmlDialog::~CHtmlDialog()
 	
 }
 
+BOOL CHtmlDialog::OnInitDialog()
+{
+	if (FALSE == __super::OnInitDialog())
+		return FALSE;
+
+	CRect rectWin;
+	this->GetWindowRect(&rectWin);
+	CRect rectHtml;
+	rectHtml.top = GAP;
+	rectHtml.left = GAP;
+	rectHtml.bottom = rectWin.Height() - GAP;
+	rectHtml.right = rectWin.Width() - GAP;
+	m_html.Create(rectHtml, this, GetDlgCtrlID() + 10000);
+
+	m_html.SetIsHideContextMenu(TRUE);
+
+	InitJsEvents();
+	RemoveBorder();
+
+	CString sDefaultUrl = GetDefaultUrl();
+	if (!sDefaultUrl.IsEmpty())
+		m_html.Navigate2(sDefaultUrl);
+
+	//新建Resize Border dialog
+	m_mpBorders[HTLEFT] = new CDialogResizeBorder(NULL, m_hWnd, HTLEFT);
+	m_mpBorders[HTLEFT]->DoModeless();
+	m_mpBorders[HTRIGHT] = new CDialogResizeBorder(NULL, m_hWnd, HTRIGHT);
+	m_mpBorders[HTRIGHT]->DoModeless();
+	m_mpBorders[HTTOP] = new CDialogResizeBorder(NULL, m_hWnd, HTTOP);
+	m_mpBorders[HTTOP]->DoModeless();
+	m_mpBorders[HTBOTTOM] = new CDialogResizeBorder(NULL, m_hWnd, HTBOTTOM);
+	m_mpBorders[HTBOTTOM]->DoModeless();
+	m_mpBorders[HTTOPLEFT] = new CDialogResizeBorder(NULL, m_hWnd, HTTOPLEFT);
+	m_mpBorders[HTTOPLEFT]->DoModeless();
+	m_mpBorders[HTTOPRIGHT] = new CDialogResizeBorder(NULL, m_hWnd, HTTOPRIGHT);
+	m_mpBorders[HTTOPRIGHT]->DoModeless();
+	m_mpBorders[HTBOTTOMLEFT] = new CDialogResizeBorder(NULL, m_hWnd, HTBOTTOMLEFT);
+	m_mpBorders[HTBOTTOMLEFT]->DoModeless();
+	m_mpBorders[HTBOTTOMRIGHT] = new CDialogResizeBorder(NULL, m_hWnd, HTBOTTOMRIGHT);
+	m_mpBorders[HTBOTTOMRIGHT]->DoModeless();
+	SyncBorder(false);
+
+	return TRUE;
+}
+
+BOOL CHtmlDialog::DestroyWindow()
+{
+	DestroyBorders();
+
+	return __super::DestroyWindow();
+}
+
+void CHtmlDialog::OnOK()
+{
+	DestroyBorders();
+
+	return __super::OnOK();
+}
+
+void CHtmlDialog::OnCancel()
+{
+	DestroyBorders();
+
+	return __super::OnCancel();
+}
+
 void CHtmlDialog::InitJsEvents()
 {
 	ADD_EXTERNAL_CALL(&m_html, _T("onMouseDownCaption"), &CHtmlDialog::js_onMouseDownCaption, this);
@@ -348,71 +414,6 @@ LRESULT CHtmlDialog::OnBorderResizeEnd(WPARAM wParam, LPARAM lParam)
 LRESULT CHtmlDialog::OnBorderResize(WPARAM wParam, LPARAM lParam)
 {
 	return S_OK;
-}
-
-BOOL CHtmlDialog::OnInitDialog()
-{
-	BOOL bRet = __super::OnInitDialog();
-
-	CRect rectWin;
-	this->GetWindowRect(&rectWin);
-	CRect rectHtml;
-	rectHtml.top = GAP;
-	rectHtml.left = GAP;
-	rectHtml.bottom = rectWin.Height() - GAP;
-	rectHtml.right = rectWin.Width() - GAP;
-	m_html.Create(rectHtml, this, GetDlgCtrlID() + 10000);
-
-	m_html.SetIsHideContextMenu(TRUE);
-
-	InitJsEvents();
-	RemoveBorder();
-	
-	CString sDefaultUrl = GetDefaultUrl();
-	if (!sDefaultUrl.IsEmpty())
-		m_html.Navigate2(sDefaultUrl);
-
-	//新建Resize Border dialog
-	m_mpBorders[HTLEFT] = new CDialogResizeBorder(NULL, m_hWnd, HTLEFT);
-	m_mpBorders[HTLEFT]->DoModeless();
-	m_mpBorders[HTRIGHT] = new CDialogResizeBorder(NULL, m_hWnd, HTRIGHT);
-	m_mpBorders[HTRIGHT]->DoModeless();
-	m_mpBorders[HTTOP] = new CDialogResizeBorder(NULL, m_hWnd, HTTOP);
-	m_mpBorders[HTTOP]->DoModeless();
-	m_mpBorders[HTBOTTOM] = new CDialogResizeBorder(NULL, m_hWnd, HTBOTTOM);
-	m_mpBorders[HTBOTTOM]->DoModeless();
-	m_mpBorders[HTTOPLEFT] = new CDialogResizeBorder(NULL, m_hWnd, HTTOPLEFT);
-	m_mpBorders[HTTOPLEFT]->DoModeless();
-	m_mpBorders[HTTOPRIGHT] = new CDialogResizeBorder(NULL, m_hWnd, HTTOPRIGHT);
-	m_mpBorders[HTTOPRIGHT]->DoModeless();
-	m_mpBorders[HTBOTTOMLEFT] = new CDialogResizeBorder(NULL, m_hWnd, HTBOTTOMLEFT);
-	m_mpBorders[HTBOTTOMLEFT]->DoModeless();
-	m_mpBorders[HTBOTTOMRIGHT] = new CDialogResizeBorder(NULL, m_hWnd, HTBOTTOMRIGHT);
-	m_mpBorders[HTBOTTOMRIGHT]->DoModeless();
-	SyncBorder(false);
-
-	return bRet;
-}
-
-BOOL CHtmlDialog::DestroyWindow()
-{
-	DestroyBorders();
-
-	return __super::DestroyWindow();
-}
-
-void CHtmlDialog::OnOK()
-{
-	DestroyBorders();
-
-	return __super::OnOK();
-}
-
-void CHtmlDialog::OnCancel()
-{
-	DestroyBorders();
-
-	return __super::OnCancel();
 }
 
 BEGIN_MESSAGE_MAP(CHtmlDialog, CDialogEx)
