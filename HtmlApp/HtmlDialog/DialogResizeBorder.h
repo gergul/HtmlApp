@@ -1,6 +1,6 @@
 // DialogResizeBorder.h
-#ifndef KDIALOG_H_INCLUDED
-#define KDIALOG_H_INCLUDED
+#ifndef DIALOG_RESIZE_BORDER
+#define DIALOG_RESIZE_BORDER
 #include <windows.h>
 #include <map>
 
@@ -63,4 +63,4 @@ private:
 	static int ms_opaque;
 };
 
-#endif // KDIALOG_H_INCLUDED
+#endif // DIALOG_RESIZE_BORDER

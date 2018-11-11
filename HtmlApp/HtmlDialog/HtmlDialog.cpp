@@ -13,7 +13,6 @@ CHtmlDialog::CHtmlDialog(UINT id, CWnd* pParent /*=NULL*/)
 	: CDialogEx(id, pParent)
 	, m_htmlHelper(&m_html)
 	, m_bEnableResize(true)
-	, m_bWinChangeByBorder(false)
 {
 
 }
@@ -46,23 +45,15 @@ BOOL CHtmlDialog::OnInitDialog()
 	if (!sDefaultUrl.IsEmpty())
 		m_html.Navigate2(sDefaultUrl);
 
-	//新建Resize Border dialog
-	m_mpBorders[HTLEFT] = new CDialogResizeBorder(NULL, m_hWnd, HTLEFT);
-	m_mpBorders[HTLEFT]->DoModeless();
-	m_mpBorders[HTRIGHT] = new CDialogResizeBorder(NULL, m_hWnd, HTRIGHT);
-	m_mpBorders[HTRIGHT]->DoModeless();
-	m_mpBorders[HTTOP] = new CDialogResizeBorder(NULL, m_hWnd, HTTOP);
-	m_mpBorders[HTTOP]->DoModeless();
-	m_mpBorders[HTBOTTOM] = new CDialogResizeBorder(NULL, m_hWnd, HTBOTTOM);
-	m_mpBorders[HTBOTTOM]->DoModeless();
-	m_mpBorders[HTTOPLEFT] = new CDialogResizeBorder(NULL, m_hWnd, HTTOPLEFT);
-	m_mpBorders[HTTOPLEFT]->DoModeless();
-	m_mpBorders[HTTOPRIGHT] = new CDialogResizeBorder(NULL, m_hWnd, HTTOPRIGHT);
-	m_mpBorders[HTTOPRIGHT]->DoModeless();
-	m_mpBorders[HTBOTTOMLEFT] = new CDialogResizeBorder(NULL, m_hWnd, HTBOTTOMLEFT);
-	m_mpBorders[HTBOTTOMLEFT]->DoModeless();
-	m_mpBorders[HTBOTTOMRIGHT] = new CDialogResizeBorder(NULL, m_hWnd, HTBOTTOMRIGHT);
-	m_mpBorders[HTBOTTOMRIGHT]->DoModeless();
+	//新建Resize Border Dialog
+	(m_mpBorders[HTLEFT] = new CDialogResizeBorder(NULL, m_hWnd, HTLEFT))->DoModeless();
+	(m_mpBorders[HTRIGHT] = new CDialogResizeBorder(NULL, m_hWnd, HTRIGHT))->DoModeless();
+	(m_mpBorders[HTTOP] = new CDialogResizeBorder(NULL, m_hWnd, HTTOP))->DoModeless();
+	(m_mpBorders[HTBOTTOM] = new CDialogResizeBorder(NULL, m_hWnd, HTBOTTOM))->DoModeless();
+	(m_mpBorders[HTTOPLEFT] = new CDialogResizeBorder(NULL, m_hWnd, HTTOPLEFT))->DoModeless();
+	(m_mpBorders[HTTOPRIGHT] = new CDialogResizeBorder(NULL, m_hWnd, HTTOPRIGHT))->DoModeless();
+	(m_mpBorders[HTBOTTOMLEFT] = new CDialogResizeBorder(NULL, m_hWnd, HTBOTTOMLEFT))->DoModeless();
+	(m_mpBorders[HTBOTTOMRIGHT] = new CDialogResizeBorder(NULL, m_hWnd, HTBOTTOMRIGHT))->DoModeless();
 	SyncBorder(false);
 
 	return TRUE;
@@ -395,19 +386,16 @@ void CHtmlDialog::OnGetMinMaxInfo(MINMAXINFO* lpMMI)
 {
 	__super::OnGetMinMaxInfo(lpMMI);
 
-	if (!m_bWinChangeByBorder)
-		SyncBorder(true);
+	SyncBorder(true);
 }
 
 LRESULT CHtmlDialog::OnBorderResizeStart(WPARAM wParam, LPARAM lParam)
 {
-	m_bWinChangeByBorder = true;
 	return S_OK;
 }
 
 LRESULT CHtmlDialog::OnBorderResizeEnd(WPARAM wParam, LPARAM lParam)
 {
-	m_bWinChangeByBorder = false;
 	return S_OK;
 }
 

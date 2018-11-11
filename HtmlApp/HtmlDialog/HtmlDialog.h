@@ -77,6 +77,5 @@ protected:
 	CHtmlHelper m_htmlHelper;	
 	POINT m_ptLast;	
 	bool m_bEnableResize;
-	bool m_bWinChangeByBorder;
 	std::map<int, CDialogResizeBorder*> m_mpBorders;
 };
