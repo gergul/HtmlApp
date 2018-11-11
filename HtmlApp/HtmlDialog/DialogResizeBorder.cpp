@@ -85,12 +85,12 @@ INT_PTR CALLBACK CDialogResizeBorder::DialogProc(HWND hDlg, UINT uMsg, WPARAM wP
 					pDlg->resizeWindow();
 				}
 				return TRUE;
-			}			
+			}
 		}
 	}
 	break;
 	case WM_LBUTTONUP:
-	{		
+	{
 		//½áÊøÍÏ¶¯´°¿Ú
 		CDialogResizeBorder* pDlg = ms_wndClass[hDlg];
 		if (NULL != pDlg)
@@ -238,6 +238,11 @@ void CDialogResizeBorder::resizeWindow()
 	}
 	LONG width = rectWin.right - rectWin.left;
 	LONG height = rectWin.bottom - rectWin.top;
+	if (width < MIN_WIDTH)	
+		width = MIN_WIDTH;
+	if (height < MIN_HEIGHT)
+		height = MIN_HEIGHT;
+	
 	::MoveWindow(m_hOwnerWnd, rectWin.left, rectWin.top, width, height, TRUE);
 }
 
@@ -276,7 +281,7 @@ BOOL CDialogResizeBorder::DoModeless()
 	nchar = 1 + MultiByteToWideChar(CP_ACP, 0, "BORDER", -1,
 		lpwsz, 50);
 	lpw += nchar;
-	
+
 	GlobalUnlock(hgbl);
 
 	m_hWnd = CreateDialogIndirect(m_hInst,

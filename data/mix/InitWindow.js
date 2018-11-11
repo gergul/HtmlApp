@@ -1,7 +1,7 @@
 //设置窗口大小
 //window.external.call('setWindowSize', '500,500');
 //设置窗口是否可Resize
-window.external.call('enableResize', '1,0,1,0,0,0,0,0');
+window.external.call('enableResize', '1');
 //设置透明颜色
 //window.external.call('setTransparentColor', '238,238,238');
 //窗口的初始位置

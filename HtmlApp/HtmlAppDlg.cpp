@@ -48,6 +48,7 @@ BOOL CHtmlAppDlg::OnInitDialog()
 	
 	//注册异步回调函数
 	ADD_EXTERNAL_CALL(&m_html, _T("asyncFoo"), &CHtmlAppDlg::js_asyncFoo, this);
+	ADD_EXTERNAL_CALL0(&m_html, _T("asyncFoo2"), &CHtmlAppDlg::js_asyncFoo2, this);
 	//注册链接回调
 	ADD_ON_CLICK_LINK(&m_html, _T("toolbar"), _T("console"), &CHtmlAppDlg::onClickLink, this);
 	ADD_ON_CLICK_LINK(&m_html, _T("app"), _T("Gergul"), &CHtmlAppDlg::onClickLink, this);
@@ -63,9 +64,9 @@ BOOL CHtmlAppDlg::OnInitDialog()
 	m_pDlgDropFilePriview->Create(CDlgDropFilePriview::IDD, this);
 	m_pDlgDropFilePriview->ShowWindow(SW_SHOW);
 	
-	CDlgSample* dlg = new CDlgSample(this);
-	dlg->Create(CDlgSample::IDD, this);
-	dlg->ShowWindow(SW_SHOW);
+	//CDlgSample* dlg = new CDlgSample(this);
+	//dlg->Create(CDlgSample::IDD, this);
+	//dlg->ShowWindow(SW_SHOW);
 
 	return TRUE;  // 除非将焦点设置到控件，否则返回 TRUE
 }
@@ -166,6 +167,13 @@ void CHtmlAppDlg::js_asyncFoo(LPCTSTR str)
 
 	//将导致一个js错误
 	m_html.ExecuteScript(_T("willError()"));
+}
+
+void CHtmlAppDlg::js_asyncFoo2()
+{
+	CString s;
+	s.Format(_T("js_asyncFoo2()"));
+	AfxMessageBox(s);
 }
 
 void CHtmlAppDlg::onClickLink(const CString& sProtocols, const CString& sCmd)

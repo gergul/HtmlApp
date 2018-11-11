@@ -41,6 +41,7 @@ protected:
 
 	//绑定的异步回调，在这种回调中支持dom操作
 	void js_asyncFoo(LPCTSTR str);
+	void js_asyncFoo2();
 
 	//绑定的链接回调，在这种回调中支持dom操作
 	void onClickLink(const CString& sProtocols, const CString& sCmd);
