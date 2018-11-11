@@ -7,7 +7,6 @@
 #include <vector>
 
 #define TIMER_WIN_POS WM_USER + 10000
-#define WM_SYNCBORDER WM_USER + 2000
 
 // HtmlDialog 对话框
 
@@ -36,6 +35,8 @@ public:
 
 	void SyncBorder(bool bCheckShowed = true);
 
+	void DestroyBorders();
+
 public:
 	static std::vector<CString> SplitCString(const CString& strSource, TCHAR* ch);
 
@@ -60,13 +61,15 @@ protected:
 	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV 支持
 	virtual BOOL PreTranslateMessage(MSG* pMsg);
 	virtual BOOL OnInitDialog();
+	virtual BOOL DestroyWindow();
+	virtual void OnOK();
+	virtual void OnCancel();
 	afx_msg void OnTimer(UINT_PTR nIDEvent);
 	afx_msg void OnSize(UINT nType, int cx, int cy);
 	afx_msg void OnGetMinMaxInfo(MINMAXINFO* lpMMI);
 	afx_msg LRESULT OnBorderResizeStart(WPARAM wParam, LPARAM lParam);
 	afx_msg LRESULT OnBorderResizeEnd(WPARAM wParam, LPARAM lParam);
 	afx_msg LRESULT OnBorderResize(WPARAM wParam, LPARAM lParam);
-	afx_msg LRESULT OnSyncBorder(WPARAM wParam, LPARAM lParam);
 	DECLARE_MESSAGE_MAP()
 
 protected:

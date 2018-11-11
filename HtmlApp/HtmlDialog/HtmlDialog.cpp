@@ -20,13 +20,7 @@ CHtmlDialog::CHtmlDialog(UINT id, CWnd* pParent /*=NULL*/)
 
 CHtmlDialog::~CHtmlDialog()
 {
-	for (std::map<int, CDialogResizeBorder*>::iterator it = m_mpBorders.begin();
-		it != m_mpBorders.end(); ++it)
-	{
-		if (it->second)
-			delete (it->second);
-	}
-	m_mpBorders.clear();
+	
 }
 
 void CHtmlDialog::InitJsEvents()
@@ -71,7 +65,7 @@ void CHtmlDialog::SetTransparentColor(COLORREF color)
 void CHtmlDialog::SetEnableResize(bool bEnable)
 {
 	m_bEnableResize = bEnable;
-	::PostMessage(m_hWnd, WM_SYNCBORDER, true, 0);
+	SyncBorder(true);
 }
 
 void CHtmlDialog::SyncBorder(bool bCheckShowed/* = true*/)
@@ -81,54 +75,23 @@ void CHtmlDialog::SyncBorder(bool bCheckShowed/* = true*/)
 	{
 		int nHitTest = it->first;
 		CDialogResizeBorder* pBorder = it->second;
-				
-		if (m_bEnableResize && 
-			!IsZoomed() && !IsIconic() && 
-			(!bCheckShowed || (bCheckShowed && TRUE == ::IsWindowVisible(m_hWnd)))
-			)
-		{
-			HWND hBorderWnd = pBorder->m_hWnd;
-			::ShowWindow(hBorderWnd, SW_SHOW);
+		
+		pBorder->SyncBorder(bCheckShowed);
+	}
+}
 
-			CRect rectWin;
-			this->GetWindowRect(&rectWin);
-			switch (nHitTest)
-			{
-			case HTLEFT:
-				::MoveWindow(hBorderWnd, rectWin.left - GAP, rectWin.top + GAP, GAP, rectWin.Height() - GAP * 2, TRUE);
-				break;
-			case HTRIGHT:
-				::MoveWindow(hBorderWnd, rectWin.right, rectWin.top + GAP, GAP, rectWin.Height() - GAP * 2, TRUE);
-				break;
-			case HTTOP:
-				::MoveWindow(hBorderWnd, rectWin.left + GAP, rectWin.top - GAP, rectWin.Width() - GAP * 2, GAP, TRUE);
-				break;
-			case HTBOTTOM:
-				::MoveWindow(hBorderWnd, rectWin.left + GAP, rectWin.bottom, rectWin.Width() - GAP * 2, GAP, TRUE);
-				break;
-			case HTTOPLEFT:
-				::MoveWindow(hBorderWnd, rectWin.left - GAP / 2, rectWin.top - GAP / 2, GAP, GAP, TRUE);
-				break;
-			case HTTOPRIGHT:
-				::MoveWindow(hBorderWnd, rectWin.right - GAP / 2, rectWin.top - GAP / 2, GAP, GAP, TRUE);
-				break;
-			case HTBOTTOMLEFT:
-				::MoveWindow(hBorderWnd, rectWin.left - GAP / 2, rectWin.bottom - GAP / 2, GAP, GAP, TRUE);
-				break;
-			case HTBOTTOMRIGHT:
-				::MoveWindow(hBorderWnd, rectWin.right - GAP / 2, rectWin.bottom - GAP / 2, GAP, GAP, TRUE);
-				break;
-			default:
-				break;
-			}
-			
-			::SetFocus(m_html.m_hWnd);
-		}
-		else
+void CHtmlDialog::DestroyBorders()
+{
+	for (std::map<int, CDialogResizeBorder*>::iterator it = m_mpBorders.begin();
+		it != m_mpBorders.end(); ++it)
+	{
+		if (it->second)
 		{
-			::ShowWindow(pBorder->m_hWnd, SW_HIDE);
+			::DestroyWindow(it->second->m_hWnd);
+			delete (it->second);
 		}
 	}
+	m_mpBorders.clear();
 }
 
 std::vector<CString> CHtmlDialog::SplitCString(const CString& strSource, TCHAR* ch)
@@ -274,7 +237,7 @@ void CHtmlDialog::js_showWindow(LPCTSTR str)
 	else if (sVal == _T("FALSE") || sVal == _T("0"))
 		ShowWindow(SW_HIDE);
 
-	::PostMessage(m_hWnd, WM_SYNCBORDER, true, 0);
+	SyncBorder(true);
 }
 
 void CHtmlDialog::js_enableResize(LPCTSTR str)
@@ -314,7 +277,6 @@ BOOL CHtmlDialog::PreTranslateMessage(MSG* pMsg)
 	if (pMsg->message == WM_LBUTTONUP)
 	{
 		KillTimer(TIMER_WIN_POS);
-		//::PostMessage(m_hWnd, WM_SYNCBORDER, true, 0);
 	}
 
 	return __super::PreTranslateMessage(pMsg);
@@ -368,74 +330,24 @@ void CHtmlDialog::OnGetMinMaxInfo(MINMAXINFO* lpMMI)
 	__super::OnGetMinMaxInfo(lpMMI);
 
 	if (!m_bWinChangeByBorder)
-		::PostMessage(m_hWnd, WM_SYNCBORDER, true, 0);
+		SyncBorder(true);
 }
 
 LRESULT CHtmlDialog::OnBorderResizeStart(WPARAM wParam, LPARAM lParam)
 {
 	m_bWinChangeByBorder = true;
-	return 0;
+	return S_OK;
 }
 
 LRESULT CHtmlDialog::OnBorderResizeEnd(WPARAM wParam, LPARAM lParam)
 {
 	m_bWinChangeByBorder = false;
-	::PostMessage(m_hWnd, WM_SYNCBORDER, true, 0);
-	return 0;
+	return S_OK;
 }
 
 LRESULT CHtmlDialog::OnBorderResize(WPARAM wParam, LPARAM lParam)
 {
-	HWND hBorder = (HWND)wParam;
-	int nHitTest = (int)lParam;
-
-	RECT rectBorder;
-	::GetWindowRect(hBorder, &rectBorder);
-	
-	CRect rectWin;
-	this->GetWindowRect(rectWin);
-	switch (nHitTest)
-	{
-	case HTLEFT:
-		rectWin.left = rectBorder.right;
-		break;
-	case HTRIGHT:
-		rectWin.right = rectBorder.left;
-		break;
-	case HTTOP:
-		rectWin.top = rectBorder.bottom;
-		break;
-	case HTBOTTOM:
-		rectWin.bottom = rectBorder.top;
-		break;
-	case HTTOPLEFT:
-		rectWin.left = rectBorder.right - GAP / 2;
-		rectWin.top = rectBorder.bottom - GAP / 2;
-		break;
-	case HTTOPRIGHT:
-		rectWin.right = rectBorder.left + GAP / 2;
-		rectWin.top = rectBorder.bottom - GAP / 2;
-		break;
-	case HTBOTTOMLEFT:
-		rectWin.left = rectBorder.right - GAP / 2;
-		rectWin.bottom = rectBorder.top + GAP / 2;
-		break;
-	case HTBOTTOMRIGHT:
-		rectWin.right = rectBorder.left + GAP / 2;
-		rectWin.bottom = rectBorder.top + GAP / 2;
-		break;
-	default:
-		break;
-	}
-	this->MoveWindow(&rectWin);
-
-	return 0;
-}
-
-LRESULT CHtmlDialog::OnSyncBorder(WPARAM wParam, LPARAM lParam)
-{
-	SyncBorder((bool)wParam);
-	return 0;
+	return S_OK;
 }
 
 BOOL CHtmlDialog::OnInitDialog()
@@ -477,9 +389,30 @@ BOOL CHtmlDialog::OnInitDialog()
 	m_mpBorders[HTBOTTOMLEFT]->DoModeless();
 	m_mpBorders[HTBOTTOMRIGHT] = new CDialogResizeBorder(NULL, m_hWnd, HTBOTTOMRIGHT);
 	m_mpBorders[HTBOTTOMRIGHT]->DoModeless();
-	::PostMessage(m_hWnd, WM_SYNCBORDER, false, 0);
+	SyncBorder(false);
 
 	return bRet;
+}
+
+BOOL CHtmlDialog::DestroyWindow()
+{
+	DestroyBorders();
+
+	return __super::DestroyWindow();
+}
+
+void CHtmlDialog::OnOK()
+{
+	DestroyBorders();
+
+	return __super::OnOK();
+}
+
+void CHtmlDialog::OnCancel()
+{
+	DestroyBorders();
+
+	return __super::OnCancel();
 }
 
 BEGIN_MESSAGE_MAP(CHtmlDialog, CDialogEx)
@@ -489,7 +422,6 @@ BEGIN_MESSAGE_MAP(CHtmlDialog, CDialogEx)
 	ON_MESSAGE(WM_BORDER_RESIZE_START, &CHtmlDialog::OnBorderResizeStart)
 	ON_MESSAGE(WM_BORDER_RESIZE_END, &CHtmlDialog::OnBorderResizeEnd)
 	ON_MESSAGE(WM_BORDER_RESIZE, &CHtmlDialog::OnBorderResize)
-	ON_MESSAGE(WM_SYNCBORDER, &CHtmlDialog::OnSyncBorder)
 END_MESSAGE_MAP()
 
 

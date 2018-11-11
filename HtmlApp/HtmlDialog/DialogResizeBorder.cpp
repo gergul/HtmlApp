@@ -4,7 +4,9 @@
 
 std::map<HWND, HCURSOR> CDialogResizeBorder::ms_mpCursors;
 std::map<HWND, int> CDialogResizeBorder::ms_mpHitTestType;
-int CDialogResizeBorder::ms_opaque = 1;
+std::map<HWND, CDialogResizeBorder*> CDialogResizeBorder::ms_wndClass;
+
+int CDialogResizeBorder::ms_opaque = 100;
 
 CDialogResizeBorder::CDialogResizeBorder(HINSTANCE hinst, HWND hwndOwner, int nHitTestType)
 {
@@ -54,14 +56,16 @@ INT_PTR CALLBACK CDialogResizeBorder::DialogProc(HWND hDlg, UINT uMsg, WPARAM wP
 	{
 		//::PostMessage(hDlg, WM_SYSCOMMAND, SC_MOVE | HTCAPTION, 0);
 		//鼠标左键按下时拖动窗口并联动主窗口
-		HWND hParent = ::GetParent(hDlg);
-		if (NULL != hParent)
+		HWND hOwer = ms_wndClass[hDlg]->m_hOwnerWnd;
+		if (NULL != hOwer)
 		{
-			g_bNoticingParentResize = true;
-
 			::ReleaseCapture();
-			::SendMessage(hParent, WM_BORDER_RESIZE_START, 0, 0);
-			::SendMessage(hDlg, WM_SYSCOMMAND, SC_MOVE | HTCAPTION, 0);
+			LRESULT res = ::SendMessage(hOwer, WM_BORDER_RESIZE_START, (WPARAM)hDlg, (LPARAM)ms_mpHitTestType[hDlg]);
+			if (res == S_OK)
+			{
+				g_bNoticingParentResize = true;
+				::SendMessage(hDlg, WM_SYSCOMMAND, SC_MOVE | HTCAPTION, 0);
+			}
 			::SendMessage(hDlg, WM_LBUTTONUP, 0, 0);
 			return TRUE;
 		}
@@ -72,11 +76,16 @@ INT_PTR CALLBACK CDialogResizeBorder::DialogProc(HWND hDlg, UINT uMsg, WPARAM wP
 		//拖动的过程
 		if (g_bNoticingParentResize)
 		{
-			HWND hParent = ::GetParent(hDlg);
-			if (NULL != hParent)
+			CDialogResizeBorder* pDlg = ms_wndClass[hDlg];
+			if (NULL != pDlg)
 			{
-				::SendMessage(hParent, WM_BORDER_RESIZE, (WPARAM)hDlg, (LPARAM)ms_mpHitTestType[hDlg]);
-			}
+				LRESULT res = ::SendMessage(pDlg->m_hOwnerWnd, WM_BORDER_RESIZE, (WPARAM)hDlg, (LPARAM)ms_mpHitTestType[hDlg]);
+				if (res == S_OK)
+				{
+					pDlg->resizeWindow();
+				}
+				return TRUE;
+			}			
 		}
 	}
 	break;
@@ -85,12 +94,24 @@ INT_PTR CALLBACK CDialogResizeBorder::DialogProc(HWND hDlg, UINT uMsg, WPARAM wP
 		g_bNoticingParentResize = false;
 
 		//结束拖动窗口
-		HWND hParent = ::GetParent(hDlg);
-		if (NULL != hParent)
+		CDialogResizeBorder* pDlg = ms_wndClass[hDlg];
+		if (NULL != pDlg)
 		{
-			::SendMessage(hParent, WM_BORDER_RESIZE_END, 0, 0);
+			LRESULT res = ::SendMessage(pDlg->m_hOwnerWnd, WM_BORDER_RESIZE_END, (WPARAM)hDlg, (LPARAM)ms_mpHitTestType[hDlg]);
+			if (res == S_OK)
+			{
+				pDlg->resizeWindow();
+			}
 			return TRUE;
 		}
+	}
+	break;
+	case WM_SYNCBORDER:
+	{
+		std::map<HWND, CDialogResizeBorder*>::iterator it = ms_wndClass.find(hDlg);
+		if (it != ms_wndClass.end())
+			it->second->syncBorder((bool)wParam);
+		return TRUE;
 	}
 	break;
 	default:
@@ -118,6 +139,100 @@ BOOL CDialogResizeBorder::_ModifyStyle(HWND hWnd, int nStyleOffset, DWORD dwRemo
 BOOL CDialogResizeBorder::ModifyStyleEx(HWND hWnd, DWORD dwRemove, DWORD dwAdd, UINT nFlags)
 {
 	return _ModifyStyle(hWnd, (int)GWL_EXSTYLE, dwRemove, dwAdd, nFlags);
+}
+
+void CDialogResizeBorder::syncBorder(bool bCheckShowed /*= true*/)
+{
+	if (!::IsZoomed(m_hWnd) && !::IsIconic(m_hWnd) &&
+		(!bCheckShowed || (bCheckShowed && TRUE == ::IsWindowVisible(m_hWnd)))
+		)
+	{
+		HWND hBorderWnd = m_hWnd;
+		::ShowWindow(hBorderWnd, SW_SHOW);
+
+		CRect rectWin;
+		::GetWindowRect(m_hOwnerWnd, &rectWin);
+
+		switch (m_nHitTestType)
+		{
+		case HTLEFT:
+			::MoveWindow(hBorderWnd, rectWin.left - GAP, rectWin.top + GAP, GAP, rectWin.Height() - GAP * 2, TRUE);
+			break;
+		case HTRIGHT:
+			::MoveWindow(hBorderWnd, rectWin.right, rectWin.top + GAP, GAP, rectWin.Height() - GAP * 2, TRUE);
+			break;
+		case HTTOP:
+			::MoveWindow(hBorderWnd, rectWin.left + GAP, rectWin.top - GAP, rectWin.Width() - GAP * 2, GAP, TRUE);
+			break;
+		case HTBOTTOM:
+			::MoveWindow(hBorderWnd, rectWin.left + GAP, rectWin.bottom, rectWin.Width() - GAP * 2, GAP, TRUE);
+			break;
+		case HTTOPLEFT:
+			::MoveWindow(hBorderWnd, rectWin.left - GAP / 2, rectWin.top - GAP / 2, GAP, GAP, TRUE);
+			break;
+		case HTTOPRIGHT:
+			::MoveWindow(hBorderWnd, rectWin.right - GAP / 2, rectWin.top - GAP / 2, GAP, GAP, TRUE);
+			break;
+		case HTBOTTOMLEFT:
+			::MoveWindow(hBorderWnd, rectWin.left - GAP / 2, rectWin.bottom - GAP / 2, GAP, GAP, TRUE);
+			break;
+		case HTBOTTOMRIGHT:
+			::MoveWindow(hBorderWnd, rectWin.right - GAP / 2, rectWin.bottom - GAP / 2, GAP, GAP, TRUE);
+			break;
+		default:
+			break;
+		}
+
+		::SetFocus(m_hOwnerWnd);
+	}
+	else
+	{
+		::ShowWindow(m_hWnd, SW_HIDE);
+	}
+}
+
+void CDialogResizeBorder::resizeWindow()
+{
+	RECT rectBorder;
+	::GetWindowRect(m_hWnd, &rectBorder);
+
+	CRect rectWin;
+	::GetWindowRect(m_hOwnerWnd, rectWin);
+
+	switch (m_nHitTestType)
+	{
+	case HTLEFT:
+		rectWin.left = rectBorder.right;
+		break;
+	case HTRIGHT:
+		rectWin.right = rectBorder.left;
+		break;
+	case HTTOP:
+		rectWin.top = rectBorder.bottom;
+		break;
+	case HTBOTTOM:
+		rectWin.bottom = rectBorder.top;
+		break;
+	case HTTOPLEFT:
+		rectWin.left = rectBorder.right - GAP / 2;
+		rectWin.top = rectBorder.bottom - GAP / 2;
+		break;
+	case HTTOPRIGHT:
+		rectWin.right = rectBorder.left + GAP / 2;
+		rectWin.top = rectBorder.bottom - GAP / 2;
+		break;
+	case HTBOTTOMLEFT:
+		rectWin.left = rectBorder.right - GAP / 2;
+		rectWin.bottom = rectBorder.top + GAP / 2;
+		break;
+	case HTBOTTOMRIGHT:
+		rectWin.right = rectBorder.left + GAP / 2;
+		rectWin.bottom = rectBorder.top + GAP / 2;
+		break;
+	default:
+		break;
+	}
+	::MoveWindow(m_hOwnerWnd, rectWin.left, rectWin.top, rectWin.Width(), rectWin.Height(), TRUE);
 }
 
 BOOL CDialogResizeBorder::DoModeless()
@@ -199,7 +314,13 @@ BOOL CDialogResizeBorder::DoModeless()
 	}
 
 	ms_mpHitTestType[m_hWnd] = m_nHitTestType;
+	ms_wndClass[m_hWnd] = this;
 
 
 	return TRUE;
+}
+
+void CDialogResizeBorder::SyncBorder(bool bCheckShowed /*= true*/)
+{
+	::PostMessage(m_hWnd, WM_SYNCBORDER, (WPARAM)bCheckShowed, 0);
 }
