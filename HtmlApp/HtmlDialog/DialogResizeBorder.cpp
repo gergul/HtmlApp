@@ -6,7 +6,16 @@ std::map<HWND, HCURSOR> CDialogResizeBorder::ms_mpCursors;
 std::map<HWND, int> CDialogResizeBorder::ms_mpHitTestType;
 std::map<HWND, CDialogResizeBorder*> CDialogResizeBorder::ms_wndClass;
 
+#ifdef _DEBUG
+int CDialogResizeBorder::ms_opaque = 100;
+#else
 int CDialogResizeBorder::ms_opaque = 1;
+#endif
+
+int CDialogResizeBorder::ms_width = 6;
+int CDialogResizeBorder::ms_hornDepth = 6;
+int CDialogResizeBorder::ms_minOwerWidth = 30;
+int CDialogResizeBorder::ms_minOwerHeight = 30;
 
 CDialogResizeBorder::CDialogResizeBorder(HINSTANCE hinst, HWND hwndOwner, int nHitTestType)
 {
@@ -32,8 +41,6 @@ INT_PTR CALLBACK CDialogResizeBorder::DialogProc(HWND hDlg, UINT uMsg, WPARAM wP
 	case WM_INITDIALOG:
 	{
 		//设置透明度
-		//  修改窗口的风格
-		ModifyStyleEx(hDlg, 0, WS_EX_LAYERED);
 		//  设置透明度，第三个参数
 		::SetLayeredWindowAttributes(hDlg, 0, ms_opaque, LWA_ALPHA);
 		return TRUE;
@@ -101,6 +108,7 @@ INT_PTR CALLBACK CDialogResizeBorder::DialogProc(HWND hDlg, UINT uMsg, WPARAM wP
 				pDlg->resizeWindow();
 			}
 			g_bNoticingOwerResize = false;
+			::PostMessage(hDlg, WM_SYNCBORDER, (WPARAM)false, 0);
 			return TRUE;
 		}
 	}
@@ -160,28 +168,29 @@ void CDialogResizeBorder::syncBorder(bool bCheckShowed /*= true*/)
 		switch (m_nHitTestType)
 		{
 		case HTLEFT:
-			::MoveWindow(hBorderWnd, rectWin.left - GetGap(), rectWin.top + GetGap(), GetGap(), height - GetGap() * 2, TRUE);
+			::MoveWindow(hBorderWnd, rectWin.left - GetWidth(), rectWin.top, GetWidth(), height, TRUE);
 			break;
 		case HTRIGHT:
-			::MoveWindow(hBorderWnd, rectWin.right, rectWin.top + GetGap(), GetGap(), height - GetGap() * 2, TRUE);
+			::MoveWindow(hBorderWnd, rectWin.right, rectWin.top, GetWidth(), height, TRUE);
 			break;
 		case HTTOP:
-			::MoveWindow(hBorderWnd, rectWin.left + GetGap(), rectWin.top - GetGap(), width - GetGap() * 2, GetGap(), TRUE);
+			::MoveWindow(hBorderWnd, rectWin.left, rectWin.top - GetWidth(), width, GetWidth(), TRUE);
 			break;
 		case HTBOTTOM:
-			::MoveWindow(hBorderWnd, rectWin.left + GetGap(), rectWin.bottom, width - GetGap() * 2, GetGap(), TRUE);
+			::MoveWindow(hBorderWnd, rectWin.left, rectWin.bottom, width, GetWidth(), TRUE);
 			break;
+
 		case HTTOPLEFT:
-			::MoveWindow(hBorderWnd, rectWin.left - GetGap() / 2, rectWin.top - GetGap() / 2, GetGap(), GetGap(), TRUE);
+			::MoveWindow(hBorderWnd, rectWin.left - GetWidth(), rectWin.top - GetWidth(), GetWidth() + GetHornDepth(), GetWidth() + GetHornDepth(), TRUE);
 			break;
 		case HTTOPRIGHT:
-			::MoveWindow(hBorderWnd, rectWin.right - GetGap() / 2, rectWin.top - GetGap() / 2, GetGap(), GetGap(), TRUE);
+			::MoveWindow(hBorderWnd, rectWin.right - GetHornDepth(), rectWin.top - GetWidth(), GetWidth() + GetHornDepth(), GetWidth() + GetHornDepth(), TRUE);
 			break;
 		case HTBOTTOMLEFT:
-			::MoveWindow(hBorderWnd, rectWin.left - GetGap() / 2, rectWin.bottom - GetGap() / 2, GetGap(), GetGap(), TRUE);
+			::MoveWindow(hBorderWnd, rectWin.left - GetWidth(), rectWin.bottom - GetHornDepth(), GetWidth() + GetHornDepth(), GetWidth() + GetHornDepth(), TRUE);
 			break;
 		case HTBOTTOMRIGHT:
-			::MoveWindow(hBorderWnd, rectWin.right - GetGap() / 2, rectWin.bottom - GetGap() / 2, GetGap(), GetGap(), TRUE);
+			::MoveWindow(hBorderWnd, rectWin.right - GetHornDepth(), rectWin.bottom - GetHornDepth(), GetWidth() + GetHornDepth(), GetWidth() + GetHornDepth(), TRUE);
 			break;
 		default:
 			break;
@@ -217,38 +226,44 @@ void CDialogResizeBorder::resizeWindow()
 	case HTBOTTOM:
 		rectWin.bottom = rectBorder.top;
 		break;
+
 	case HTTOPLEFT:
-		rectWin.left = rectBorder.right - GetGap() / 2;
-		rectWin.top = rectBorder.bottom - GetGap() / 2;
+		rectWin.left = rectBorder.right - GetHornDepth();
+		rectWin.top = rectBorder.bottom - GetHornDepth();
 		break;
 	case HTTOPRIGHT:
-		rectWin.right = rectBorder.left + GetGap() / 2;
-		rectWin.top = rectBorder.bottom - GetGap() / 2;
+		rectWin.right = rectBorder.left + GetHornDepth();
+		rectWin.top = rectBorder.bottom - GetHornDepth();
 		break;
 	case HTBOTTOMLEFT:
-		rectWin.left = rectBorder.right - GetGap() / 2;
-		rectWin.bottom = rectBorder.top + GetGap() / 2;
+		rectWin.left = rectBorder.right - GetHornDepth();
+		rectWin.bottom = rectBorder.top + GetHornDepth();
 		break;
 	case HTBOTTOMRIGHT:
-		rectWin.right = rectBorder.left + GetGap() / 2;
-		rectWin.bottom = rectBorder.top + GetGap() / 2;
+		rectWin.right = rectBorder.left + GetHornDepth();
+		rectWin.bottom = rectBorder.top + GetHornDepth();
 		break;
 	default:
 		break;
 	}
 	LONG width = rectWin.right - rectWin.left;
 	LONG height = rectWin.bottom - rectWin.top;
-	if (width < MIN_WIDTH)	
-		width = MIN_WIDTH;
-	if (height < MIN_HEIGHT)
-		height = MIN_HEIGHT;
-	
+	if (width < ms_minOwerWidth)
+		width = ms_minOwerWidth;
+	if (height < ms_minOwerHeight)
+		height = ms_minOwerHeight;
+
 	::MoveWindow(m_hOwnerWnd, rectWin.left, rectWin.top, width, height, TRUE);
 }
 
-LONG CDialogResizeBorder::GetGap()
+LONG CDialogResizeBorder::GetWidth()
 {
-	return ((LONG)GAP / 2) * 2;
+	return ((LONG)ms_width / 2) * 2;
+}
+
+LONG CDialogResizeBorder::GetHornDepth()
+{
+	return ms_hornDepth;
 }
 
 BOOL CDialogResizeBorder::DoModeless()
@@ -266,7 +281,8 @@ BOOL CDialogResizeBorder::DoModeless()
 	lpdt = (LPDLGTEMPLATE)GlobalLock(hgbl);
 
 	// Define a dialog box.
-	lpdt->style = WS_POPUP/* | WS_BORDER | WS_SYSMENU | DS_MODALFRAME | WS_CAPTION*/;
+	lpdt->style = WS_POPUP;
+	lpdt->dwExtendedStyle = WS_EX_LAYERED;
 	lpdt->cdit = 0;//3  // number of controls
 	lpdt->x = 10;
 	lpdt->y = 10;

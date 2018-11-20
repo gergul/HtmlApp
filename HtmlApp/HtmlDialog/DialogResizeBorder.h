@@ -10,22 +10,19 @@
 
 #define WM_SYNCBORDER WM_USER + 2000//同步拖拉区域消息
 
-#define GAP 6//拖拉区域大小
-#define MIN_WIDTH 30
-#define MIN_HEIGHT 30
 
 class CDialogResizeBorder
 {
 public:
 	/*nHitTestType:
-      HTLEFT
-      HTRIGHT
-      HTTOP
-      HTTOPLEFT
-      HTTOPRIGHT
-      HTBOTTOM
-      HTBOTTOMLEFT
-      HTBOTTOMRIGHT
+	HTLEFT
+	HTRIGHT
+	HTTOP
+	HTTOPLEFT
+	HTTOPRIGHT
+	HTBOTTOM
+	HTBOTTOMLEFT
+	HTBOTTOMRIGHT
 	*/
 	CDialogResizeBorder(HINSTANCE hinst, HWND hwndOwner, int nHitTestType);
 
@@ -35,9 +32,19 @@ public:
 
 	virtual void SyncBorder(bool bCheckShowed = true);
 
-	inline LONG GetGap();
-
+	inline LONG GetWidth();
+	inline LONG GetHornDepth();
+		
+public:
 	HWND m_hWnd;
+
+	//不透明度，应为 1~255，一般为1（不能为0，否则不能接受鼠标事件），只有调试时设为其它
+	static int ms_opaque;
+
+	static int ms_width;//边框宽度
+	static int ms_hornDepth;//角的深度，如果要做圆角窗口这个窗口可以调整
+	static int ms_minOwerWidth;//窗口最小可调到多小
+	static int ms_minOwerHeight;//窗口最小可调到多小
 
 protected:
 	// API中注册的消息处理函数，不能是成员函数，因为成员函数有this指针
@@ -47,12 +54,12 @@ protected:
 	static BOOL _ModifyStyle(HWND hWnd, int nStyleOffset,
 		DWORD dwRemove, DWORD dwAdd, UINT nFlags);
 
-	static BOOL ModifyStyleEx(HWND hWnd, DWORD dwRemove, DWORD dwAdd, UINT nFlags = 0);	
+	static BOOL ModifyStyleEx(HWND hWnd, DWORD dwRemove, DWORD dwAdd, UINT nFlags = 0);
 
 protected:
 	void syncBorder(bool bCheckShowed = true);
 	void resizeWindow();
-		
+
 private:
 	HWND  m_hOwnerWnd;
 	HINSTANCE m_hInst;
@@ -61,9 +68,7 @@ private:
 	int m_nHitTestType;
 	static std::map<HWND, int> ms_mpHitTestType;
 	static std::map<HWND, CDialogResizeBorder*> ms_wndClass;
-
-	//不透明度，应为 1~255，一般为1（不能为0，否则不能接受鼠标事件），只有调试时设为其它
-	static int ms_opaque;
+		
 };
 
 #endif // DIALOG_RESIZE_BORDER

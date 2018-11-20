@@ -30,10 +30,10 @@ BOOL CHtmlDialog::OnInitDialog()
 	CRect rectWin;
 	this->GetWindowRect(&rectWin);
 	CRect rectHtml;
-	rectHtml.top = GAP;
-	rectHtml.left = GAP;
-	rectHtml.bottom = rectWin.Height() - GAP;
-	rectHtml.right = rectWin.Width() - GAP;
+	rectHtml.top = 0;
+	rectHtml.left = 0;
+	rectHtml.bottom = rectWin.Height();
+	rectHtml.right = rectWin.Width();
 	m_html.Create(rectHtml, this, GetDlgCtrlID() + 10000);
 
 	m_html.SetIsHideContextMenu(TRUE);
